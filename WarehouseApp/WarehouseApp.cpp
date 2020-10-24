@@ -28,33 +28,33 @@ int main()
 
     // using the database, get product position
     // in this example, I am getting a tuple
-    std::tuple<float, float> t = d->getProductPosition(1);
+    std::tuple<float, float> t = d->getProductPosition("1");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
 
     // create a product class
     // and add the product into the order
-    Product p(1, t);
+    Product p("1", t);
     o.addProduct(p);
 
-    t = d->getProductPosition(45);
+    t = d->getProductPosition("45");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
 
     p.~Product();
-    new(&p) Product(45, t);
+    new(&p) Product("45", t);
     o.addProduct(p);
 
-    t = d->getProductPosition(102);
+    t = d->getProductPosition("102");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
 
     p.~Product();
-    new(&p) Product(102, t);
+    new(&p) Product("102", t);
     o.addProduct(p);
 
-    t = d->getProductPosition(16);
+    t = d->getProductPosition("16");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
 
     p.~Product();
-    new(&p) Product(16, t);
+    new(&p) Product("16", t);
     o.addProduct(p);
 
     // iterates through the product list
