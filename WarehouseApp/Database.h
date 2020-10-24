@@ -25,8 +25,8 @@ private:
 	static Database* instance;
 	std::map<int, std::tuple<float, float>> database;
 
-	// Private constructor so that no objects can be created
-	Database() {};
+	/* Private constructor so that no objects can be created */
+    Database() {};
 
 public:
 	static Database* getInstance(void);
