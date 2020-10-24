@@ -12,6 +12,7 @@
 #pragma once
 
 #include <tuple>
+#include "third_party/nlohmann/single_include/nlohmann/json.hpp"
 
 class Product
 {
