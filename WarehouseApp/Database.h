@@ -18,15 +18,17 @@
 #include <string>
 #include <map>
 #include <fstream>
+#include "third_party/nlohmann/single_include/nlohmann/json.hpp"
 
+using json = nlohmann::json;
 
 class Database {
 private:
 	static Database* instance;
-	std::map<int, std::tuple<float, float>> database;
-
-	// Private constructor so that no objects can be created
-	Database() {};
+	//std::map<int, std::tuple<float, float>> database;
+	json database;
+	/* Private constructor so that no objects can be created */
+    Database() {};
 
 public:
 	static Database* getInstance(void);
@@ -35,5 +37,5 @@ public:
 
 	void populateDatabase(std::string filename);
 
-	std::tuple<float, float> getProductPosition(int productID);
+	std::tuple<float, float> getProductPosition(std::string productID);
 };

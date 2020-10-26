@@ -20,7 +20,7 @@
  *					the product's position. The tuple expects
  *					the xy coordinate system
  */
-Product::Product(int pID, std::tuple<float, float> t) {
+Product::Product(std::string pID, std::tuple<float, float> t) {
 	productID = pID;
 	xPosition = std::get<0>(t);
 	yPosition = std::get<1>(t);
@@ -38,7 +38,7 @@ Product::Product(int pID, std::tuple<float, float> t) {
  * @param	y		y is a float that indicates the product's y
  *					position in a warehouse
  */
-Product::Product(int pID, float x, float y) {
+Product::Product(std::string pID, float x, float y) {
 	productID = pID;
 	xPosition = x;
 	yPosition = y;
@@ -75,8 +75,8 @@ float Product::getYPosition(void) {
 /**
  * @brief	This function returns the product ID of a product
  *
- * @return	returns an int
+ * @return	returns a string
  */
-int Product::getProductID(void) {
+std::string Product::getProductID(void) {
 	return productID;
 }

@@ -11,25 +11,27 @@
 
 #pragma once
 
-#include<tuple>
+#include <tuple>
+#include <string>
+#include "third_party/nlohmann/single_include/nlohmann/json.hpp"
 
 class Product
 {
 private:
-	int productID;
+	std::string productID;
 	float xPosition;
 	float yPosition;
 
 	
 
 public:
-	Product(int pID, std::tuple<float, float> t);
-	Product(int pID, float x, float y);
+	Product(std::string pID, std::tuple<float, float> t);
+	Product(std::string pID, float x, float y);
 
 	std::tuple<float, float> getPositionTuple(void);
 	float getXPosition(void);
 	float getYPosition(void);
-	int getProductID(void);
+	std::string getProductID(void);
 
 };
 

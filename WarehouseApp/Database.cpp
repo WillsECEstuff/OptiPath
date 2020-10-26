@@ -41,7 +41,7 @@ void Database::deleteDatabase(void) {
  */
 void Database::populateDatabase(std::string filename) {
 	std::string s1, s2, s3;
-	int productID;
+	std::string productID;
 	float x, y;
 
 	std::cout << "Opening file called " << filename << std::endl;
@@ -54,7 +54,8 @@ void Database::populateDatabase(std::string filename) {
 
 	while (infile >> productID >> x >> y) {
 		//std::cout << productID << " " << x << " " << y << std::endl;
-		database.emplace(productID, std::make_tuple(x, y));
+		//database.emplace(productID, std::make_tuple(x, y));
+		database[productID] = {x, y};
 	}
 
 	std::cout << "Finished creating Database " << std::endl;
@@ -72,15 +73,15 @@ void Database::populateDatabase(std::string filename) {
  *			xy coordinate. If a product does not exist in the database,
  *			the function will return a tuple of <-1, -1>.
  */
-std::tuple<float, float> Database::getProductPosition(int productID) {
-	std::map<int, std::tuple<float, float>>::iterator it;
-	it = database.find(productID);
+std::tuple<float, float> Database::getProductPosition(std::string productID) {
+	//std::map<int, std::tuple<float, float>>::iterator it;
+	json::iterator it = database.find(productID);
 
 	if (it == database.end()) {
 		// return -1,-1 if not exist
 		return std::make_tuple(-1, -1);
 	}
 	else {
-		return database[productID];
+		return std::make_tuple((*it)[0],(*it)[1]);
 	}
 }
