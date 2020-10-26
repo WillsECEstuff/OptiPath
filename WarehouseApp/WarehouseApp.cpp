@@ -5,14 +5,14 @@
 #include <iostream>
 #include <list>
 #include <tuple>
+
 #include "Database.h"
 #include "Ticket.h"
 #include "Order.h"
 
-int main()
+int main(int argc, char** argv)
 {
     std::cout << "Hello World!\n" << std::endl;;
-    
     // Instantiate a database
     // only expected 1 instance
     Database* d = d->getInstance();

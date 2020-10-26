@@ -75,7 +75,7 @@ float Product::getYPosition(void) {
 /**
  * @brief	This function returns the product ID of a product
  *
- * @return	returns an int
+ * @return	returns a string
  */
 std::string Product::getProductID(void) {
 	return productID;
