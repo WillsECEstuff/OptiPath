@@ -6,6 +6,7 @@
 #include <list>
 #include <tuple>
 
+#include "AdjacencyMatrix.h"
 #include "Database.h"
 #include "Ticket.h"
 #include "Order.h"
@@ -20,6 +21,9 @@ int main(int argc, char** argv)
     // Instantiate an order
     // can have multiple orders
     Order o(1,1);
+
+    // Instantiate an adjacency matrix
+    AdjacencyMatrix matrix;
 
     // make sure database is clear before reading and populating
     // database from the text file
