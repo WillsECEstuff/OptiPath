@@ -47,6 +47,9 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{86f76ef2-9997-42da-ad34-dfc24098963c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PriorityQueueTest">
+      <UniqueIdentifier>{393afbac-4637-494a-81a6-dd832f960000}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="D:\Downloads\qvBox-warehouse-data-f20-v01.txt">

@@ -1,3 +1,14 @@
+/*****************************************************************//**
+ * @file   PriorityQueue.h
+ * @brief  This header includes the class for the Priority Queue.
+ *			The Priority Queue is a standard vector that takes in 
+ *			the object Order. The priority is based on the Object
+ *			member priority. More info can be found in Order.h
+ * 
+ * @author Tony
+ * @date   October 2020
+ *********************************************************************/
+
 #pragma once
 
 #include <algorithm>
