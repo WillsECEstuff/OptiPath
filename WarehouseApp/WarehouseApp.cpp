@@ -63,11 +63,17 @@ int main(int argc, char** argv)
 
     // iterates through the product list
     // and check the productID and positions of each product
+    // also adds the products to the adjacency matrix
     std::list<Product> l = o.getProductList();
+    std::deque<Product> deq;
     for (auto& it:l) {
+        deq.push_back(it);
         std::cout << "ID: " << it.getProductID() << "\txPosition: " << it.getXPosition()
             << "\tyPosition: " << it.getYPosition() << std::endl;
     }
+    matrix.setProductList(deq);
+    matrix.populateMatrix();
+    matrix.displayMatrix();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
