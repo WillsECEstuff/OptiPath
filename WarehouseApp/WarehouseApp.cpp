@@ -6,10 +6,10 @@
 #include <list>
 #include <tuple>
 
-#include "AdjacencyMatrix.h"
 #include "Database.h"
 #include "Ticket.h"
 #include "Order.h"
+#include "PathFinder.h"
 
 int main(int argc, char** argv)
 {
@@ -24,6 +24,9 @@ int main(int argc, char** argv)
 
     // Instantiate an adjacency matrix
     AdjacencyMatrix matrix;
+
+    //Instantiate path finder
+    PathFinder path;
 
     // make sure database is clear before reading and populating
     // database from the text file
@@ -90,6 +93,7 @@ int main(int argc, char** argv)
     matrix.setProductList(deq);
     matrix.populateMatrix();
     matrix.displayMatrix();
+    std::cout<<"Total path length = "<<path.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd)<<std::endl;;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

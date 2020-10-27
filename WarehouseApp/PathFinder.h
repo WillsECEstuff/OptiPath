@@ -11,10 +11,10 @@ class PathFinder {
 
     public:
     float calculatePath(
-        std::unordered_map<Product*, std::deque<Product>>& graph, 
+        std::unordered_map<Product*, std::deque<Product>> graph, 
         std::deque<Product> productList,
-        Product& startLocation,
-        Product& endLocation
+        Product startLocation,
+        Product endLocation
         );
 
     std::deque<std::string> singleProductPath(
