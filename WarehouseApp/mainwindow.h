@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QPainter>
+#include <QVector>
+#include <QPointF>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,6 +17,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    //QVector <QPointF> readDB(void);
 
     virtual void paintEvent(QPaintEvent *event);
 

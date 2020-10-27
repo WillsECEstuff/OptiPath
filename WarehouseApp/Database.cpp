@@ -85,3 +85,14 @@ std::tuple<float, float> Database::getProductPosition(std::string productID) {
 		return std::make_tuple((*it)[0],(*it)[1]);
 	}
 }
+
+std::vector<std::tuple<float, float>> Database::getLocList() {
+    std::vector<std::tuple<float, float>> locList;
+
+    for (json::iterator it = database.begin(); it != database.end(); it++) {
+        std::tuple<float, float> temp = std::make_tuple((*it)[0], (*it)[1]);
+        locList.push_back(temp);
+    }
+
+    return locList;
+}
