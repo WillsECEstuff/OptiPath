@@ -80,3 +80,4 @@ float Product::getYPosition(void) {
 std::string Product::getProductID(void) {
 	return productID;
 }
+

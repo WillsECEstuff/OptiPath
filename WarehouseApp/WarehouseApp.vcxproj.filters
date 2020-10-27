@@ -22,24 +22,30 @@
     <ClCompile Include="PathFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AdjacencyMatrix.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PathFinder.h">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="PriorityQueue.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdjacencyMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Database.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Order.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PathFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Product.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ticket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -52,6 +58,9 @@
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{86f76ef2-9997-42da-ad34-dfc24098963c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PriorityQueueTest">
+      <UniqueIdentifier>{393afbac-4637-494a-81a6-dd832f960000}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
