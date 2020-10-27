@@ -1,4 +1,4 @@
-/*****************************************************************//**
+/*********************************************************************
  * @file   AdjacencyMatrix.cpp
  * @brief  This source file contains the definitions for AdjacencyMatrix.h
  * 

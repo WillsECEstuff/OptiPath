@@ -1,4 +1,4 @@
-/*****************************************************************//**
+/*********************************************************************
  * @file   PathFinder.h
  * @brief  This header includes the PathFinder. The PathFinder class 
  *			contains members: distance and visted which are unorderdered
@@ -16,6 +16,7 @@
 
 class PathFinder {
     private:
+    long pathLength;
     std::deque<Product> path;
     std::unordered_map<std::string,float> distance;
     std::unordered_map<std::string,bool>  visited;

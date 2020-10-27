@@ -125,7 +125,7 @@ int main(int argc, char** argv)
     }
 
     std::tuple<float, float> startLocation = std::make_tuple(0,0);
-    std::tuple<float, float> endLocation = std::make_tuple(40,20);
+    std::tuple<float, float> endLocation = std::make_tuple(40,21);
 
     Product dummyStart("startLocation", startLocation);
     Product dummyEnd("endLocation", endLocation);

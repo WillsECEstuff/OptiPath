@@ -1,4 +1,4 @@
-/*****************************************************************//**
+/*********************************************************************
  * @file   AdjacencyMatrix.h
  * @brief  This header includes the AdjacencyMatrix. The AdjacencyMatrix class 
  *			contains members: productList and graph. The productList is a vector of 
