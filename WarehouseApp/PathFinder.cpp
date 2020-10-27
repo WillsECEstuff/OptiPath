@@ -1,9 +1,11 @@
 #include "PathFinder.h"
 
 float PathFinder::distanceBetweenProducts(Product& product1, Product& product2) {
-    float distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) + pow(product1.getYPosition() - product2.getYPosition(),2));
+    float distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) + 
+                        pow(product1.getYPosition() - product2.getYPosition(),2));
     //std::cout<<"Distance between "<<product1.getProductID()<<" and "<<product2.getProductID()<<" = "<<distance<<std::endl;
-    return sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) + pow(product1.getYPosition() - product2.getYPosition(),2));
+    return sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) + 
+                pow(product1.getYPosition() - product2.getYPosition(),2));
 }
 
 std::deque<Product> PathFinder::calculatePath(
