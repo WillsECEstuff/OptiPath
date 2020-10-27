@@ -1,2 +1,2 @@
 # OptiPath
-This is the OptiPath git project
+This is the OptiPath project
