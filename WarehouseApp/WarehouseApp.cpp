@@ -78,6 +78,15 @@ int main(int argc, char** argv)
         std::cout << "ID: " << it.getProductID() << "\txPosition: " << it.getXPosition()
             << "\tyPosition: " << it.getYPosition() << std::endl;
     }
+
+    std::tuple<float, float> startLocation = std::make_tuple(0,0);
+    std::tuple<float, float> endLocation = std::make_tuple(40,20);
+
+    Product dummyStart("startLocation", startLocation);
+    Product dummyEnd("endLocation", endLocation);
+
+    deq.push_back(dummyStart);
+    deq.push_back(dummyEnd);
     matrix.setProductList(deq);
     matrix.populateMatrix();
     matrix.displayMatrix();

@@ -31,6 +31,7 @@ class AdjacencyMatrix {
         void setProductList(std::deque<Product>& requestedProducts);
         std::deque<std::string> calculateShortestPath(void);
         void displayMatrix(void);
+        //bool operator< (Product a, Product b ) { return std::make_pair(a.x,a.y) < std::make_pair(b.x,b.y) ; }
 
         std::unordered_map<std::string, std::deque<Product>> getMatrix(void);
 };
