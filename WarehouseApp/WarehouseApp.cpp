@@ -9,6 +9,7 @@
 #include "Database.h"
 #include "Ticket.h"
 #include "Order.h"
+#include "PathFinder.h"
 
 int main(int argc, char** argv)
 {
@@ -20,6 +21,12 @@ int main(int argc, char** argv)
     // Instantiate an order
     // can have multiple orders
     Order o(1,1);
+
+    // Instantiate an adjacency matrix
+    AdjacencyMatrix matrix;
+
+    //Instantiate path finder
+    PathFinder pathFinder;
 
     // make sure database is clear before reading and populating
     // database from the text file
@@ -57,13 +64,80 @@ int main(int argc, char** argv)
     new(&p) Product("16", t);
     o.addProduct(p);
 
+    t = d->getProductPosition("290");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("290", t);
+    o.addProduct(p);
+
+    t = d->getProductPosition("485");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("485", t);
+    o.addProduct(p);
+
+    t = d->getProductPosition("364");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("364", t);
+    o.addProduct(p);
+
+    t = d->getProductPosition("571");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("571", t);
+    o.addProduct(p);
+
+    t = d->getProductPosition("517");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("517", t);
+    o.addProduct(p);
+
+
+    t = d->getProductPosition("623");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("623", t);
+    o.addProduct(p);
+
+    t = d->getProductPosition("3401");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("3401", t);
+    o.addProduct(p);
     // iterates through the product list
     // and check the productID and positions of each product
+    // also adds the products to the adjacency matrix
     std::list<Product> l = o.getProductList();
+    std::deque<Product> deq;
     for (auto& it:l) {
+        deq.push_back(it);
         std::cout << "ID: " << it.getProductID() << "\txPosition: " << it.getXPosition()
             << "\tyPosition: " << it.getYPosition() << std::endl;
     }
+
+    std::tuple<float, float> startLocation = std::make_tuple(0,0);
+    std::tuple<float, float> endLocation = std::make_tuple(40,21);
+
+    Product dummyStart("startLocation", startLocation);
+    Product dummyEnd("endLocation", endLocation);
+
+    //deq.push_back(dummyStart);
+    matrix.setProductList(deq);
+    matrix.populateMatrix();
+    matrix.displayMatrix();
+    std::cout<<"Path for you : ";
+    std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
+    pathFinder.displayPath();
+    std::cout<<std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

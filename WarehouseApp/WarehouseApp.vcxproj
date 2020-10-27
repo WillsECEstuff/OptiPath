@@ -146,6 +146,8 @@
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="AdjacencyMatrix.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="D:\Downloads\qvBox-warehouse-data-f20-v01.txt" />
@@ -156,6 +158,8 @@
     <ClInclude Include="Product.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="Database.h" />
+    <ClCompile Include="AdjacencyMatrix.h" />
+    <ClCompile Include="PathFinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
