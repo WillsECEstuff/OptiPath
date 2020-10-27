@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     AdjacencyMatrix matrix;
 
     //Instantiate path finder
-    PathFinder path;
+    PathFinder pathFinder;
 
     // make sure database is clear before reading and populating
     // database from the text file
@@ -88,12 +88,14 @@ int main(int argc, char** argv)
     Product dummyStart("startLocation", startLocation);
     Product dummyEnd("endLocation", endLocation);
 
-    deq.push_back(dummyStart);
-    deq.push_back(dummyEnd);
+    //deq.push_back(dummyStart);
     matrix.setProductList(deq);
     matrix.populateMatrix();
     matrix.displayMatrix();
-    std::cout<<"Total path length = "<<path.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd)<<std::endl;;
+    std::cout<<"Path for you : ";
+    std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
+    pathFinder.displayPath();
+    std::cout<<std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
