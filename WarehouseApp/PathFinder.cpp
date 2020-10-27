@@ -18,32 +18,40 @@ std::string PathFinder::minDistance() {
     return minProductID;
 }
 
-std::deque<std::string> PathFinder::calculatePath(
-    std::unordered_map<Product*, std::deque<Product>>& graph, 
-    std::tuple<float,float> startLocation,
-    std::tuple<float,float> endLocation
+
+//std::deque<std::string> PathFinder::calculatePath(
+    float PathFinder::calculatePath(
+    std::unordered_map<Product*, std::deque<Product>>& graph,
+    std::deque<Product> productList, 
+    Product& startLocation,
+    Product& endLocation
     ) {
     //startLocation = std::make_tuple(0,0);
     //endLocation = std::make_tuple(40,20);
-    for(auto& element : graph) {
-        Product* curr = element.first;
-        distance[curr->getProductID()] = INT_MAX;
-        visited[curr->getProductID()] = 0;
-    }
     /*
-    distance["startLocation"] = 0;
-    for(int i = 0;i<graph.size() -1; ++i) {
-        std::string u = minDistance(distance,visited);
-        visited[u] = true;
-        for(auto& neighbor : graph[u]) {
-            if (!visited[neighbor] && distance[u] != INT_MAX && distance[u] + distanceBetweenProducts() < distance[neighbor]) {
-                distance[neighbor] = distance[u] + graph[u][v]; 
-            } 
-        }
+    std::vector<Product> vertices;
+    for(auto& entry : graph) {
+        if((entry.first)->getProductID() != startLocation.getProductID())
+            vertices.push_back(*(entry.first));
     }
+    
+    int minPath = INT_MAX;
+    do {
+        float currentPathWeight = 0;
+        Product k = startLocation;
+        
+        for(auto& entry : graph) {
+            Product next = *(entry.first); 
+            currentPathWeight += distanceBetweenProducts(k,next);
+            k = next; 
+        }
+        
+        currentPathWeight += distanceBetweenProducts(k,endLocation);
+    } while(next_permutation(vertices.begin(),vertices.end()));
+    return minPath;
     */
-
 }
+
 
 std::deque<std::string> PathFinder::singleProductPath(
     Product& product, 
