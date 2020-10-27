@@ -12,8 +12,10 @@
 
 #pragma once
 
+#include<algorithm>
 #include <list>
 #include "Product.h"
+
 
 class Order
 {
@@ -22,6 +24,8 @@ private:
 	int orderID;
 
 	std::list<Product> productList;
+
+	
 
 public:
 	Order(int oID, int p = 1);
@@ -33,7 +37,9 @@ public:
 	void changePriority(int p);
 
 	int getPriority(void);
+
 };
+
 
 
 

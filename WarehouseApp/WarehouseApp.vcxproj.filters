@@ -16,6 +16,9 @@
     <ClCompile Include="Ticket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PriorityQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h">
@@ -30,6 +33,9 @@
     <ClInclude Include="Ticket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PriorityQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -40,6 +46,9 @@
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{86f76ef2-9997-42da-ad34-dfc24098963c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PriorityQueueTest">
+      <UniqueIdentifier>{393afbac-4637-494a-81a6-dd832f960000}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
