@@ -16,7 +16,7 @@
 
 class PathFinder {
     private:
-    long pathLength;
+    double pathLength;
     std::deque<Product> path;
     std::unordered_map<std::string,float> distance;
     std::unordered_map<std::string,bool>  visited;

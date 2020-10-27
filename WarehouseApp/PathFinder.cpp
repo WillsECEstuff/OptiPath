@@ -46,7 +46,7 @@ std::deque<Product> PathFinder::calculatePath(
                 vertices.push_back(*(entry.first));
         }
     
-        pathLength = (float)INT_MAX;
+        pathLength = (double)INT_MAX;
         do {
             float currentPathLength = 0;
             Product k = startLocation;
