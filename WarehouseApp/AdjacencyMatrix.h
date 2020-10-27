@@ -23,7 +23,7 @@
 class AdjacencyMatrix {
     private:
         std::deque<Product> productList;
-        std::unordered_map<std::string, std::deque<Product>> graph;
+        std::unordered_map<Product*, std::deque<Product>> graph;
 
     public:
         AdjacencyMatrix();
@@ -33,5 +33,5 @@ class AdjacencyMatrix {
         void displayMatrix(void);
         //bool operator< (Product a, Product b ) { return std::make_pair(a.x,a.y) < std::make_pair(b.x,b.y) ; }
 
-        std::unordered_map<std::string, std::deque<Product>> getMatrix(void);
+        std::unordered_map<Product*, std::deque<Product>> getMatrix(void);
 };

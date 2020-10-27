@@ -16,7 +16,7 @@ AdjacencyMatrix::AdjacencyMatrix(){}
 /**
  * @brief	Will return the adjacency matrix. 
  */
-std::unordered_map<std::string, std::deque<Product>> AdjacencyMatrix::getMatrix(void) {
+std::unordered_map<Product*, std::deque<Product>> AdjacencyMatrix::getMatrix(void) {
     return graph;
 }
 
@@ -36,8 +36,8 @@ void AdjacencyMatrix::populateMatrix(void) {
     for(int i = 0;i<productList.size();++i) {
         for(int j = 0;j<productList.size();++j){
             if(i!=j){
-                std::string productID = productList[i].getProductID();
-                graph[productID].push_back(productList[j]);
+                //std::string productID = productList[i].getProductID();
+                graph[&productList[i]].push_back(productList[j]);
             }
         }
     }
@@ -46,9 +46,9 @@ void AdjacencyMatrix::populateMatrix(void) {
  * @brief	Will display the adjacency matrix.
  */
 void AdjacencyMatrix::displayMatrix(void) {
-    std::unordered_map<std::string, std::deque<Product>> graph = getMatrix();
+    std::unordered_map<Product*, std::deque<Product>> graph = getMatrix();
     for(auto& entry : graph) {
-        std::cout<<entry.first<<"\t";
+        std::cout<<(entry.first)->getProductID()<<"\t";
         for(auto& neighbor : entry.second) {
             std::cout<<neighbor.getProductID()<<"\t";
         }

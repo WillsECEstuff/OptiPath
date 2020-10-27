@@ -19,15 +19,16 @@ std::string PathFinder::minDistance() {
 }
 
 std::deque<std::string> PathFinder::calculatePath(
-    std::unordered_map<std::string, std::deque<Product>>& graph, 
+    std::unordered_map<Product*, std::deque<Product>>& graph, 
     std::tuple<float,float> startLocation,
     std::tuple<float,float> endLocation
     ) {
     //startLocation = std::make_tuple(0,0);
     //endLocation = std::make_tuple(40,20);
     for(auto& element : graph) {
-        distance[element.first] = INT_MAX;
-        visited[element.first] = 0;
+        Product* curr = element.first;
+        distance[curr->getProductID()] = INT_MAX;
+        visited[curr->getProductID()] = 0;
     }
     /*
     distance["startLocation"] = 0;
