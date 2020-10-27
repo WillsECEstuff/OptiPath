@@ -23,7 +23,7 @@ std::unordered_map<std::string, std::deque<Product>> AdjacencyMatrix::getMatrix(
 /**
  * @brief	Will set the productList variable from given user input.
  */
-void AdjacencyMatrix::setProductList(std::deque<Product> requestedProducts) {
+void AdjacencyMatrix::setProductList(std::deque<Product>& requestedProducts) {
     for(int i = 0; i < requestedProducts.size(); ++i) {
         productList.push_back(requestedProducts[i]);
     }

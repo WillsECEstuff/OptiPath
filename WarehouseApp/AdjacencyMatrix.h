@@ -3,7 +3,7 @@
  * @brief  This header includes the AdjacencyMatrix. The AdjacencyMatrix class 
  *			contains members: productList and graph. The productList is a vector of 
             products for which the best route has to be figure out. The graph is
-            an unordered_map with productID as the key and vector of products as
+            an unordered_map with productID as the key and deque of products as
             its value - This represents the adjacency matrix of the products. 
  *			
  * @author Abinav
@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <string>
 #include <deque>
+#include <vector>
 
 #include "Database.h"
 #include "Product.h"
@@ -27,7 +28,7 @@ class AdjacencyMatrix {
     public:
         AdjacencyMatrix();
         void populateMatrix(void);
-        void setProductList(std::deque<Product> requestedProducts);
+        void setProductList(std::deque<Product>& requestedProducts);
         std::deque<std::string> calculateShortestPath(void);
         void displayMatrix(void);
 

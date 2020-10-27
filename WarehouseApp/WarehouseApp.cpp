@@ -61,6 +61,13 @@ int main(int argc, char** argv)
     new(&p) Product("16", t);
     o.addProduct(p);
 
+    t = d->getProductPosition("290");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    
+    p.~Product();
+    new(&p) Product("290", t);
+    o.addProduct(p);
+
     // iterates through the product list
     // and check the productID and positions of each product
     // also adds the products to the adjacency matrix
