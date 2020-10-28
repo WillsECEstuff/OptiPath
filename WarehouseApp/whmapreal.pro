@@ -9,11 +9,27 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp
+    Inventory.cpp \
+    WarehouseApp.cpp \
+    mainwindow.cpp \
+    AdjacencyMatrix.cpp \
+    Database.cpp \
+    Order.cpp \
+    PathFinder.cpp \
+    PriorityQueue.cpp \
+    Product.cpp \
+    Ticket.cpp \
 
 HEADERS += \
-    mainwindow.h
+    Inventory.h \
+    mainwindow.h \
+    AdjacencyMatrix.h \
+    Database.h \
+    Order.h \
+    PathFinder.h \
+    PriorityQueue.h \
+    Product.h \
+    Ticket.h
 
 FORMS += \
     mainwindow.ui

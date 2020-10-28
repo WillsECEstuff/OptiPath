@@ -50,6 +50,7 @@ void Database::populateDatabase(std::string filename) {
 
 	if (!(infile >> s1 >> s2 >> s3)) {
 		/* error, could not read first line!*/
+        std::cout << "ERROR!" << std::endl;
 	}
 
 	while (infile >> productID >> x >> y) {

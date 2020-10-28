@@ -11,6 +11,8 @@
 
 #include <limits.h>
 #include <math.h>
+#include <QVector>
+#include <QPointF>
 
 #include "AdjacencyMatrix.h"
 
@@ -20,6 +22,8 @@ class PathFinder {
     std::deque<Product> path;
     std::unordered_map<std::string,float> distance;
     std::unordered_map<std::string,bool>  visited;
+    const float TILE_SIZE = 30;
+    const float SCALE = 5;
 
     public:
 
@@ -45,5 +49,5 @@ class PathFinder {
 
     float distanceBetweenProducts(Product& product1, Product& product2);
 
-    void displayPath(void);
+    QVector <QPointF> displayPath(void);
 };
