@@ -7,6 +7,8 @@
  *********************************************************************/
 
 #include "PathFinder.h"
+#include <QVector>
+#include <QPointF>
 
 
 /**
@@ -99,10 +101,15 @@ std::deque<Product> PathFinder::singleProductPath(
  * @param	startLocation   Take in the start location from the user
  * @param	endLocation		Takes in the end location from the user
  */
-void PathFinder::displayPath(void) {
+QVector <QPointF> PathFinder::displayPath(void) { // was void return type
+    QVector <QPointF> routeprinter;
+
     for(auto& vertex : path) {
         std::cout<<vertex.getProductID()<<"->";
+        routeprinter.append(QPointF(vertex.getXPosition() * TILE_SIZE/SCALE, vertex.getYPosition() * TILE_SIZE/SCALE));
     }
     std::cout<<std::endl;
     std::cout<<"Minimum path length = "<< pathLength<<std::endl;
+
+    return routeprinter;
 }

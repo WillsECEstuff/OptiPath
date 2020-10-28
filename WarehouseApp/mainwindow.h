@@ -18,11 +18,16 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    //QVector <QPointF> readDB(void);
+    void loadAllPoints(QVector <QPointF> ptsList);
+    void loadProductPoints(QVector <QPointF> ptsList);
+    void loadRoutePrinter(QVector <QPointF> route);
 
     virtual void paintEvent(QPaintEvent *event);
 
 private:
     Ui::MainWindow *ui;
+    QVector <QPointF> allPoints;
+    QVector <QPointF> productPoints;
+    QVector <QPointF> routePoints;
 };
 #endif // MAINWINDOW_H
