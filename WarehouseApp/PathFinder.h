@@ -47,7 +47,9 @@ class PathFinder {
         Product endLocation
         );
 
-    float distanceBetweenProducts(Product& product1, Product& product2);
+    double distanceBetweenProducts(Product& product1, Product& product2);
 
     QVector <QPointF> displayPath(void);
+    QVector <std::string> pathAnnotation(std::deque<Product>& path);
+
 };

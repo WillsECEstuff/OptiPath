@@ -20,8 +20,8 @@
  * @param	product2		product1 is a product that will indicate the 
                             ending product
  */
-float PathFinder::distanceBetweenProducts(Product& product1, Product& product2) {
-    float distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) + 
+double PathFinder::distanceBetweenProducts(Product& product1, Product& product2) {
+    double distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) +
                         pow(product1.getYPosition() - product2.getYPosition(),2));
     //std::cout<<"Distance between "<<product1.getProductID()<<" and "<<product2.getProductID()<<" = "<<distance<<std::endl;
     return sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) + 
@@ -42,15 +42,21 @@ std::deque<Product> PathFinder::calculatePath(
     Product startLocation,
     Product endLocation
     ) {
+        long numItr = 0;
         std::vector<Product> vertices;
         for(auto& entry : graph) {
             if((entry.first)->getProductID() != startLocation.getProductID())
                 vertices.push_back(*(entry.first));
         }
-    
+
+        std::sort(vertices.begin(),vertices.end(),[](Product& a, Product& b) -> bool
+        {
+            return a.getProductID()< b.getProductID();
+        });
+
         pathLength = (double)INT_MAX;
         do {
-            float currentPathLength = 0;
+            double currentPathLength = 0;
             Product k = startLocation;
             std::deque<Product> currPath;
             currPath.push_back(startLocation);
@@ -66,10 +72,12 @@ std::deque<Product> PathFinder::calculatePath(
                 path = currPath;
                 pathLength = currentPathLength;
             }
+            numItr++;
         } while(next_permutation(vertices.begin(),vertices.end(), [](Product& a, Product& b) -> bool 
         {
             return a.getProductID()< b.getProductID();
         }));
+        std::cout<<"Number of paths evaluated = "<<numItr<<std::endl;
     return path;  
 }
 

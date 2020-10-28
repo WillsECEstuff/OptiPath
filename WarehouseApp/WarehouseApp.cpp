@@ -47,7 +47,7 @@ int main(int argc, char** argv)
     // make sure database is clear before reading and populating
     // database from the text file
     d->deleteDatabase();
-    d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
+    d->populateDatabase("/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp/qvBox-warehouse-data-f20-v01.txt");
 
     // using the database, get product position
     // in this example, I am getting a tuple
@@ -170,8 +170,8 @@ int main(int argc, char** argv)
     w.loadProductPoints(pLocs);
     w.setFixedSize(1500, 1000);
 
-    std::cout<<"Path for you : ";
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
+    std::cout<<"Path for you : ";
     QVector<QPointF> route = pathFinder.displayPath();
     std::cout<<std::endl;
 
