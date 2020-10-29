@@ -87,7 +87,14 @@ std::tuple<float, float> Database::getProductPosition(std::string productID) {
 	}
 }
 
-std::vector<std::tuple<float, float>> Database::getLocList() {
+/**
+ * @brief	This functions returns a vector of tuples<float, float>
+ *			in the xy coordinate format. The vector contains all the 
+ *			locations of products in the database
+ * 
+ * @return	locList			A vector of tuples<float, float>
+ */
+std::vector<std::tuple<float, float>> Database::getLocList(void) {
     std::vector<std::tuple<float, float>> locList;
 
     for (json::iterator it = database.begin(); it != database.end(); it++) {
