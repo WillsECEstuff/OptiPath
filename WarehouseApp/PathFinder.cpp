@@ -24,8 +24,7 @@ double PathFinder::distanceBetweenProducts(Product& product1, Product& product2)
     double distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) +
                         pow(product1.getYPosition() - product2.getYPosition(),2));
     //std::cout<<"Distance between "<<product1.getProductID()<<" and "<<product2.getProductID()<<" = "<<distance<<std::endl;
-    return sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) + 
-                pow(product1.getYPosition() - product2.getYPosition(),2));
+    return distance;
 }
 
 /**
@@ -44,11 +43,12 @@ std::deque<Product> PathFinder::calculatePath(
     ) {
         long numItr = 0;
         std::vector<Product> vertices;
-        for(auto& entry : graph) {
-            if((entry.first)->getProductID() != startLocation.getProductID())
-                vertices.push_back(*(entry.first));
+        for(auto& entry : productList) {
+            if(entry.getProductID() != startLocation.getProductID())
+                vertices.push_back(entry);
         }
 
+        //Sort the vector to make sure no permutation is missed
         std::sort(vertices.begin(),vertices.end(),[](Product& a, Product& b) -> bool
         {
             return a.getProductID()< b.getProductID();
@@ -122,9 +122,19 @@ QVector <QPointF> PathFinder::displayPath(void) { // was void return type
     return routeprinter;
 }
 
+/**
+ * @brief	Returns path for the user
+ */
+
 std::deque<Product> PathFinder::getPath(void) {
     return path;
 }
+
+/**
+ * @brief	Stores instructions for user in a vector
+ *
+ * @param   path         Path output by the path finder
+ */
 
 QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
     QVector <std::string> instructions;
@@ -139,7 +149,7 @@ QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
     xStream.str(""); yStream.str("");
 
     instructions.append(instruction);
-    for(unsigned int i = 1;i < path.size();++i) {
+    for(unsigned int i = 1;i < path.size()-1;++i) {
         xStream << std::fixed << std::setprecision(2) << path[i].getXPosition();
         yStream << std::fixed << std::setprecision(2) << path[i].getYPosition();
 

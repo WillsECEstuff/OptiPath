@@ -60,6 +60,7 @@ int main(int argc, char** argv)
     Product p("1", t);
     o.addProduct(p);
 
+
     t = d->getProductPosition("45");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
