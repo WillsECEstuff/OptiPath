@@ -1,0 +1,19 @@
+digraph "Product.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Product.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This header includes the class for Products. The product class includes members such as productID,..."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="AdjacencyMatrix.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_adjacency_matrix_8h_source.html",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="PathFinder.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_path_finder_8h_source.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Order.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_order_8h.html",tooltip="This header includes the Order class. The order class contains members: priority, orderID,..."];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Order.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_order_8cpp.html",tooltip="This source file contains the definitions for Order.h."];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="PriorityQueue.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_priority_queue_8h.html",tooltip="This header includes the class for the Priority Queue. The Priority Queue is a standard vector that t..."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Product.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_product_8cpp.html",tooltip="This source file is the definitions for Product.h."];
+}

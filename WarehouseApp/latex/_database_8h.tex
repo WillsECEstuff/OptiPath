@@ -1,0 +1,39 @@
+\hypertarget{_database_8h}{}\doxysection{Database.\+h File Reference}
+\label{_database_8h}\index{Database.h@{Database.h}}
+
+
+This header includes the \mbox{\hyperlink{class_database}{Database}} class. It implements a singleton and will only have 1 instance at a time. This class is a simple database whose job is to read from a text file and store its content in a map. The database can be called to get information about products.  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$tuple$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include \char`\"{}third\+\_\+party/nlohmann/single\+\_\+include/nlohmann/json.\+hpp\char`\"{}}\newline
+Include dependency graph for Database.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_database}{Database}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_database_8h_ab701e3ac61a85b337ec5c1abaad6742d}\label{_database_8h_ab701e3ac61a85b337ec5c1abaad6742d}} 
+using {\bfseries json} = nlohmann\+::json
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This header includes the \mbox{\hyperlink{class_database}{Database}} class. It implements a singleton and will only have 1 instance at a time. This class is a simple database whose job is to read from a text file and store its content in a map. The database can be called to get information about products. 
+
+\begin{DoxyAuthor}{Author}
+Tony 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+October 2020 
+\end{DoxyDate}

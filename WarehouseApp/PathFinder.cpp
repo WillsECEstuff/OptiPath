@@ -19,6 +19,7 @@
  *					        starting product
  * @param	product2		product1 is a product that will indicate the 
                             ending product
+ * @return  Euclidean distance between products
  */
 double PathFinder::distanceBetweenProducts(Product& product1, Product& product2) {
     double distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) +
@@ -34,6 +35,8 @@ double PathFinder::distanceBetweenProducts(Product& product1, Product& product2)
  * @param   productList     List of products to be picked up
  * @param	startLocation   Take in the start location from the user
  * @param	endLocation		Takes in the end location from the user
+ *
+ * @return  Ordered list of products in the path
  */
 std::deque<Product> PathFinder::calculatePath(
     std::unordered_map<Product*, std::deque<Product>> graph,
@@ -90,6 +93,8 @@ std::deque<Product> PathFinder::calculatePath(
  * @param   product         Product to be picked up
  * @param	startLocation   Take in the start location from the user
  * @param	endLocation		Takes in the end location from the user
+ *
+ * @return  Ordered list of products in the path
  */
 
 std::deque<Product> PathFinder::singleProductPath(
@@ -111,6 +116,8 @@ std::deque<Product> PathFinder::singleProductPath(
  * @param   product         Product to be picked up
  * @param	startLocation   Take in the start location from the user
  * @param	endLocation		Takes in the end location from the user
+ *
+ * @return  Returns vector of points on the map
  */
 QVector <QPointF> PathFinder::displayPath(void) { // was void return type
     QVector <QPointF> routeprinter;
@@ -137,6 +144,8 @@ std::deque<Product> PathFinder::getPath(void) {
  * @brief	Stores instructions for user in a vector
  *
  * @param   path         Path output by the path finder
+ *
+ * @return  return instructions in user-readable format
  */
 
 QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {

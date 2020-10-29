@@ -1,0 +1,81 @@
+\hypertarget{class_ticket}{}\doxysection{Ticket Class Reference}
+\label{class_ticket}\index{Ticket@{Ticket}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ticket_a1df975b8ff86f5ab78c9ff043301767d}{Ticket}} (int p=1)
+\begin{DoxyCompactList}\small\item\em This is a constructor function. The function clear the product ID list and sets the priority. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ticket_aef9ee6c424dde07cb451fed311cdfe07}{add\+Product\+I\+Dto\+List}} (int product\+ID)
+\begin{DoxyCompactList}\small\item\em Adds a product ID to the end of the p\+I\+D\+List. \end{DoxyCompactList}\item 
+std\+::list$<$ int $>$ \mbox{\hyperlink{class_ticket_a51b6818a7132f36bcec449454bd30c63}{get\+Product\+List}} (void)
+\begin{DoxyCompactList}\small\item\em returns the p\+I\+D\+List. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_ticket_a304222ca99e54e69f277aa7945b6f14b}{get\+Priority}} (void)
+\begin{DoxyCompactList}\small\item\em gets the priority of the ticket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ticket_a1df975b8ff86f5ab78c9ff043301767d}\label{class_ticket_a1df975b8ff86f5ab78c9ff043301767d}} 
+\index{Ticket@{Ticket}!Ticket@{Ticket}}
+\index{Ticket@{Ticket}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{Ticket()}{Ticket()}}
+{\footnotesize\ttfamily Ticket\+::\+Ticket (\begin{DoxyParamCaption}\item[{int}]{p = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+This is a constructor function. The function clear the product ID list and sets the priority. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & p takes an integer between 1 and 100 inclusive If p is $<$ 1, p is set to 1. If p is $>$ 100, p is set to 100. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ticket_aef9ee6c424dde07cb451fed311cdfe07}\label{class_ticket_aef9ee6c424dde07cb451fed311cdfe07}} 
+\index{Ticket@{Ticket}!addProductIDtoList@{addProductIDtoList}}
+\index{addProductIDtoList@{addProductIDtoList}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{addProductIDtoList()}{addProductIDtoList()}}
+{\footnotesize\ttfamily void Ticket\+::add\+Product\+I\+Dto\+List (\begin{DoxyParamCaption}\item[{int}]{product\+ID }\end{DoxyParamCaption})}
+
+
+
+Adds a product ID to the end of the p\+I\+D\+List. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em product\+ID} & product\+ID is an int \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_ticket_a304222ca99e54e69f277aa7945b6f14b}\label{class_ticket_a304222ca99e54e69f277aa7945b6f14b}} 
+\index{Ticket@{Ticket}!getPriority@{getPriority}}
+\index{getPriority@{getPriority}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getPriority()}{getPriority()}}
+{\footnotesize\ttfamily int Ticket\+::get\+Priority (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+gets the priority of the ticket. 
+
+\begin{DoxyReturn}{Returns}
+return an int which indicates the priority of the ticket. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_ticket_a51b6818a7132f36bcec449454bd30c63}\label{class_ticket_a51b6818a7132f36bcec449454bd30c63}} 
+\index{Ticket@{Ticket}!getProductList@{getProductList}}
+\index{getProductList@{getProductList}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getProductList()}{getProductList()}}
+{\footnotesize\ttfamily std\+::list$<$ int $>$ Ticket\+::get\+Product\+List (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+returns the p\+I\+D\+List. 
+
+\begin{DoxyReturn}{Returns}
+returns the p\+I\+D\+List in form of std\+::list$<$int$>$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_ticket_8h}{Ticket.\+h}}\item 
+\mbox{\hyperlink{_ticket_8cpp}{Ticket.\+cpp}}\end{DoxyCompactItemize}

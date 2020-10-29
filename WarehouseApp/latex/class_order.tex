@@ -1,0 +1,100 @@
+\hypertarget{class_order}{}\doxysection{Order Class Reference}
+\label{class_order}\index{Order@{Order}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_order_a6e9f3235da66521cb3bfe479e11b15ad}{Order}} (int o\+ID, int p=1)
+\begin{DoxyCompactList}\small\item\em This is a constructor for the \mbox{\hyperlink{class_order}{Order}} object. This constructor requires 2 arguments. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_order_a41af641cd8b1b14dd97a85ae80144009}{add\+Product}} (\mbox{\hyperlink{class_product}{Product}} p)
+\begin{DoxyCompactList}\small\item\em This function adds an already constructed \mbox{\hyperlink{class_product}{Product}} object to the product\+List in an \mbox{\hyperlink{class_order}{Order}} object. If the product\textquotesingle{}s position is not valid, ignore the order. \end{DoxyCompactList}\item 
+std\+::list$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \mbox{\hyperlink{class_order_a81a54bac672cb3a4b4a552386ec2eda6}{get\+Product\+List}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the \mbox{\hyperlink{class_order}{Order}} object\textquotesingle{}s product\+List. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_order_acf22e776c71f740e0456677a7d7942c1}{change\+Priority}} (int p)
+\begin{DoxyCompactList}\small\item\em This function changes the priority of an order. Unlike the constructor, this function accepts values over 100. However, values less than 1 is not accepted. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_order_a6ddc03a66213733c06098f42c2af76e3}{get\+Priority}} (void)
+\begin{DoxyCompactList}\small\item\em Get the \mbox{\hyperlink{class_order}{Order}} object\textquotesingle{}s priority. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_order_a6e9f3235da66521cb3bfe479e11b15ad}\label{class_order_a6e9f3235da66521cb3bfe479e11b15ad}} 
+\index{Order@{Order}!Order@{Order}}
+\index{Order@{Order}!Order@{Order}}
+\doxysubsubsection{\texorpdfstring{Order()}{Order()}}
+{\footnotesize\ttfamily Order\+::\+Order (\begin{DoxyParamCaption}\item[{int}]{o\+ID,  }\item[{int}]{p = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+This is a constructor for the \mbox{\hyperlink{class_order}{Order}} object. This constructor requires 2 arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em o\+ID} & o\+ID is the assigned order\+ID. o\+ID should not be a negative number \\
+\hline
+{\em p} & p is the assigned priority. p\textquotesingle{}s default is 1. p should be a value between 1 and 100 inclusive \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_order_a41af641cd8b1b14dd97a85ae80144009}\label{class_order_a41af641cd8b1b14dd97a85ae80144009}} 
+\index{Order@{Order}!addProduct@{addProduct}}
+\index{addProduct@{addProduct}!Order@{Order}}
+\doxysubsubsection{\texorpdfstring{addProduct()}{addProduct()}}
+{\footnotesize\ttfamily void Order\+::add\+Product (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_product}{Product}}}]{p }\end{DoxyParamCaption})}
+
+
+
+This function adds an already constructed \mbox{\hyperlink{class_product}{Product}} object to the product\+List in an \mbox{\hyperlink{class_order}{Order}} object. If the product\textquotesingle{}s position is not valid, ignore the order. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & p is a \mbox{\hyperlink{class_product}{Product}} object. It is expected for the object to have valid position variables. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_order_acf22e776c71f740e0456677a7d7942c1}\label{class_order_acf22e776c71f740e0456677a7d7942c1}} 
+\index{Order@{Order}!changePriority@{changePriority}}
+\index{changePriority@{changePriority}!Order@{Order}}
+\doxysubsubsection{\texorpdfstring{changePriority()}{changePriority()}}
+{\footnotesize\ttfamily void Order\+::change\+Priority (\begin{DoxyParamCaption}\item[{int}]{p }\end{DoxyParamCaption})}
+
+
+
+This function changes the priority of an order. Unlike the constructor, this function accepts values over 100. However, values less than 1 is not accepted. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & p is an integer $>$ 1. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_order_a6ddc03a66213733c06098f42c2af76e3}\label{class_order_a6ddc03a66213733c06098f42c2af76e3}} 
+\index{Order@{Order}!getPriority@{getPriority}}
+\index{getPriority@{getPriority}!Order@{Order}}
+\doxysubsubsection{\texorpdfstring{getPriority()}{getPriority()}}
+{\footnotesize\ttfamily int Order\+::get\+Priority (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Get the \mbox{\hyperlink{class_order}{Order}} object\textquotesingle{}s priority. 
+
+\begin{DoxyReturn}{Returns}
+returns an integer indicating the object\textquotesingle{}s priority. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_order_a81a54bac672cb3a4b4a552386ec2eda6}\label{class_order_a81a54bac672cb3a4b4a552386ec2eda6}} 
+\index{Order@{Order}!getProductList@{getProductList}}
+\index{getProductList@{getProductList}!Order@{Order}}
+\doxysubsubsection{\texorpdfstring{getProductList()}{getProductList()}}
+{\footnotesize\ttfamily std\+::list$<$ \mbox{\hyperlink{class_product}{Product}} $>$ Order\+::get\+Product\+List (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the \mbox{\hyperlink{class_order}{Order}} object\textquotesingle{}s product\+List. 
+
+\begin{DoxyReturn}{Returns}
+Returns the \mbox{\hyperlink{class_order}{Order}} object\textquotesingle{}s product\+List. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_order_8h}{Order.\+h}}\item 
+\mbox{\hyperlink{_order_8cpp}{Order.\+cpp}}\end{DoxyCompactItemize}

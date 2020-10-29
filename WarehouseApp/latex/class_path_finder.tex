@@ -1,0 +1,118 @@
+\hypertarget{class_path_finder}{}\doxysection{Path\+Finder Class Reference}
+\label{class_path_finder}\index{PathFinder@{PathFinder}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \mbox{\hyperlink{class_path_finder_aeb30c70a64926aecdbe17fb209d9668e}{calculate\+Path}} (std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{class_product}{Product}} $\ast$, std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$$>$ graph, std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \&product\+List, \mbox{\hyperlink{class_product}{Product}} \&start\+Location, \mbox{\hyperlink{class_product}{Product}} \&end\+Location)
+\begin{DoxyCompactList}\small\item\em Finds the most optimal path the user must take. \end{DoxyCompactList}\item 
+std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \mbox{\hyperlink{class_path_finder_a2512cef246c157265872f10b17251a8d}{single\+Product\+Path}} (\mbox{\hyperlink{class_product}{Product}} \&product, \mbox{\hyperlink{class_product}{Product}} \&start\+Location, \mbox{\hyperlink{class_product}{Product}} \&end\+Location)
+\begin{DoxyCompactList}\small\item\em To be used if only one product is to be picked. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_path_finder_a67b4e164a443f60c964f550053997e5f}{distance\+Between\+Products}} (\mbox{\hyperlink{class_product}{Product}} \&product1, \mbox{\hyperlink{class_product}{Product}} \&product2)
+\begin{DoxyCompactList}\small\item\em Calculates distance between two products on the warehouse. Takes two Products as arguments. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_path_finder_a47e58e4f41b0f2508cec7fac30e29ae8}\label{class_path_finder_a47e58e4f41b0f2508cec7fac30e29ae8}} 
+std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \mbox{\hyperlink{class_path_finder_a47e58e4f41b0f2508cec7fac30e29ae8}{get\+Path}} (void)
+\begin{DoxyCompactList}\small\item\em Returns path for the user. \end{DoxyCompactList}\item 
+Q\+Vector$<$ Q\+PointF $>$ \mbox{\hyperlink{class_path_finder_aecef6af7f7d38323ba46582573c276e6}{display\+Path}} (void)
+\begin{DoxyCompactList}\small\item\em Display the path in textual human readable format along with total path length. \end{DoxyCompactList}\item 
+Q\+Vector$<$ std\+::string $>$ \mbox{\hyperlink{class_path_finder_a6838dd48096d2aea4be5f4904ed3d6ac}{path\+Annotation}} (std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \&path)
+\begin{DoxyCompactList}\small\item\em Stores instructions for user in a vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_path_finder_aeb30c70a64926aecdbe17fb209d9668e}\label{class_path_finder_aeb30c70a64926aecdbe17fb209d9668e}} 
+\index{PathFinder@{PathFinder}!calculatePath@{calculatePath}}
+\index{calculatePath@{calculatePath}!PathFinder@{PathFinder}}
+\doxysubsubsection{\texorpdfstring{calculatePath()}{calculatePath()}}
+{\footnotesize\ttfamily std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ Path\+Finder\+::calculate\+Path (\begin{DoxyParamCaption}\item[{std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{class_product}{Product}} $\ast$, std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$$>$}]{graph,  }\item[{std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \&}]{product\+List,  }\item[{\mbox{\hyperlink{class_product}{Product}} \&}]{start\+Location,  }\item[{\mbox{\hyperlink{class_product}{Product}} \&}]{end\+Location }\end{DoxyParamCaption})}
+
+
+
+Finds the most optimal path the user must take. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & Adjacency matrix of the products \\
+\hline
+{\em product\+List} & List of products to be picked up \\
+\hline
+{\em start\+Location} & Take in the start location from the user \\
+\hline
+{\em end\+Location} & Takes in the end location from the user \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_path_finder_aecef6af7f7d38323ba46582573c276e6}\label{class_path_finder_aecef6af7f7d38323ba46582573c276e6}} 
+\index{PathFinder@{PathFinder}!displayPath@{displayPath}}
+\index{displayPath@{displayPath}!PathFinder@{PathFinder}}
+\doxysubsubsection{\texorpdfstring{displayPath()}{displayPath()}}
+{\footnotesize\ttfamily Q\+Vector$<$ Q\+PointF $>$ Path\+Finder\+::display\+Path (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Display the path in textual human readable format along with total path length. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em product} & \mbox{\hyperlink{class_product}{Product}} to be picked up \\
+\hline
+{\em start\+Location} & Take in the start location from the user \\
+\hline
+{\em end\+Location} & Takes in the end location from the user \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_path_finder_a67b4e164a443f60c964f550053997e5f}\label{class_path_finder_a67b4e164a443f60c964f550053997e5f}} 
+\index{PathFinder@{PathFinder}!distanceBetweenProducts@{distanceBetweenProducts}}
+\index{distanceBetweenProducts@{distanceBetweenProducts}!PathFinder@{PathFinder}}
+\doxysubsubsection{\texorpdfstring{distanceBetweenProducts()}{distanceBetweenProducts()}}
+{\footnotesize\ttfamily double Path\+Finder\+::distance\+Between\+Products (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_product}{Product}} \&}]{product1,  }\item[{\mbox{\hyperlink{class_product}{Product}} \&}]{product2 }\end{DoxyParamCaption})}
+
+
+
+Calculates distance between two products on the warehouse. Takes two Products as arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em product1} & product1 is a product that will indicate the starting product \\
+\hline
+{\em product2} & product1 is a product that will indicate the ending product \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_path_finder_a6838dd48096d2aea4be5f4904ed3d6ac}\label{class_path_finder_a6838dd48096d2aea4be5f4904ed3d6ac}} 
+\index{PathFinder@{PathFinder}!pathAnnotation@{pathAnnotation}}
+\index{pathAnnotation@{pathAnnotation}!PathFinder@{PathFinder}}
+\doxysubsubsection{\texorpdfstring{pathAnnotation()}{pathAnnotation()}}
+{\footnotesize\ttfamily Q\+Vector$<$ std\+::string $>$ Path\+Finder\+::path\+Annotation (\begin{DoxyParamCaption}\item[{std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Stores instructions for user in a vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & Path output by the path finder \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_path_finder_a2512cef246c157265872f10b17251a8d}\label{class_path_finder_a2512cef246c157265872f10b17251a8d}} 
+\index{PathFinder@{PathFinder}!singleProductPath@{singleProductPath}}
+\index{singleProductPath@{singleProductPath}!PathFinder@{PathFinder}}
+\doxysubsubsection{\texorpdfstring{singleProductPath()}{singleProductPath()}}
+{\footnotesize\ttfamily std\+::deque$<$ \mbox{\hyperlink{class_product}{Product}} $>$ Path\+Finder\+::single\+Product\+Path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_product}{Product}} \&}]{product,  }\item[{\mbox{\hyperlink{class_product}{Product}} \&}]{start\+Location,  }\item[{\mbox{\hyperlink{class_product}{Product}} \&}]{end\+Location }\end{DoxyParamCaption})}
+
+
+
+To be used if only one product is to be picked. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em product} & \mbox{\hyperlink{class_product}{Product}} to be picked up \\
+\hline
+{\em start\+Location} & Take in the start location from the user \\
+\hline
+{\em end\+Location} & Takes in the end location from the user \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Path\+Finder.\+h\item 
+Path\+Finder.\+cpp\end{DoxyCompactItemize}

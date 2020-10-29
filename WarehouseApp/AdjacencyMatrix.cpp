@@ -10,11 +10,14 @@
 
 /**
  * @brief	This is the defualt constructor for the AdjacencyMatrix object. 
+ *
  */
 AdjacencyMatrix::AdjacencyMatrix(){}
 
 /**
  * @brief	Will return the adjacency matrix. 
+ *
+ * @return  return graph
  */
 std::unordered_map<Product*, std::deque<Product>> AdjacencyMatrix::getMatrix(void) {
     return graph;

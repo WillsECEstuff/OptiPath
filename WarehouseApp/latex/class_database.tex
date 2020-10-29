@@ -1,0 +1,75 @@
+\hypertarget{class_database}{}\doxysection{Database Class Reference}
+\label{class_database}\index{Database@{Database}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_database_ab47b90f3298e3eadc357b1ceeea06bf1}\label{class_database_ab47b90f3298e3eadc357b1ceeea06bf1}} 
+void \mbox{\hyperlink{class_database_ab47b90f3298e3eadc357b1ceeea06bf1}{delete\+Database}} (void)
+\begin{DoxyCompactList}\small\item\em Deletes all items within the map data structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_database_a708f2bf5525dfe2691ca4c3ec9c255df}{populate\+Database}} (std\+::string filename)
+\begin{DoxyCompactList}\small\item\em Populates the database from a provided file. The file needs to be in text format. \end{DoxyCompactList}\item 
+std\+::tuple$<$ float, float $>$ \mbox{\hyperlink{class_database_aa61f51e9a436ee0937bcdf984fbebabe}{get\+Product\+Position}} (std\+::string product\+ID)
+\begin{DoxyCompactList}\small\item\em This function returns a tuple$<$float, float$>$ in the xy coordinate format given a particular product\+ID. Before using this function, the database should be populated by using the populate\+Database function. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_aeb7f6117b4083d9067562202458fd6e9}\label{class_database_aeb7f6117b4083d9067562202458fd6e9}} 
+std\+::vector$<$ std\+::tuple$<$ float, float $>$ $>$ {\bfseries get\+Loc\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_database}{Database}} $\ast$ \mbox{\hyperlink{class_database_ac660ed13d49843f771f28a13cc7e740c}{get\+Instance}} (void)
+\begin{DoxyCompactList}\small\item\em This function allows only one intance of the database. If there are no instances of the database, create the database and return it. Otherwise, return the database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_database_ac660ed13d49843f771f28a13cc7e740c}\label{class_database_ac660ed13d49843f771f28a13cc7e740c}} 
+\index{Database@{Database}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_database}{Database}} $\ast$ Database\+::get\+Instance (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+This function allows only one intance of the database. If there are no instances of the database, create the database and return it. Otherwise, return the database. 
+
+\begin{DoxyReturn}{Returns}
+instance return the instance of the database 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_database_aa61f51e9a436ee0937bcdf984fbebabe}\label{class_database_aa61f51e9a436ee0937bcdf984fbebabe}} 
+\index{Database@{Database}!getProductPosition@{getProductPosition}}
+\index{getProductPosition@{getProductPosition}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{getProductPosition()}{getProductPosition()}}
+{\footnotesize\ttfamily std\+::tuple$<$ float, float $>$ Database\+::get\+Product\+Position (\begin{DoxyParamCaption}\item[{std\+::string}]{product\+ID }\end{DoxyParamCaption})}
+
+
+
+This function returns a tuple$<$float, float$>$ in the xy coordinate format given a particular product\+ID. Before using this function, the database should be populated by using the populate\+Database function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em product\+ID} & This value is a unique integer value indicating a product. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This function returns a tuple$<$float, float$>$ in the xy coordinate. If a product does not exist in the database, the function will return a tuple of $<$-\/1, -\/1$>$. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_database_a708f2bf5525dfe2691ca4c3ec9c255df}\label{class_database_a708f2bf5525dfe2691ca4c3ec9c255df}} 
+\index{Database@{Database}!populateDatabase@{populateDatabase}}
+\index{populateDatabase@{populateDatabase}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{populateDatabase()}{populateDatabase()}}
+{\footnotesize\ttfamily void Database\+::populate\+Database (\begin{DoxyParamCaption}\item[{std\+::string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Populates the database from a provided file. The file needs to be in text format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The filename which we are reading the database values from. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_database_8h}{Database.\+h}}\item 
+\mbox{\hyperlink{_database_8cpp}{Database.\+cpp}}\end{DoxyCompactItemize}
