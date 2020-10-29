@@ -1,0 +1,116 @@
+\hypertarget{class_priority_queue}{}\doxysection{Priority\+Queue Class Reference}
+\label{class_priority_queue}\index{PriorityQueue@{PriorityQueue}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_priority_queue_accd74e3ef0bf2e29076c51258446f105}{size}} (void)
+\begin{DoxyCompactList}\small\item\em returns the size of the priority queue (\# of \mbox{\hyperlink{class_order}{Order}} objects) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_priority_queue_a69d6e00a1af03b777cab00f055d0ae98}{is\+Empty}} (void)
+\begin{DoxyCompactList}\small\item\em returns true of there are no \mbox{\hyperlink{class_order}{Order}} objects in the priority queue; false otherwise \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_priority_queue_ad83c0b959e3c31558d80a212a2f8a9b6}{push\+Order}} (\mbox{\hyperlink{class_order}{Order}} order)
+\begin{DoxyCompactList}\small\item\em Adds the \mbox{\hyperlink{class_order}{Order}} object into the priority queue and automatically moves its position within the queue through its priority. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_order}{Order}} \mbox{\hyperlink{class_priority_queue_aa008d8d991c5858c0a3470f70be32e5e}{pop\+Order}} (void)
+\begin{DoxyCompactList}\small\item\em Gets an \mbox{\hyperlink{class_order}{Order}} object from the root of the priority queue (index = 0). The resulting \mbox{\hyperlink{class_order}{Order}} object is then removed from the pq. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_order}{Order}} \mbox{\hyperlink{class_priority_queue_a751d241fc300660107e197c19e97e000}{peek\+Order}} (int index)
+\begin{DoxyCompactList}\small\item\em Returns an \mbox{\hyperlink{class_order}{Order}} object from a supplied index location. Does not remove the \mbox{\hyperlink{class_order}{Order}} from the priority queue. N\+O\+TE\+: index does not mean that the order of priority goes from highest to lowest. This pq implements a binary heap. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_order}{Order}} \mbox{\hyperlink{class_priority_queue_ae68c5a161f40e6541de665372713d4da}{pop\+Order\+At}} (int index)
+\begin{DoxyCompactList}\small\item\em Gets an \mbox{\hyperlink{class_order}{Order}} object from the the supplied index in the priority queue . The resulting \mbox{\hyperlink{class_order}{Order}} object is then removed from the pq. N\+O\+TE\+: index does not mean that the order of priority goes from highest to lowest. This pq implements a binary heap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_priority_queue_a69d6e00a1af03b777cab00f055d0ae98}\label{class_priority_queue_a69d6e00a1af03b777cab00f055d0ae98}} 
+\index{PriorityQueue@{PriorityQueue}!isEmpty@{isEmpty}}
+\index{isEmpty@{isEmpty}!PriorityQueue@{PriorityQueue}}
+\doxysubsubsection{\texorpdfstring{isEmpty()}{isEmpty()}}
+{\footnotesize\ttfamily bool Priority\+Queue\+::is\+Empty (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+returns true of there are no \mbox{\hyperlink{class_order}{Order}} objects in the priority queue; false otherwise 
+
+\begin{DoxyReturn}{Returns}
+bool true if pq is empty 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_priority_queue_a751d241fc300660107e197c19e97e000}\label{class_priority_queue_a751d241fc300660107e197c19e97e000}} 
+\index{PriorityQueue@{PriorityQueue}!peekOrder@{peekOrder}}
+\index{peekOrder@{peekOrder}!PriorityQueue@{PriorityQueue}}
+\doxysubsubsection{\texorpdfstring{peekOrder()}{peekOrder()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_order}{Order}} Priority\+Queue\+::peek\+Order (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Returns an \mbox{\hyperlink{class_order}{Order}} object from a supplied index location. Does not remove the \mbox{\hyperlink{class_order}{Order}} from the priority queue. N\+O\+TE\+: index does not mean that the order of priority goes from highest to lowest. This pq implements a binary heap. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_order}{Order}} \mbox{\hyperlink{class_order}{Order}} object at index 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_priority_queue_aa008d8d991c5858c0a3470f70be32e5e}\label{class_priority_queue_aa008d8d991c5858c0a3470f70be32e5e}} 
+\index{PriorityQueue@{PriorityQueue}!popOrder@{popOrder}}
+\index{popOrder@{popOrder}!PriorityQueue@{PriorityQueue}}
+\doxysubsubsection{\texorpdfstring{popOrder()}{popOrder()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_order}{Order}} Priority\+Queue\+::pop\+Order (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Gets an \mbox{\hyperlink{class_order}{Order}} object from the root of the priority queue (index = 0). The resulting \mbox{\hyperlink{class_order}{Order}} object is then removed from the pq. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_order}{Order}} \mbox{\hyperlink{class_order}{Order}} object that had the highest priority at time of pop. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_priority_queue_ae68c5a161f40e6541de665372713d4da}\label{class_priority_queue_ae68c5a161f40e6541de665372713d4da}} 
+\index{PriorityQueue@{PriorityQueue}!popOrderAt@{popOrderAt}}
+\index{popOrderAt@{popOrderAt}!PriorityQueue@{PriorityQueue}}
+\doxysubsubsection{\texorpdfstring{popOrderAt()}{popOrderAt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_order}{Order}} Priority\+Queue\+::pop\+Order\+At (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Gets an \mbox{\hyperlink{class_order}{Order}} object from the the supplied index in the priority queue . The resulting \mbox{\hyperlink{class_order}{Order}} object is then removed from the pq. N\+O\+TE\+: index does not mean that the order of priority goes from highest to lowest. This pq implements a binary heap. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_order}{Order}} \mbox{\hyperlink{class_order}{Order}} object at index 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_priority_queue_ad83c0b959e3c31558d80a212a2f8a9b6}\label{class_priority_queue_ad83c0b959e3c31558d80a212a2f8a9b6}} 
+\index{PriorityQueue@{PriorityQueue}!pushOrder@{pushOrder}}
+\index{pushOrder@{pushOrder}!PriorityQueue@{PriorityQueue}}
+\doxysubsubsection{\texorpdfstring{pushOrder()}{pushOrder()}}
+{\footnotesize\ttfamily void Priority\+Queue\+::push\+Order (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_order}{Order}}}]{order }\end{DoxyParamCaption})}
+
+
+
+Adds the \mbox{\hyperlink{class_order}{Order}} object into the priority queue and automatically moves its position within the queue through its priority. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em order} & Completed \mbox{\hyperlink{class_order}{Order}} object \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_priority_queue_accd74e3ef0bf2e29076c51258446f105}\label{class_priority_queue_accd74e3ef0bf2e29076c51258446f105}} 
+\index{PriorityQueue@{PriorityQueue}!size@{size}}
+\index{size@{size}!PriorityQueue@{PriorityQueue}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily int Priority\+Queue\+::size (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+returns the size of the priority queue (\# of \mbox{\hyperlink{class_order}{Order}} objects) 
+
+\begin{DoxyReturn}{Returns}
+int size of priority queue 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_priority_queue_8h}{Priority\+Queue.\+h}}\item 
+Priority\+Queue.\+cpp\end{DoxyCompactItemize}

@@ -10,6 +10,7 @@
  * @date   October 2020
  *********************************************************************/
 
+#pragma once
 
 #include <iostream>
 #include <unordered_map>

@@ -1,0 +1,117 @@
+\hypertarget{class_product}{}\doxysection{Product Class Reference}
+\label{class_product}\index{Product@{Product}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_product_aa85add12bd87bea85fb60e8b71ab2e86}{Product}} (std\+::string p\+ID, std\+::tuple$<$ float, float $>$ t)
+\begin{DoxyCompactList}\small\item\em This is one of the constructors for the \mbox{\hyperlink{class_product}{Product}} class This construct expects a product\+ID, p\+ID, and a tuple$<$float, float$>$ in the xy coordinate system to indicate its position in the warehouse. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_product_aabcb775940e9c4ad99234c56c1ffe7ca}{Product}} (std\+::string p\+ID, float x, float y)
+\begin{DoxyCompactList}\small\item\em This is one of the constructors for the \mbox{\hyperlink{class_product}{Product}} class This construct expects a product\+ID, p\+ID, and two floats, x and y, to indicate its positon in the warehouse. \end{DoxyCompactList}\item 
+std\+::tuple$<$ float, float $>$ \mbox{\hyperlink{class_product_a1c9cbb9cf7ed4883c2808f8d1ca8968f}{get\+Position\+Tuple}} (void)
+\begin{DoxyCompactList}\small\item\em This function returns the position of a product in terms of a tuple. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_product_abeeeeed496379c1cb1cbf560442baa45}{get\+X\+Position}} (void)
+\begin{DoxyCompactList}\small\item\em This function returns the x position of a product. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_product_af99554d910ebc41b4a003ca068afecfb}{get\+Y\+Position}} (void)
+\begin{DoxyCompactList}\small\item\em This function returns the y position of a product. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_product_ac2ffb13add2f5f3b9210f1a0e43d8b33}{get\+Product\+ID}} (void)
+\begin{DoxyCompactList}\small\item\em This function returns the product ID of a product. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_product_aa85add12bd87bea85fb60e8b71ab2e86}\label{class_product_aa85add12bd87bea85fb60e8b71ab2e86}} 
+\index{Product@{Product}!Product@{Product}}
+\index{Product@{Product}!Product@{Product}}
+\doxysubsubsection{\texorpdfstring{Product()}{Product()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Product\+::\+Product (\begin{DoxyParamCaption}\item[{std\+::string}]{p\+ID,  }\item[{std\+::tuple$<$ float, float $>$}]{t }\end{DoxyParamCaption})}
+
+
+
+This is one of the constructors for the \mbox{\hyperlink{class_product}{Product}} class This construct expects a product\+ID, p\+ID, and a tuple$<$float, float$>$ in the xy coordinate system to indicate its position in the warehouse. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+ID} & p\+ID is an integer that will indicate the product\+ID \\
+\hline
+{\em t} & t is a tuple$<$float, float$>$ that indicates the product\textquotesingle{}s position. The tuple expects the xy coordinate system \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_product_aabcb775940e9c4ad99234c56c1ffe7ca}\label{class_product_aabcb775940e9c4ad99234c56c1ffe7ca}} 
+\index{Product@{Product}!Product@{Product}}
+\index{Product@{Product}!Product@{Product}}
+\doxysubsubsection{\texorpdfstring{Product()}{Product()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Product\+::\+Product (\begin{DoxyParamCaption}\item[{std\+::string}]{p\+ID,  }\item[{float}]{x,  }\item[{float}]{y }\end{DoxyParamCaption})}
+
+
+
+This is one of the constructors for the \mbox{\hyperlink{class_product}{Product}} class This construct expects a product\+ID, p\+ID, and two floats, x and y, to indicate its positon in the warehouse. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+ID} & p\+ID is an integer that will indicate the product\+ID \\
+\hline
+{\em x} & x is a float that indicates the product\textquotesingle{}s x position in a warehouse \\
+\hline
+{\em y} & y is a float that indicates the product\textquotesingle{}s y position in a warehouse \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_product_a1c9cbb9cf7ed4883c2808f8d1ca8968f}\label{class_product_a1c9cbb9cf7ed4883c2808f8d1ca8968f}} 
+\index{Product@{Product}!getPositionTuple@{getPositionTuple}}
+\index{getPositionTuple@{getPositionTuple}!Product@{Product}}
+\doxysubsubsection{\texorpdfstring{getPositionTuple()}{getPositionTuple()}}
+{\footnotesize\ttfamily std\+::tuple$<$ float, float $>$ Product\+::get\+Position\+Tuple (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function returns the position of a product in terms of a tuple. 
+
+\begin{DoxyReturn}{Returns}
+tuple$<$float, float$>$ in the xy coordinate system 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_product_ac2ffb13add2f5f3b9210f1a0e43d8b33}\label{class_product_ac2ffb13add2f5f3b9210f1a0e43d8b33}} 
+\index{Product@{Product}!getProductID@{getProductID}}
+\index{getProductID@{getProductID}!Product@{Product}}
+\doxysubsubsection{\texorpdfstring{getProductID()}{getProductID()}}
+{\footnotesize\ttfamily std\+::string Product\+::get\+Product\+ID (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function returns the product ID of a product. 
+
+\begin{DoxyReturn}{Returns}
+returns a string 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_product_abeeeeed496379c1cb1cbf560442baa45}\label{class_product_abeeeeed496379c1cb1cbf560442baa45}} 
+\index{Product@{Product}!getXPosition@{getXPosition}}
+\index{getXPosition@{getXPosition}!Product@{Product}}
+\doxysubsubsection{\texorpdfstring{getXPosition()}{getXPosition()}}
+{\footnotesize\ttfamily float Product\+::get\+X\+Position (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function returns the x position of a product. 
+
+\begin{DoxyReturn}{Returns}
+returns a float 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_product_af99554d910ebc41b4a003ca068afecfb}\label{class_product_af99554d910ebc41b4a003ca068afecfb}} 
+\index{Product@{Product}!getYPosition@{getYPosition}}
+\index{getYPosition@{getYPosition}!Product@{Product}}
+\doxysubsubsection{\texorpdfstring{getYPosition()}{getYPosition()}}
+{\footnotesize\ttfamily float Product\+::get\+Y\+Position (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function returns the y position of a product. 
+
+\begin{DoxyReturn}{Returns}
+returns a float 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_product_8h}{Product.\+h}}\item 
+\mbox{\hyperlink{_product_8cpp}{Product.\+cpp}}\end{DoxyCompactItemize}
