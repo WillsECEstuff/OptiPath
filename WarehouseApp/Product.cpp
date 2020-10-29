@@ -10,7 +10,7 @@
 
 /**
  * @brief	This is one of the constructors for the Product class
- *			This construct expects a productID, pID, and a 
+ *			This constructer expects a productID, pID, and a 
  *			tuple<float, float> in the xy coordinate system to
  *			indicate its position in the warehouse
  * 
@@ -29,7 +29,7 @@ Product::Product(std::string pID, std::tuple<float, float> t) {
 /**
  * @brief	This is one of the constructors for the Product class
  *			This construct expects a productID, pID, and two floats, 
- *			x and y, to indicate its positon in the warehouse
+ *			x and y, to indicate its position in the warehouse
  * 
  * @param	pID		pID is an integer that will indicate the 
  *					productID
@@ -46,7 +46,8 @@ Product::Product(std::string pID, float x, float y) {
 
 /**
  * @brief	This function returns the position of a product in
- *			terms of a tuple
+ *			a tuple<float, float>. The tuple represents the position
+ *			by the xy coordinate system.
  * 
  * @return	tuple<float, float> in the xy coordinate system
  */
@@ -56,6 +57,7 @@ std::tuple<float, float> Product::getPositionTuple(void) {
 
 /**
  * @brief	This function returns the x position of a product
+ *			 in the cartesian coordinate system
  * 
  * @return	returns a float
  */
@@ -65,6 +67,7 @@ float Product::getXPosition(void) {
 
 /**
  * @brief	This function returns the y position of a product
+ *			in the cartesian coordinate system
  *
  * @return	returns a float
  */

@@ -10,6 +10,11 @@
  *********************************************************************/
 #pragma once
 
+/**
+ * Unused at the moment due to changes in product scope.
+ */
+
+
 #include <list>
 
 class Ticket
