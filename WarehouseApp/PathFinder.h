@@ -8,6 +8,7 @@
  * @author Abinav
  * @date   October 2020
  *********************************************************************/
+#pragma once
 
 #include <limits.h>
 #include <math.h>
