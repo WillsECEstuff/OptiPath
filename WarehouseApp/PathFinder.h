@@ -11,6 +11,9 @@
 
 #include <limits.h>
 #include <math.h>
+#include <iomanip>
+#include <sstream>
+
 #include <QVector>
 #include <QPointF>
 
@@ -48,7 +51,7 @@ class PathFinder {
         );
 
     double distanceBetweenProducts(Product& product1, Product& product2);
-
+    std::deque<Product> getPath(void);
     QVector <QPointF> displayPath(void);
     QVector <std::string> pathAnnotation(std::deque<Product>& path);
 

@@ -121,3 +121,44 @@ QVector <QPointF> PathFinder::displayPath(void) { // was void return type
 
     return routeprinter;
 }
+
+std::deque<Product> PathFinder::getPath(void) {
+    return path;
+}
+
+QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
+    QVector <std::string> instructions;
+    std::stringstream xStream, yStream;
+
+    xStream << std::fixed << std::setprecision(2) << path[0].getXPosition();
+    yStream << std::fixed << std::setprecision(2) << path[0].getYPosition();
+
+    std::string instruction = "Start at start location present in (" + xStream.str()
+                                    + ',' + yStream.str() + ")";
+
+    xStream.str(""); yStream.str("");
+
+    instructions.append(instruction);
+    for(unsigned int i = 1;i < path.size();++i) {
+        xStream << std::fixed << std::setprecision(2) << path[i].getXPosition();
+        yStream << std::fixed << std::setprecision(2) << path[i].getYPosition();
+
+        instruction = "go to product " + path[i].getProductID() + " at (" +
+                xStream.str() +"," + yStream.str() + ")";
+
+        xStream.str(""); yStream.str("");
+
+        instructions.append(instruction);
+    }
+
+    xStream << std::fixed << std::setprecision(2) << path[path.size()-1].getXPosition();
+    yStream << std::fixed << std::setprecision(2) << path[path.size()-1].getYPosition();
+
+    instruction = "Drop the products off at end location in (" + xStream.str()
+            + ',' + yStream.str() + ")";
+
+    xStream.str(""); yStream.str("");
+
+    instructions.append(instruction);
+    return instructions;
+}

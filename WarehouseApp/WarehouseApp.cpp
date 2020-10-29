@@ -174,7 +174,8 @@ int main(int argc, char** argv)
     std::cout<<"Path for you : ";
     QVector<QPointF> route = pathFinder.displayPath();
     std::cout<<std::endl;
-
+    QVector <std::string> instructions = pathFinder.pathAnnotation(path);
+    for(auto& instruction : instructions) std::cout<<instruction<<std::endl;
     w.loadRoutePrinter(route);
     return a.exec();
 }
