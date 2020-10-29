@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
     <ClCompile Include="WarehouseApp.cpp" />
     <ClCompile Include="Order.cpp" />
@@ -153,6 +155,8 @@
     <Text Include="D:\Downloads\qvBox-warehouse-data-f20-v01.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="mainwindow.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="Product.h" />
@@ -160,6 +164,9 @@
     <ClInclude Include="Database.h" />
     <ClCompile Include="AdjacencyMatrix.h" />
     <ClCompile Include="PathFinder.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mainwindow.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

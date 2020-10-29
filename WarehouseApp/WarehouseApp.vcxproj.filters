@@ -25,18 +25,24 @@
     <ClCompile Include="PriorityQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AdjacencyMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinder.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdjacencyMatrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Database.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Order.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PathFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Product.h">
@@ -46,6 +52,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PriorityQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,10 +74,18 @@
     <Filter Include="PriorityQueueTest">
       <UniqueIdentifier>{393afbac-4637-494a-81a6-dd832f960000}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Forms">
+      <UniqueIdentifier>{b69b6880-1db0-4656-b731-b2fe631a06c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="D:\Downloads\qvBox-warehouse-data-f20-v01.txt">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mainwindow.ui">
+      <Filter>Forms</Filter>
+    </None>
   </ItemGroup>
 </Project>
