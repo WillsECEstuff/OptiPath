@@ -47,7 +47,7 @@ int main(int argc, char** argv)
     // make sure database is clear before reading and populating
     // database from the text file
     d->deleteDatabase();
-    d->populateDatabase("/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp/qvBox-warehouse-data-f20-v01.txt");
+    d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
 
     // using the database, get product position
     // in this example, I am getting a tuple
