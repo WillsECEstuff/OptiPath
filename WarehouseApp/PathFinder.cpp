@@ -37,9 +37,9 @@ double PathFinder::distanceBetweenProducts(Product& product1, Product& product2)
  */
 std::deque<Product> PathFinder::calculatePath(
     std::unordered_map<Product*, std::deque<Product>> graph,
-    std::deque<Product> productList, 
-    Product startLocation,
-    Product endLocation
+    std::deque<Product>& productList,
+    Product& startLocation,
+    Product& endLocation
     ) {
         long numItr = 0;
         std::vector<Product> vertices;
@@ -55,6 +55,8 @@ std::deque<Product> PathFinder::calculatePath(
         });
 
         pathLength = (double)INT_MAX;
+
+        //Go through all permutations and find the lowest path length
         do {
             double currentPathLength = 0;
             Product k = startLocation;
@@ -77,6 +79,7 @@ std::deque<Product> PathFinder::calculatePath(
         {
             return a.getProductID()< b.getProductID();
         }));
+        //Print out number of paths evaluated
         std::cout<<"Number of paths evaluated = "<<numItr<<std::endl;
     return path;  
 }
@@ -91,8 +94,8 @@ std::deque<Product> PathFinder::calculatePath(
 
 std::deque<Product> PathFinder::singleProductPath(
     Product& product, 
-    Product startLocation,
-    Product endLocation
+    Product& startLocation,
+    Product& endLocation
     ) {
     //startLocation = std::make_tuple(0,0);
     path.push_back(startLocation);

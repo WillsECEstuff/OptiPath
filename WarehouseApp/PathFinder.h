@@ -24,31 +24,22 @@ class PathFinder {
     private:
     double pathLength;
     std::deque<Product> path;
-    std::unordered_map<std::string,float> distance;
-    std::unordered_map<std::string,bool>  visited;
     const float TILE_SIZE = 30;
     const float SCALE = 5;
 
     public:
 
     std::deque<Product> calculatePath(
-        std::unordered_map<Product*, std::deque<Product>> graph, 
-        std::deque<Product> productList,
-        Product startLocation,
-        Product endLocation
-        );
-
-    float calculatePathAlternate(
-        std::unordered_map<Product*, std::deque<Product>> graph, 
-        std::deque<Product> productList,
-        Product startLocation,
-        Product endLocation
+        std::unordered_map<Product*, std::deque<Product>> graph,
+        std::deque<Product>& productList,
+        Product& startLocation,
+        Product& endLocation
         );
 
     std::deque<Product> singleProductPath(
         Product& product, 
-        Product startLocation,
-        Product endLocation
+        Product& startLocation,
+        Product& endLocation
         );
 
     double distanceBetweenProducts(Product& product1, Product& product2);
