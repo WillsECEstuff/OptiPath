@@ -176,8 +176,9 @@ int main(int argc, char** argv)
     std::cout<<std::endl;
     QVector <std::string> instructions = pathFinder.pathAnnotation(path);
 
-    for (auto@ instruction: instructions)
+    for (auto& instruction: instructions) {
         std::cout << instruction << std::endl;
+    }
 
     w.loadRoutePrinter(route);
     w.show();
