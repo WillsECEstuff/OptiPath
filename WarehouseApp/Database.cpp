@@ -33,10 +33,11 @@ void Database::deleteDatabase(void) {
 }
 
 /**
- * @brief	Populates the database from a provided file. The 
- *			file needs to be in text format.
- * 
- * @param	filename	The filename which we are reading the 
+ * @brief	Populates the database from a provided text file. The database
+ *			will convert text into a JSON object in which the product ID will
+ *			be a key and the position are the values.
+ *
+ * @param	filename	The filename which we are reading the
  *						database values from.
  */
 void Database::populateDatabase(std::string filename) {
@@ -87,6 +88,13 @@ std::tuple<float, float> Database::getProductPosition(std::string productID) {
 	}
 }
 
+/**
+ * @brief This function returns a vector of tuples<float, float> in the cartesian 
+ *		  coordinate format. The vector contains all the locations of products 
+ *		  in the database.
+ * 
+ * @return 
+ */
 std::vector<std::tuple<float, float>> Database::getLocList() {
     std::vector<std::tuple<float, float>> locList;
 

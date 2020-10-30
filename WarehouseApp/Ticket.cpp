@@ -8,6 +8,10 @@
 
 #include "Ticket.h"
 
+/**
+ * Unused at the moment due to changes in scope.
+ */
+
 
 /**
  * @brief	This is a constructor function. The function clear the

@@ -34,7 +34,7 @@ Order::Order(int oID, int p) {
 
 /**
  * @brief	This function adds an already constructed Product object
- *			to the productList in an Order object. If the product's 
+ *			to the productList of an Order object. If the product's 
  *			position is not valid, ignore the order
  * 
  * @param	p		p is a Product object. It is expected for the 
@@ -59,7 +59,8 @@ std::list<Product> Order::getProductList(void) {
 /**
  * @brief	This function changes the priority of an order.
  *			Unlike the constructor, this function accepts values
- *			over 100. However, values less than 1 is not accepted.
+ *			greater than 100. However, values less than 1 are not
+ *			accepted and will set the priority to 1.
  * 
  * @param	p		p is an integer > 1.
  */
