@@ -169,10 +169,15 @@ int main(int argc, char** argv)
     w.setFixedSize(1500, 1000);
     std::cout << "Please wait; calculating path." << std::endl;
 
-    std::cout<<"Path for you : ";
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
+    std::cout<<"Path for you : ";
+
     QVector<QPointF> route = pathFinder.displayPath();
     std::cout<<std::endl;
+    QVector <std::string> instructions = pathFinder.pathAnnotation(path);
+
+    for (auto@ instruction: instructions)
+        std::cout << instruction << std::endl;
 
     w.loadRoutePrinter(route);
     w.show();
