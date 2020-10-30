@@ -60,7 +60,6 @@ int main(int argc, char** argv)
     Product p("1", t);
     o.addProduct(p);
 
-
     t = d->getProductPosition("45");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
@@ -133,7 +132,6 @@ int main(int argc, char** argv)
 
     std::vector<std::tuple<float, float>> locList = d->getLocList();
     for (auto& it : locList) {
-        //std::cout << "Item #" << i << ": " << std::get<0>(locList[i]) << " " << std::get<1>(locList[i]) << std::endl; // test only. WARNING: VERY LONG!
         aLocs.append(QPointF(std::get<0>(it) * TILE_SIZE/SCALE, std::get<1>(it) * TILE_SIZE/SCALE));
     }
 
@@ -166,18 +164,18 @@ int main(int argc, char** argv)
     matrix.displayMatrix();
 
     MainWindow w;
-    w.show();
     w.loadAllPoints(aLocs);
     w.loadProductPoints(pLocs);
     w.setFixedSize(1500, 1000);
+    std::cout << "Please wait; calculating path." << std::endl;
 
-    std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
     std::cout<<"Path for you : ";
+    std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
     QVector<QPointF> route = pathFinder.displayPath();
     std::cout<<std::endl;
-    QVector <std::string> instructions = pathFinder.pathAnnotation(path);
-    for(auto& instruction : instructions) std::cout<<instruction<<std::endl;
+
     w.loadRoutePrinter(route);
+    w.show();
     return a.exec();
 }
 

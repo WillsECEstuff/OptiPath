@@ -4,7 +4,7 @@
 Inventory::Inventory(QVector<QPointF> aL, QVector<QPointF> pL) {
     allListLoc = aL;
     prodListLoc = pL;
-    std::cout << "successfully created inventory" << std::endl;
+    //std::cout << "successfully created inventory" << std::endl;
 }
 
 QVector<QPointF> Inventory::getProdLocList() {

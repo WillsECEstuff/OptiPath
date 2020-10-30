@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    std::cout << "created" << std::endl;
 }
 
 MainWindow::~MainWindow()
@@ -32,13 +31,11 @@ void MainWindow::loadAllPoints(QVector <QPointF> ptsList) {
 
 void MainWindow::loadProductPoints(QVector <QPointF> ptsList) {
     productPoints = ptsList;
-    std::cout << productPoints.size() << std::endl;
     std::cout << "loaded products" << std::endl;
 }
 
 void MainWindow::loadRoutePrinter(QVector<QPointF> route) {
     routePoints = route;
-    std::cout << routePoints.size() << std::endl;
     std::cout << "loaded route" << std::endl;
 }
 
@@ -48,19 +45,15 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.setBrush(Qt::DiagCrossPattern);
     QPen pen;
 
-    qDebug() << "test";
-
-    //points = readDB(); // read the database (TEMPORARY)
-
     int xboundary = TILE_SIZE * 40; // max 40 length? Scaled by tilesize
     int yboundary = TILE_SIZE * 22;
+    int legendX = xboundary + 100; // x = 1300, location for legend
 
-    pen.setColor(Qt::green);
+    //pen.setColor(Qt::green);
     pen.setWidth(5);
 
-    // draw stuff. scaling coordinates by 30. Max product coordinate is 37.98 (*30 to scale)
-
-    for (int i = 0; i < xboundary+1; i += TILE_SIZE) { // make a 40x40 map with 30 pixels per square
+    // create and label grid begin. scaling coordinates by 30. Max product coordinate is 37.98 (*30 to scale)
+    for (int i = 0; i < xboundary+1; i += TILE_SIZE) {     // make a 40x22 map with 30 pixels per square
         painter.drawLine(i, 0, i, yboundary);
     }
 
@@ -68,18 +61,38 @@ void MainWindow::paintEvent(QPaintEvent *event)
         painter.drawLine(0, j, xboundary, j);
     }
 
-    //painter.drawPoint(2.5*tileSize/scale, 5*tileSize/scale); // test point
+    for (int i = 0; i < xboundary-1; i += TILE_SIZE*5) { // label the 40x22 map
+        painter.drawText(i, yboundary+9, QString::number(i / TILE_SIZE));
+    }
 
-    /* Fill in points with n number of points
-    for(int i = 0; i < yboundary; i++) {
-        allPoints.append(QPointF(i*TILE_SIZE/SCALE, i*TILE_SIZE/SCALE));
-    } */
+    painter.drawText(xboundary - 5, yboundary+9, QString::number(xboundary / TILE_SIZE)); // x = 40
 
-    qDebug() << allPoints.size();
-    qDebug() << productPoints.size();
+    for (int j = 0; j < yboundary+1; j += TILE_SIZE*5) {
+        painter.drawText(xboundary+3, j+4, QString::number(j / TILE_SIZE));
+    }
+    // create and label grid end
+
+    // create legend begin
+    painter.drawText(legendX + 40, 30, "LEGEND");
+    painter.drawText(legendX - 25, 35, "---------------------------------------");
+    painter.drawText(legendX + 25, 60, "Unselected Product");
+    painter.drawText(legendX + 25, 90, "Selected Product");
+    painter.drawText(legendX + 25, 120, "Route, numbered from");
+    painter.drawText(legendX + 25, 130, "start->1->...->end");
 
     painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.scale(MAPSCALE, MAPSCALE);
+    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 60 / MAPSCALE));
+
+    painter.setPen(QPen(Qt::green, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 90 / MAPSCALE));
+
+    painter.setPen(QPen(Qt::blue, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.drawLine((legendX + 5) / MAPSCALE, 120 / MAPSCALE, (legendX + 15) / MAPSCALE, 120 / MAPSCALE);
+    // create legend end
+
+    // draw map contents begin
+    painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
 
     for (auto& it : allPoints) { // draw all points
         painter.drawPoint(it);
@@ -92,14 +105,13 @@ void MainWindow::paintEvent(QPaintEvent *event)
     }
 
     painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.setFont(QFont("times",2));
+    painter.drawText(routePoints[0].x()+2, routePoints[0].y()+4, "START");
+    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+4, "END");
 
-    for (int i = 0; i < routePoints.size() - 1; i++) {
-        painter.drawLine(routePoints[i].x(), routePoints[i].y(), routePoints[i+1].x(), routePoints[i+1].y());
-        painter.drawText(routePoints[i].x()+5, routePoints[i].y(), QString::number(i));
-
-        if (i == routePoints.size() - 1) {
-            painter.drawText(routePoints[i+1].x(), routePoints[i+1].y(), QString::number(i+1));
-        }
+    for (int i = 1; i < routePoints.size(); i++) {
+        painter.drawLine(routePoints[i-1].x(), routePoints[i-1].y(), routePoints[i].x(), routePoints[i].y());
+        painter.drawText(routePoints[i].x()+2, routePoints[i].y()+4, QString::number(i));
     }
-
+    // draw map contents end
 }
