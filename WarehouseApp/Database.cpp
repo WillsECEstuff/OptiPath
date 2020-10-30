@@ -8,13 +8,10 @@
 
 #include "Database.h"
 
-/**
- * @brief	On program start up, set instance to NULL.
- */
 Database* Database::instance = NULL;
 
 /**
- * @brief	This function allows only one instance of the database.
+ * @brief	This function allows only one intance of the database.
  *			If there are no instances of the database, create the
  *			database and return it. Otherwise, return the database.
  * 
@@ -28,8 +25,7 @@ Database* Database::getInstance(void) {
 }
 
 /**
- * @brief	Deletes all items in the database. This function should be called
- *			before parsing a database file.
+ * @brief	Deletes all items within the map data structure.
  * 
  */
 void Database::deleteDatabase(void) {
@@ -37,10 +33,11 @@ void Database::deleteDatabase(void) {
 }
 
 /**
- * @brief	Populates the database from a provided file. The 
- *			file needs to be in text format.
- * 
- * @param	filename	The filename which we are reading the 
+ * @brief	Populates the database from a provided text file. The database
+ *			will convert text into a JSON object in which the product ID will
+ *			be a key and the position are the values.
+ *
+ * @param	filename	The filename which we are reading the
  *						database values from.
  */
 void Database::populateDatabase(std::string filename) {
@@ -92,13 +89,13 @@ std::tuple<float, float> Database::getProductPosition(std::string productID) {
 }
 
 /**
- * @brief	This function returns a vector of tuples<float, float>
- *			in the xy coordinate format. The vector contains all the 
- *			locations of products in the database
+ * @brief This function returns a vector of tuples<float, float> in the cartesian 
+ *		  coordinate format. The vector contains all the locations of products 
+ *		  in the database.
  * 
- * @return	locList			A vector of tuples<float, float>
+ * @return 
  */
-std::vector<std::tuple<float, float>> Database::getLocList(void) {
+std::vector<std::tuple<float, float>> Database::getLocList() {
     std::vector<std::tuple<float, float>> locList;
 
     for (json::iterator it = database.begin(); it != database.end(); it++) {
