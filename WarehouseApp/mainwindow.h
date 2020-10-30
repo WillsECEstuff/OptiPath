@@ -5,6 +5,8 @@
 #include <QPainter>
 #include <QVector>
 #include <QPointF>
+#include <QtWidgets>
+#include "secondproductwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,13 +23,22 @@ public:
     void loadAllPoints(QVector <QPointF> ptsList);
     void loadProductPoints(QVector <QPointF> ptsList);
     void loadRoutePrinter(QVector <QPointF> route);
+    void loadInstructions(QVector <std::string> instrList);
 
     virtual void paintEvent(QPaintEvent *event);
+
+private slots:
+    void handleButton();
 
 private:
     Ui::MainWindow *ui;
     QVector <QPointF> allPoints;
     QVector <QPointF> productPoints;
     QVector <QPointF> routePoints;
+    QVector <std::string> directions;
+    QPushButton *p_button;
+    QLineEdit *txtID;
+    secondProductWindow *secWindow;
+    QVector <QPointF> singleRoute;
 };
 #endif // MAINWINDOW_H

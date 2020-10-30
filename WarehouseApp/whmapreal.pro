@@ -18,7 +18,8 @@ SOURCES += \
     PathFinder.cpp \
     PriorityQueue.cpp \
     Product.cpp \
-    Ticket.cpp \
+    secondproductwindow.cpp \
+    Ticket.cpp
 
 HEADERS += \
     Inventory.h \
@@ -29,10 +30,12 @@ HEADERS += \
     PathFinder.h \
     PriorityQueue.h \
     Product.h \
+    secondproductwindow.h \
     Ticket.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    secondproductwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
