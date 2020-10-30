@@ -180,6 +180,7 @@ int main(int argc, char** argv)
         std::cout << instruction << std::endl;
     }
 
+    w.loadInstructions(instructions);
     w.loadRoutePrinter(route);
     w.show();
     return a.exec();

@@ -165,7 +165,7 @@ QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
         xStream << std::fixed << std::setprecision(2) << path[i].getXPosition();
         yStream << std::fixed << std::setprecision(2) << path[i].getYPosition();
 
-        instruction = "go to product " + path[i].getProductID() + " at (" +
+        instruction = "Go to product " + path[i].getProductID() + " at (" +
                 xStream.str() +"," + yStream.str() + ")";
 
         xStream.str(""); yStream.str("");

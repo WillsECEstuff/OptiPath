@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QString>
+#include <string>
 
 static const int TILE_SIZE = 30;
 const int INKSCALE = 5;
@@ -37,6 +38,11 @@ void MainWindow::loadProductPoints(QVector <QPointF> ptsList) {
 void MainWindow::loadRoutePrinter(QVector<QPointF> route) {
     routePoints = route;
     std::cout << "loaded route" << std::endl;
+}
+
+void MainWindow::loadInstructions(QVector<std::string> instrList) {
+    directions = instrList;
+    std::cout << "loaded instructions" << std::endl;
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -72,13 +78,24 @@ void MainWindow::paintEvent(QPaintEvent *event)
     }
     // create and label grid end
 
+    // write instructions begin
+    painter.drawText(xboundary/2 + 40, yboundary + 40, "Instructions");
+    painter.drawText(xboundary/2 - 25, yboundary + 45, "--------------------------------------------------");
+    for (int i = 0; i < directions.size(); i++) {
+        std::string toBeNumbered = std::to_string(i+1) + ". " + directions[i];
+        QString temp = QString::fromStdString(toBeNumbered);
+        painter.drawText(xboundary/2 - 25, yboundary + 60 + i*20, temp);
+    }
+    // write instructions end
+
     // create legend begin
     painter.drawText(legendX + 40, 30, "LEGEND");
-    painter.drawText(legendX - 25, 35, "---------------------------------------");
+    painter.drawText(legendX - 25, 35, "-------------------------------------------");
     painter.drawText(legendX + 25, 60, "Unselected Product");
     painter.drawText(legendX + 25, 90, "Selected Product");
     painter.drawText(legendX + 25, 120, "Route, numbered from");
     painter.drawText(legendX + 25, 130, "start->1->...->end");
+    painter.drawText(legendX + 25, 150, "Start and End points");
 
     painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.scale(MAPSCALE, MAPSCALE);
@@ -89,6 +106,9 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
     painter.setPen(QPen(Qt::blue, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.drawLine((legendX + 5) / MAPSCALE, 120 / MAPSCALE, (legendX + 15) / MAPSCALE, 120 / MAPSCALE);
+
+    painter.setPen(QPen(Qt::cyan, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 150 / MAPSCALE));
     // create legend end
 
     // draw map contents begin
@@ -104,14 +124,20 @@ void MainWindow::paintEvent(QPaintEvent *event)
         painter.drawPoint(it);
     }
 
-    painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.setPen(QPen(Qt::cyan, 10/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.drawPoint(routePoints[0].x(), routePoints[0].y());
+    painter.drawPoint(routePoints[routePoints.size() - 1].x(), routePoints[routePoints.size() - 1].y());
+
+    painter.setPen(QPen(Qt::cyan, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.setFont(QFont("times",2));
     painter.drawText(routePoints[0].x()+2, routePoints[0].y()+4, "START");
     painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+4, "END");
 
-    for (int i = 1; i < routePoints.size(); i++) {
+    painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    for (int i = 1; i < routePoints.size() - 1; i++) {
         painter.drawLine(routePoints[i-1].x(), routePoints[i-1].y(), routePoints[i].x(), routePoints[i].y());
         painter.drawText(routePoints[i].x()+2, routePoints[i].y()+4, QString::number(i));
     }
+    painter.drawLine(routePoints[routePoints.size() - 2].x(), routePoints[routePoints.size() - 2].y(), routePoints[routePoints.size() - 1].x(), routePoints[routePoints.size() - 1].y());
     // draw map contents end
 }
