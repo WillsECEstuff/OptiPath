@@ -1,0 +1,117 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QPointF>
+#include <QVector>
+#include "Inventory.h"
+#include <iostream>
+#include <QDebug>
+#include <QString>
+
+static const int TILE_SIZE = 30;
+const int INKSCALE = 5;
+const int MAPSCALE = 5;
+
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::loadAllPoints(QVector <QPointF> ptsList) {
+    allPoints = ptsList;
+    std::cout << "loaded all" << std::endl;
+}
+
+void MainWindow::loadProductPoints(QVector <QPointF> ptsList) {
+    productPoints = ptsList;
+    std::cout << "loaded products" << std::endl;
+}
+
+void MainWindow::loadRoutePrinter(QVector<QPointF> route) {
+    routePoints = route;
+    std::cout << "loaded route" << std::endl;
+}
+
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.setBrush(Qt::DiagCrossPattern);
+    QPen pen;
+
+    int xboundary = TILE_SIZE * 40; // max 40 length? Scaled by tilesize
+    int yboundary = TILE_SIZE * 22;
+    int legendX = xboundary + 100; // x = 1300, location for legend
+
+    //pen.setColor(Qt::green);
+    pen.setWidth(5);
+
+    // create and label grid begin. scaling coordinates by 30. Max product coordinate is 37.98 (*30 to scale)
+    for (int i = 0; i < xboundary+1; i += TILE_SIZE) {     // make a 40x22 map with 30 pixels per square
+        painter.drawLine(i, 0, i, yboundary);
+    }
+
+    for (int j = 0; j < yboundary+1; j += TILE_SIZE) {
+        painter.drawLine(0, j, xboundary, j);
+    }
+
+    for (int i = 0; i < xboundary-1; i += TILE_SIZE*5) { // label the 40x22 map
+        painter.drawText(i, yboundary+9, QString::number(i / TILE_SIZE));
+    }
+
+    painter.drawText(xboundary - 5, yboundary+9, QString::number(xboundary / TILE_SIZE)); // x = 40
+
+    for (int j = 0; j < yboundary+1; j += TILE_SIZE*5) {
+        painter.drawText(xboundary+3, j+4, QString::number(j / TILE_SIZE));
+    }
+    // create and label grid end
+
+    // create legend begin
+    painter.drawText(legendX + 40, 30, "LEGEND");
+    painter.drawText(legendX - 25, 35, "---------------------------------------");
+    painter.drawText(legendX + 25, 60, "Unselected Product");
+    painter.drawText(legendX + 25, 90, "Selected Product");
+    painter.drawText(legendX + 25, 120, "Route, numbered from");
+    painter.drawText(legendX + 25, 130, "start->1->...->end");
+
+    painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.scale(MAPSCALE, MAPSCALE);
+    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 60 / MAPSCALE));
+
+    painter.setPen(QPen(Qt::green, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 90 / MAPSCALE));
+
+    painter.setPen(QPen(Qt::blue, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.drawLine((legendX + 5) / MAPSCALE, 120 / MAPSCALE, (legendX + 15) / MAPSCALE, 120 / MAPSCALE);
+    // create legend end
+
+    // draw map contents begin
+    painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+
+    for (auto& it : allPoints) { // draw all points
+        painter.drawPoint(it);
+    }
+
+    painter.setPen(QPen(Qt::green, 10/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+
+    for (auto& it : productPoints) { // draw product location
+        painter.drawPoint(it);
+    }
+
+    painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter.setFont(QFont("times",2));
+    painter.drawText(routePoints[0].x()+2, routePoints[0].y()+4, "START");
+    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+4, "END");
+
+    for (int i = 1; i < routePoints.size(); i++) {
+        painter.drawLine(routePoints[i-1].x(), routePoints[i-1].y(), routePoints[i].x(), routePoints[i].y());
+        painter.drawText(routePoints[i].x()+2, routePoints[i].y()+4, QString::number(i));
+    }
+    // draw map contents end
+}
