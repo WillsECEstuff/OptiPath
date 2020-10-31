@@ -167,6 +167,8 @@ int main(int argc, char** argv)
     w.loadAllPoints(aLocs);
     w.loadProductPoints(pLocs);
     w.setFixedSize(1500, 1000);
+    w.setWindowTitle("Main Warehouse Map with Path");
+
     std::cout << "Please wait; calculating path." << std::endl;
 
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
