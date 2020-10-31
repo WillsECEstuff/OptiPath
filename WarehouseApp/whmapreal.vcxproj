@@ -199,6 +199,7 @@
     <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
     <ClCompile Include="Product.cpp" />
+    <ClCompile Include="secondproductwindow.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="WarehouseApp.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="Product.h" />
+    <QtMoc Include="secondproductwindow.h" />
     <ClInclude Include="Ticket.h" />
     <QtMoc Include="mainwindow.h">
     </QtMoc>
@@ -236,6 +238,7 @@
   <ItemGroup>
     <QtUic Include="mainwindow.ui">
     </QtUic>
+    <QtUic Include="secondproductwindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
