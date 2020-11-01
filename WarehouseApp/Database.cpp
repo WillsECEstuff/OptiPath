@@ -105,3 +105,8 @@ std::vector<std::tuple<float, float>> Database::getLocList() {
 
     return locList;
 }
+
+json Database::returnDatabase(void)
+{
+	return database;
+}

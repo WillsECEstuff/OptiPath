@@ -39,4 +39,5 @@ public:
 
 	std::tuple<float, float> getProductPosition(std::string productID);
     std::vector<std::tuple<float, float>> getLocList();
+	json returnDatabase(void);
 };
