@@ -13,7 +13,7 @@
 #include "Ticket.h"
 #include "Order.h"
 #include "PathFinder.h"
-#include "mainwindow.h"
+#include "mainwhmap.h"
 #include "Inventory.h"
 #include <QDir>
 #include <QDebug>
@@ -163,7 +163,7 @@ int main(int argc, char** argv)
     matrix.populateMatrix();
     matrix.displayMatrix();
 
-    MainWindow w;
+    mainwhmap w;
     w.loadAllPoints(aLocs);
     w.loadProductPoints(pLocs);
     w.setFixedSize(1500, 1000);

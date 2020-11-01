@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef mainwhmap_H
+#define mainwhmap_H
 
 #include <QMainWindow>
 #include <QPainter>
@@ -9,16 +9,16 @@
 #include "secondproductwindow.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class mainwhmap; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class mainwhmap : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit mainwhmap(QWidget *parent = 0);
+    ~mainwhmap();
 
     void loadAllPoints(QVector <QPointF> ptsList);
     void loadProductPoints(QVector <QPointF> ptsList);
@@ -31,7 +31,7 @@ private slots:
     void handleButton();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::mainwhmap *ui;
     QVector <QPointF> allPoints;
     QVector <QPointF> productPoints;
     QVector <QPointF> routePoints;
@@ -42,4 +42,4 @@ private:
     secondProductWindow *secWindow;
     QVector <QPointF> singleRoute;
 };
-#endif // MAINWINDOW_H
+#endif // mainwhmap_H
