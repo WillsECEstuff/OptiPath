@@ -64,10 +64,10 @@
     <ClCompile Include="WarehouseApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mainwindow.cpp">
+    <ClCompile Include="secondproductwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="secondproductwindow.cpp">
+    <ClCompile Include="mainwhmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,9 +96,6 @@
     <ClInclude Include="Ticket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <QtMoc Include="mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -109,10 +106,10 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="mainwindow.ui">
+    <QtUic Include="secondproductwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="secondproductwindow.ui">
+    <QtUic Include="mainwhmap.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -121,6 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="secondproductwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="mainwhmap.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
