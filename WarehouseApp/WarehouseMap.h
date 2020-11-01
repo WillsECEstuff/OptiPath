@@ -19,8 +19,25 @@ private:
 	json aisles;
 	static WarehouseMap* instance;
 	WarehouseMap() {};
+
+	void findShelveEnds(void);
 public:
 	static WarehouseMap* getInstance(void);
 	void buildWarehouseMap(json productDatabase);
 };
 
+
+
+
+/*
+json structure for shelves
+
+{
+	"shelve_row_number(string)":
+		{
+			"occupied"	:	std::set<int>;
+			"start"		:	int;
+			"end"		:	int;
+		}
+}
+*/
