@@ -111,7 +111,7 @@ int main(int argc, char** argv)
         std::cout<<"("<<std::get<0>(point)<<","<<std::get<1>(point)<<")"<<std::endl;
     }
 
-    /*
+
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
     std::cout<<"Path for you : ";
 
@@ -128,7 +128,7 @@ int main(int argc, char** argv)
     w.show();
 
     return a.exec();
-    */
+
 }
 
 

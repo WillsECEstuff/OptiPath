@@ -37,7 +37,6 @@ std::deque<std::tuple<float,float>> PathFinder::STraversal(
         currentPosition = startLocation.getPositionTuple();
         points.push_back(currentPosition);
         json shelves = wMap->getShelves();
-
         for(auto& shelf : shelves.items()) {
             for(auto& product : productList) {
                 if(product.getYPosition() == std::stoi(shelf.key()))
@@ -58,24 +57,16 @@ std::deque<std::tuple<float,float>> PathFinder::STraversal(
             std::tuple<float,float> point;
             if(yCoord < 21) {
                 if(traversalOrder == 1) {
-                    point = std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord);
-                    points.push_back(point);
-                    point = std::make_tuple(shelves[std::to_string(*(it+1)-1)]["end"],yCoord);
-                    points.push_back(point);
-                    point = std::make_tuple(shelves[std::to_string(*(it+1)+1)]["end"],*(it+1));
-                    points.push_back(point);
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["end"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["end"],*(it+1)));
                     traversalOrder = 0;
-                    //std::cout<<*(it+1)<<"balsh"<<std::endl;
                 }
                 else {
-                    point = std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord);
-                    points.push_back(point);
-                    point = std::make_tuple(shelves[std::to_string(*(it+1)-1)]["begin"],yCoord);
-                    points.push_back(point);
-                    point = std::make_tuple(shelves[std::to_string(*(it+1)+1)]["begin"],*(it+1));
-                    points.push_back(point);
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["begin"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["begin"],*(it+1)));
                     traversalOrder = 1;
-                    //std::cout<<*(it+1)<<"alsh"<<std::endl;
                 }
             }
         }
@@ -248,4 +239,28 @@ std::tuple<float,float> PathFinder::getCurrentPosition(void) {
 
 void PathFinder::setCurrentPosition(std::tuple<float,float>& pos) {
     currentPosition = pos;
+}
+
+int PathFinder::findMaxEnd(int aisle, int shelf) {
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+    int max = 0;
+    for(int i = aisle; i<=shelf; ++i) {
+        std::string aisle = std::to_string(i);
+        int endCoord = shelves[aisle]["end"];
+        max = max > endCoord ? max : endCoord;
+    }
+    return max;
+}
+
+int PathFinder::findMinBegin(int aisle, int shelf) {
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+    int min = INT_MAX;
+    for(int i = aisle; i<=shelf; ++i) {
+        std::string aisle = std::to_string(i);
+        int endCoord = shelves[aisle]["begin"];
+        min = min < endCoord ? min : endCoord;
+    }
+    return min;
 }

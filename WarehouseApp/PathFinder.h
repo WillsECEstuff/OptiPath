@@ -34,6 +34,9 @@ class PathFinder {
 
     public:
 
+    int findMaxEnd(int, int);
+    int findMinBegin(int, int);
+
     std::deque<Product> calculatePath(
         std::unordered_map<Product*, std::deque<Product>> graph,
         std::deque<Product>& productList,
@@ -56,7 +59,9 @@ class PathFinder {
 
     std::tuple<float,float> getCurrentPosition(void);
     void setCurrentPosition(std::tuple<float,float>&);
+
     double distanceBetweenProductsEuclidean(Product& product1, Product& product2);
+
     std::deque<Product> getPath(void);
     QVector <QPointF> displayPath(void);
     QVector <std::string> pathAnnotation(std::deque<Product>& path);
