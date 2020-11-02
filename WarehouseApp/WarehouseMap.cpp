@@ -46,12 +46,35 @@ void WarehouseMap::buildWarehouseMap(json productDatabase)
 			shelves[s_row] = newObj;
 		}
 	}
-	//print json with pretty printing
-	std::cout << shelves.dump(4) << std::endl;
+	
 
 	// add 1 to xDimension and yDimension for final warehouse size
 	WarehouseDimensions["x"] = ++xDimension;
 	WarehouseDimensions["y"] = ++yDimension;
+
+	findShelveEnds();
+
+	//print json with pretty printing
+	std::cout << shelves.dump(4) << std::endl;
 }
 
 
+void WarehouseMap::findShelveEnds(void) {
+
+	for (auto it : shelves.items()) {
+		json j = it.value();
+		//std::cout <<j.dump(4) << std::endl;
+
+		std::set<int> set = j["occupied"];
+		std::set<int>::iterator sit;
+		std::set<int>::reverse_iterator rsit;
+		sit = set.begin();
+		int begin = *sit;
+		rsit = set.rbegin();
+		int end = *rsit;
+
+		it.value()["begin"] = begin;
+		it.value()["end"] = end;
+
+	}
+}
