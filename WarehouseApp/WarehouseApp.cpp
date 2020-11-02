@@ -108,7 +108,7 @@ int main(int argc, char** argv)
     std::deque<std::tuple<float,float>> points = pathFinder.STraversal(deq,dummyStart,dummyEnd);
     std::cout<<"Points to be reached are:"<<std::endl;
     for(auto& point : points) {
-        std::cout<<std::get<0>(point)<<" "<<std::get<1>(point)<<std::endl;
+        std::cout<<"("<<std::get<0>(point)<<","<<std::get<1>(point)<<")"<<std::endl;
     }
 
     /*

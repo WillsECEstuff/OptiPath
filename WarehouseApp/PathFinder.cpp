@@ -34,7 +34,7 @@ std::deque<std::tuple<float,float>> PathFinder::STraversal(
         int traversalOrder = 1; //1 -> left to right, 0-> right to left
         std::deque<std::tuple<float,float>> points;
         WarehouseMap* wMap = wMap->getInstance();
-        currentPosition = std::make_tuple(0,1);
+        currentPosition = startLocation.getPositionTuple();
         points.push_back(currentPosition);
         json shelves = wMap->getShelves();
 
@@ -46,27 +46,41 @@ std::deque<std::tuple<float,float>> PathFinder::STraversal(
         }
 
         std::cout<<"Aisles to be visited:"<<std::endl;
+        std::sort(aislesToBeVisited.begin(),aislesToBeVisited.end());
+
+        aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
         for(auto& element : aislesToBeVisited) {
             std::cout<<element<<std::endl;
         }
 
-        for(int y = 0; y < aislesToBeVisited.size();++y) {
-            int yCoord = aislesToBeVisited[y];
+        for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
+            int yCoord = *it;
+            std::tuple<float,float> point;
             if(yCoord < 21) {
                 if(traversalOrder == 1) {
-                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord)));
-                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["end"],yCoord)));
-                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["end"],aislesToBeVisited[y+1])));
+                    point = std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord);
+                    points.push_back(point);
+                    point = std::make_tuple(shelves[std::to_string(*(it+1)-1)]["end"],yCoord);
+                    points.push_back(point);
+                    point = std::make_tuple(shelves[std::to_string(*(it+1)+1)]["end"],*(it+1));
+                    points.push_back(point);
                     traversalOrder = 0;
+                    //std::cout<<*(it+1)<<"balsh"<<std::endl;
                 }
                 else {
-                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord)));
-                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["start"],yCoord)));
-                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["start"],aislesToBeVisited[y+1])));
+                    point = std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord);
+                    points.push_back(point);
+                    point = std::make_tuple(shelves[std::to_string(*(it+1)-1)]["begin"],yCoord);
+                    points.push_back(point);
+                    point = std::make_tuple(shelves[std::to_string(*(it+1)+1)]["begin"],*(it+1));
+                    points.push_back(point);
                     traversalOrder = 1;
+                    //std::cout<<*(it+1)<<"alsh"<<std::endl;
                 }
             }
         }
+        points.push_back(std::make_tuple(20,*(aislesToBeVisited.end()-1)));
+        points.push_back(endLocation.getPositionTuple());
 
         return points;
 }
