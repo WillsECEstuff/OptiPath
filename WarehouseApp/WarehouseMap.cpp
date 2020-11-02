@@ -96,5 +96,4 @@ void WarehouseMap::findShelveEnds(void) {
 	}
 }
 
-json 
 
