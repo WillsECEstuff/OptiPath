@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     Inventory.cpp \
     WarehouseApp.cpp \
+    WarehouseMap.cpp \
     mainwindow.cpp \
     AdjacencyMatrix.cpp \
     Database.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 
 HEADERS += \
     Inventory.h \
+    WarehouseMap.h \
     mainwindow.h \
     AdjacencyMatrix.h \
     Database.h \

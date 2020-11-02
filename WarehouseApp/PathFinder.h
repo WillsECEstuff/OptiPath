@@ -23,6 +23,7 @@
 class PathFinder {
     private:
     double pathLength;
+    std::tuple<float,float> currentPosition;
     std::deque<Product> path;
     const float TILE_SIZE = 30;
     const float SCALE = 5;
@@ -42,7 +43,9 @@ class PathFinder {
         Product& endLocation
         );
 
-    double distanceBetweenProducts(Product& product1, Product& product2);
+    std::tuple<float,float> getCurrentPosition(void);
+    void setCurrentPosition(std::tuple<float,float>&);
+    double distanceBetweenProductsEuclidean(Product& product1, Product& product2);
     std::deque<Product> getPath(void);
     QVector <QPointF> displayPath(void);
     QVector <std::string> pathAnnotation(std::deque<Product>& path);

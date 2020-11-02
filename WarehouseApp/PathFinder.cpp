@@ -9,6 +9,7 @@
 #include "PathFinder.h"
 #include <QVector>
 #include <QPointF>
+#include "WarehouseMap.h"
 
 
 /**
@@ -21,7 +22,7 @@
                             ending product
  * @return  Euclidean distance between products
  */
-double PathFinder::distanceBetweenProducts(Product& product1, Product& product2) {
+double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& product2) {
     double distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) +
                         pow(product1.getYPosition() - product2.getYPosition(),2));
     //std::cout<<"Distance between "<<product1.getProductID()<<" and "<<product2.getProductID()<<" = "<<distance<<std::endl;
@@ -67,11 +68,11 @@ std::deque<Product> PathFinder::calculatePath(
             currPath.push_back(startLocation);
             for(auto entry : vertices) {
                 Product next = entry;
-                currentPathLength += distanceBetweenProducts(k,next);
+                currentPathLength += distanceBetweenProductsEuclidean(k,next);
                 k = next; 
                 currPath.push_back(next);
             }
-            currentPathLength += distanceBetweenProducts(k,endLocation);
+            currentPathLength += distanceBetweenProductsEuclidean(k,endLocation);
             currPath.push_back(endLocation);
             if(currentPathLength < pathLength){
                 path = currPath;
@@ -183,4 +184,12 @@ QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
 
     instructions.append(instruction);
     return instructions;
+}
+
+std::tuple<float,float> PathFinder::getCurrentPosition(void) {
+    return currentPosition;
+}
+
+void PathFinder::setCurrentPosition(std::tuple<float,float>& pos) {
+    currentPosition = pos;
 }
