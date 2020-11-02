@@ -24,6 +24,8 @@ private:
 public:
 	static WarehouseMap* getInstance(void);
 	void buildWarehouseMap(json productDatabase);
+	json getShelves(void);
+	json getSingleShelf(std::string shelf);
 };
 
 
