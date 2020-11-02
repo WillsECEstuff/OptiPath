@@ -26,6 +26,30 @@ double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& 
     return distance;
 }
 
+int PathFinder::findMaxEnd(int aisle, int shelf) {
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+    int max = 0;
+    for(int i = aisle; i<=shelf; i+=2) {
+        std::string aisleCount = std::to_string(i);
+        int endCoord = shelves[aisleCount]["end"];
+        max = max > endCoord ? max : endCoord;
+    }
+    return max;
+}
+
+int PathFinder::findMinBegin(int aisle, int shelf) {
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+    int min = INT_MAX;
+    for(int i = aisle; i<=shelf; i+=2) {
+        std::string aisleCount = std::to_string(i);
+        int beginCoord = shelves[aisleCount]["begin"];
+        min = min < beginCoord ? min : beginCoord;
+    }
+    return min;
+}
+
 std::deque<std::tuple<float,float>> PathFinder::STraversal(
         std::deque<Product>& productList,
         Product& startLocation,
@@ -55,17 +79,34 @@ std::deque<std::tuple<float,float>> PathFinder::STraversal(
         for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
             int yCoord = *it;
             std::tuple<float,float> point;
+//            if(yCoord < 21) {
+//                if(traversalOrder == 1) {
+//                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord));
+//                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["end"],yCoord));
+//                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["end"],*(it+1)));
+//                    traversalOrder = 0;
+//                }
+//                else {
+//                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord));
+//                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["begin"],yCoord));
+//                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["begin"],*(it+1)));
+//                    traversalOrder = 1;
+//                }
+//            }
+
             if(yCoord < 21) {
                 if(traversalOrder == 1) {
+                    int nextEnd = findMaxEnd(yCoord+1,*(it+1)-1);
                     points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["end"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["end"],*(it+1)));
+                    points.push_back(std::make_tuple(nextEnd,yCoord));
+                    points.push_back(std::make_tuple(nextEnd,*(it+1)));
                     traversalOrder = 0;
                 }
                 else {
+                    int nextBegin = findMinBegin(yCoord+1,*(it+1)-1);
                     points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["begin"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["begin"],*(it+1)));
+                    points.push_back(std::make_tuple(nextBegin,yCoord));
+                    points.push_back(std::make_tuple(nextBegin,*(it+1)));
                     traversalOrder = 1;
                 }
             }
@@ -241,26 +282,3 @@ void PathFinder::setCurrentPosition(std::tuple<float,float>& pos) {
     currentPosition = pos;
 }
 
-int PathFinder::findMaxEnd(int aisle, int shelf) {
-    WarehouseMap* wMap = wMap->getInstance();
-    json shelves = wMap->getShelves();
-    int max = 0;
-    for(int i = aisle; i<=shelf; ++i) {
-        std::string aisle = std::to_string(i);
-        int endCoord = shelves[aisle]["end"];
-        max = max > endCoord ? max : endCoord;
-    }
-    return max;
-}
-
-int PathFinder::findMinBegin(int aisle, int shelf) {
-    WarehouseMap* wMap = wMap->getInstance();
-    json shelves = wMap->getShelves();
-    int min = INT_MAX;
-    for(int i = aisle; i<=shelf; ++i) {
-        std::string aisle = std::to_string(i);
-        int endCoord = shelves[aisle]["begin"];
-        min = min < endCoord ? min : endCoord;
-    }
-    return min;
-}
