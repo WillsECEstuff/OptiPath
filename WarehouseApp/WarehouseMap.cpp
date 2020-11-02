@@ -58,6 +58,23 @@ void WarehouseMap::buildWarehouseMap(json productDatabase)
 	std::cout << shelves.dump(4) << std::endl;
 }
 
+json WarehouseMap::getShelves(void)
+{
+	return shelves;
+}
+
+json WarehouseMap::getSingleShelf(std::string shelf)
+{
+	json::iterator it = shelves.find(shelf);
+	if (it == shelves.end()) {
+		// return -1,-1 if not exist
+		return NULL;
+	}
+	else {
+		return it.value();
+	}
+}
+
 
 void WarehouseMap::findShelveEnds(void) {
 
@@ -78,3 +95,5 @@ void WarehouseMap::findShelveEnds(void) {
 
 	}
 }
+
+

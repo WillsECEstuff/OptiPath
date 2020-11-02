@@ -7,9 +7,6 @@
  *********************************************************************/
 
 #include "PathFinder.h"
-#include <QVector>
-#include <QPointF>
-#include "WarehouseMap.h"
 
 
 /**
@@ -27,6 +24,51 @@ double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& 
                         pow(product1.getYPosition() - product2.getYPosition(),2));
     //std::cout<<"Distance between "<<product1.getProductID()<<" and "<<product2.getProductID()<<" = "<<distance<<std::endl;
     return distance;
+}
+
+std::deque<std::tuple<float,float>> PathFinder::STraversal(
+        std::deque<Product>& productList,
+        Product& startLocation,
+        Product& endLocation
+        ) {
+        int traversalOrder = 1; //1 -> left to right, 0-> right to left
+        std::deque<std::tuple<float,float>> points;
+        WarehouseMap* wMap = wMap->getInstance();
+        currentPosition = std::make_tuple(0,1);
+        points.push_back(currentPosition);
+        json shelves = wMap->getShelves();
+
+        for(auto& shelf : shelves.items()) {
+            for(auto& product : productList) {
+                if(product.getYPosition() == std::stoi(shelf.key()))
+                    aislesToBeVisited.push_back(std::stoi(shelf.key()) + 1); //aisle "1" can access shelf "0"
+            }
+        }
+
+        std::cout<<"Aisles to be visited:"<<std::endl;
+        for(auto& element : aislesToBeVisited) {
+            std::cout<<element<<std::endl;
+        }
+
+        for(int y = 0; y < aislesToBeVisited.size();++y) {
+            int yCoord = aislesToBeVisited[y];
+            if(yCoord < 21) {
+                if(traversalOrder == 1) {
+                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord)));
+                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["end"],yCoord)));
+                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["end"],aislesToBeVisited[y+1])));
+                    traversalOrder = 0;
+                }
+                else {
+                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord)));
+                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["start"],yCoord)));
+                    points.push_back((std::make_tuple(shelves[std::to_string(yCoord+1)]["start"],aislesToBeVisited[y+1])));
+                    traversalOrder = 1;
+                }
+            }
+        }
+
+        return points;
 }
 
 /**

@@ -105,6 +105,13 @@ int main(int argc, char** argv)
 
     std::cout << "Please wait; calculating path." << std::endl;
 
+    std::deque<std::tuple<float,float>> points = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+    std::cout<<"Points to be reached are:"<<std::endl;
+    for(auto& point : points) {
+        std::cout<<std::get<0>(point)<<" "<<std::get<1>(point)<<std::endl;
+    }
+
+    /*
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
     std::cout<<"Path for you : ";
 
@@ -119,7 +126,9 @@ int main(int argc, char** argv)
     w.loadInstructions(instructions);
     w.loadRoutePrinter(route);
     w.show();
+
     return a.exec();
+    */
 }
 
 

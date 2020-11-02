@@ -14,16 +14,20 @@
 #include <math.h>
 #include <iomanip>
 #include <sstream>
+#include <vector>
 
 #include <QVector>
 #include <QPointF>
 
 #include "AdjacencyMatrix.h"
+#include "WarehouseMap.h"
 
 class PathFinder {
     private:
     double pathLength;
     std::tuple<float,float> currentPosition;
+    std::vector<int> aislesToBeVisited;
+    std::tuple<float,float> points;
     std::deque<Product> path;
     const float TILE_SIZE = 30;
     const float SCALE = 5;
@@ -42,6 +46,13 @@ class PathFinder {
         Product& startLocation,
         Product& endLocation
         );
+
+
+    std::deque<std::tuple<float,float>> STraversal(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation
+            );
 
     std::tuple<float,float> getCurrentPosition(void);
     void setCurrentPosition(std::tuple<float,float>&);
