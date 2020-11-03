@@ -105,3 +105,14 @@ std::vector<std::tuple<float, float>> Database::getLocList() {
 
     return locList;
 }
+
+/**
+ * @brief	This function returns the whole JSON database from
+ *			the database class.
+ * 
+ * @return	JSON
+ */
+json Database::returnDatabase(void)
+{
+	return database;
+}
