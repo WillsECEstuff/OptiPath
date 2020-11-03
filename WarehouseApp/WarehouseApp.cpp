@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 
     qDebug() << QDir().currentPath(); // verify that the warehouse .txt file is in the path!
     QApplication a(argc, argv);
-    //std::cout << "Hello World!\n" << std::endl;;
+
     // Instantiate a database
     // only expected 1 instance
     Database* d = d->getInstance();
