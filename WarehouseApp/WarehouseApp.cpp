@@ -13,7 +13,7 @@
 #include "Ticket.h"
 #include "Order.h"
 #include "PathFinder.h"
-#include "mainwindow.h"
+#include "mainwhmap.h"
 #include "Inventory.h"
 #include "WarehouseMap.h"
 #include <QDir>

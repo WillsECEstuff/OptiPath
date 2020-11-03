@@ -82,7 +82,7 @@ std::tuple<float, float> Database::getProductPosition(std::string productID) {
 
 	if (it == database.end()) {
 		// return -1,-1 if not exist
-		return std::make_tuple(-1, -1);
+		return std::make_tuple((float)-1, (float)-1);
 	}
 	else {
 		return std::make_tuple((*it)[0],(*it)[1]);

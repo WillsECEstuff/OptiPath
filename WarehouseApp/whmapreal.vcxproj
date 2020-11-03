@@ -166,7 +166,7 @@
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <OutputFile>$(OutDir)\whmapreal.exe</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -195,6 +195,7 @@
     <ClCompile Include="AdjacencyMatrix.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="mainwhmap.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
@@ -202,13 +203,13 @@
     <ClCompile Include="secondproductwindow.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="WarehouseApp.cpp" />
-    <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="WarehouseMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="Inventory.h" />
+    <QtMoc Include="mainwhmap.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="PriorityQueue.h" />
@@ -216,8 +217,6 @@
     <ClInclude Include="WarehouseMap.h" />
     <QtMoc Include="secondproductwindow.h" />
     <ClInclude Include="Ticket.h" />
-    <QtMoc Include="mainwindow.h">
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -238,8 +237,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="mainwindow.ui">
-    </QtUic>
+    <QtUic Include="mainwhmap.ui" />
     <QtUic Include="secondproductwindow.ui" />
   </ItemGroup>
   <ItemGroup>
