@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 
 #include <QVector>
 #include <QPointF>
@@ -29,6 +30,7 @@ class PathFinder {
     std::vector<int> aislesToBeVisited;
     std::tuple<float,float> points;
     std::deque<Product> path;
+    const std::string NOT_PRODUCT = "-1";
     const float TILE_SIZE = 30;
     const float SCALE = 5;
 
