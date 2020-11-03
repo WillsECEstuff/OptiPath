@@ -1,3 +1,15 @@
+/*****************************************************************//**
+ * @file   WarehouseMap.h
+ * @brief  This header includes the WarehouseMap class. It implements
+ *			a singleton in which only one instance can be made at a 
+ *			time. This class function is to provide the dimensions
+ *			of the warehouse as well as deducing the location of the
+ *			shelves. 
+ * 
+ * @author Tony
+ * @date   November 2020
+ *********************************************************************/
+
 #pragma once
 
 #include <cmath>
@@ -12,12 +24,12 @@ using json = nlohmann::json;
 
 class WarehouseMap
 {
-
 private:
-	json shelves;
-	json WarehouseDimensions;
-	json aisles;
+	json shelves;	/* A JSON object structure can be seen below */
+	json WarehouseDimensions; /* A JSON object structure can be seen below */
+	json aisles; /* currently unused */
 	static WarehouseMap* instance;
+	/* Private constructor so that no objects can be created explicitly */
 	WarehouseMap() {};
 
 	void findShelveEnds(void);
@@ -29,17 +41,25 @@ public:
 };
 
 
-
-
 /*
 json structure for shelves
 
 {
 	"shelve_row_number(string)":
 		{
-			"occupied"	:	std::set<int>;
-			"start"		:	int;
-			"end"		:	int;
+			"occupied"	:	std::set<int>,
+			"start"		:	int,
+			"end"		:	int
 		}
+	...
+	...
+}
+*/
+
+/*
+json structure for WarehouseDimensions
+{
+	"x"	:	int,
+	"y"	:	int
 }
 */

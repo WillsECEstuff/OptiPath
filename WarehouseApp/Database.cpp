@@ -13,7 +13,8 @@ Database* Database::instance = NULL;
 /**
  * @brief	This function allows only one intance of the database.
  *			If there are no instances of the database, create the
- *			database and return it. Otherwise, return the database.
+ *			database and return it. Otherwise, return the existing
+ *			database.
  * 
  * @return	instance	return the instance of the database
  */

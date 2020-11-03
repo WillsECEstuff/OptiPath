@@ -61,6 +61,12 @@ int main(int argc, char** argv)
 
     // creating a Warehouse Map
     Map->buildWarehouseMap(d->returnDatabase());
+    json j = Map->getShelves();
+    std::cout << j.dump(4) << std::endl;
+
+    j = Map->getSingleShelf("0");
+    std::cout << j.dump(4) << std::endl;
+
 
     o = createOrders(d, o);
 

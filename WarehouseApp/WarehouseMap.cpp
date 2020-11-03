@@ -1,7 +1,21 @@
+/*****************************************************************//**
+ * @file   WarehouseMap.cpp
+ * @brief  This file contains the definitions for WarehouseMap.h.
+ * 
+ * @author Tony
+ * @date   November 2020
+ *********************************************************************/
 #include "WarehouseMap.h"
 
 WarehouseMap* WarehouseMap::instance = NULL;
 
+/**
+ * @brief	This function allows only one intance of the WarehouseMap.
+ *			If there are no instances of the WarehouseMap, create the
+ *			object and return it. Otherwise, return the existing object.
+ * 
+ * @return	instance	return the instance of the WarehouseMap
+ */
 WarehouseMap* WarehouseMap::getInstance(void)
 {
 	if (instance == NULL) {
@@ -10,6 +24,17 @@ WarehouseMap* WarehouseMap::getInstance(void)
 	return instance;
 }
 
+
+/**
+ * @brief	This function construct the shelves JSON data from the
+ *			product Database from Database.h/cpp. It builds JSON
+ *			members shelves and WarehouseDimension. The JSON
+ *			data structure for both "shelves" and "WarehouseDimension"
+ *			can be seen in WarehouseMap.h
+ * 
+ * @param	productDatabase		JSON from returnDatabase in 
+ *								Database.h
+ */
 void WarehouseMap::buildWarehouseMap(json productDatabase)
 {
 	int xDimension = 0;
@@ -58,16 +83,31 @@ void WarehouseMap::buildWarehouseMap(json productDatabase)
 	std::cout << shelves.dump(4) << std::endl;
 }
 
+/**
+ * @brief	Returns the shelves JSON structure. The structure
+ *			of shelves can be seen in WarehouseMap.h.
+ * 
+ * @return	json
+ */
 json WarehouseMap::getShelves(void)
 {
 	return shelves;
 }
 
+/**
+ * @brief	This function returns the nested JSON object
+ *			within the shelves JSON structure. This JSON
+ *			includes keys such as "occupied", "start", and
+ *			end. If no shelf exist, return a NULL pointer.
+ * 
+ * @param	shelf		shelf row number in string format
+ * @return	JSON
+ */
 json WarehouseMap::getSingleShelf(std::string shelf)
 {
 	json::iterator it = shelves.find(shelf);
 	if (it == shelves.end()) {
-		// return -1,-1 if not exist
+		// return NULL if not exist
 		return NULL;
 	}
 	else {
@@ -75,7 +115,15 @@ json WarehouseMap::getSingleShelf(std::string shelf)
 	}
 }
 
-
+/**
+ * @brief	This is a private function whose job is to find
+ *			where a shelf start within a row and end.
+ *			The JSON key for where a shelf starts is "begin"
+ *			and where a shelf stops is "end". The integer
+ *			where the shelf begins and ends means that
+ *			space is occupied by a shelf.
+ * 
+ */
 void WarehouseMap::findShelveEnds(void) {
 
 	for (auto it : shelves.items()) {
