@@ -59,6 +59,7 @@ QVector<QPointF> PathFinder::STraversal(
         std::deque<std::tuple<float,float>> points;
         QVector<QPointF> pointsToDisplay;
         std::unordered_map<int, std::vector<Product>> aisleProductMap;
+        auto start = std::chrono::high_resolution_clock::now();
 
         WarehouseMap* wMap = wMap->getInstance();
         currentPosition = startLocation.getPositionTuple();
@@ -162,6 +163,9 @@ QVector<QPointF> PathFinder::STraversal(
         for(auto& point : points) {
             pointsToDisplay.push_back(QPointF(std::get<0>(point) * TILE_SIZE/SCALE,std::get<1>(point)  * TILE_SIZE/SCALE));
         }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
         return pointsToDisplay;
 }
 
