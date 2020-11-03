@@ -166,7 +166,7 @@
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <OutputFile>$(OutDir)\whmapreal.exe</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -203,11 +203,13 @@
     <ClCompile Include="secondproductwindow.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="WarehouseApp.cpp" />
+    <ClCompile Include="WarehouseMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="WarehouseMap.h" />
     <QtMoc Include="mainwhmap.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="PathFinder.h" />

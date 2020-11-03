@@ -15,8 +15,11 @@
 #include "PathFinder.h"
 #include "mainwhmap.h"
 #include "Inventory.h"
+#include "WarehouseMap.h"
 #include <QDir>
 #include <QDebug>
+
+void fillOrderDriver(Order* o, Database* d);
 
 int main(int argc, char** argv)
 {
@@ -29,10 +32,7 @@ int main(int argc, char** argv)
     // Instantiate a database
     // only expected 1 instance
     Database* d = d->getInstance();
-
-    // Instantiate an order
-    // can have multiple orders
-    Order o(1,1);
+    WarehouseMap* whm = whm->getInstance();
 
     // Instantiate an adjacency matrix
     AdjacencyMatrix matrix;
@@ -49,86 +49,12 @@ int main(int argc, char** argv)
     d->deleteDatabase();
     d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
 
-    // using the database, get product position
-    // in this example, I am getting a tuple
-    std::tuple<float, float> t = d->getProductPosition("1");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    whm->buildWarehouseMap(d->returnDatabase());
+    json j = whm->getShelves();
+    std::cout << j.dump(4) << std::endl;
 
-    // create a product class
-    // and add the product into the order
-
-    Product p("1", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("45");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("45", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("102");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("102", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("16");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("16", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("290");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("290", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("485");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("485", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("364");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("364", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("571");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("571", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("517");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("517", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("623");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("623", t);
-    o.addProduct(p);
-
-    t = d->getProductPosition("3401");
-    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
-    p.~Product();
-
-    new(&p) Product("3401", t);
-    o.addProduct(p);
+    Order o(1, 1);
+    fillOrderDriver(&o, d);
 
     std::vector<std::tuple<float, float>> locList = d->getLocList();
     for (auto& it : locList) {
@@ -186,6 +112,92 @@ int main(int argc, char** argv)
     w.loadRoutePrinter(route);
     w.show();
     return a.exec();
+}
+
+void fillOrderDriver(Order* o, Database* d) {
+    // Instantiate an order
+    // can have multiple orders
+
+    // using the database, get product position
+    // in this example, I am getting a tuple
+    std::tuple<float, float> t = d->getProductPosition("1");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+
+    // create a product class
+    // and add the product into the order
+
+    Product p("1", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("45");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("45", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("102");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("102", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("16");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("16", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("290");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("290", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("485");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("485", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("364");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("364", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("571");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("571", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("517");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("517", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("623");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("623", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("3401");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("3401", t);
+    o->addProduct(p);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

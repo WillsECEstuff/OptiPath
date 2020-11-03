@@ -24,20 +24,14 @@ private:
 	int orderID;
 
 	std::list<Product> productList;
-
-	
-
 public:
+	Order(void);
 	Order(int oID, int p = 1);
 
 	void addProduct(Product p);
-
 	std::list<Product> getProductList(void);
-
 	void changePriority(int p);
-
 	int getPriority(void);
-
 };
 
 
