@@ -27,16 +27,14 @@ private:
 	static Database* instance;
 	//std::map<int, std::tuple<float, float>> database;
 	json database;
-	/* Private constructor so that no objects can be created */
+	/* Private constructor so that no objects can be created explicitly*/
     Database() {};
 
 public:
 	static Database* getInstance(void);
-
 	void deleteDatabase(void);
-
 	void populateDatabase(std::string filename);
-
 	std::tuple<float, float> getProductPosition(std::string productID);
     std::vector<std::tuple<float, float>> getLocList();
+	json returnDatabase(void);
 };

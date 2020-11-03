@@ -15,8 +15,13 @@
 #include "PathFinder.h"
 #include "mainwhmap.h"
 #include "Inventory.h"
+#include "WarehouseMap.h"
 #include <QDir>
 #include <QDebug>
+
+
+Order createOrders(Database* d, Order o);
+
 
 int main(int argc, char** argv)
 {
@@ -25,10 +30,14 @@ int main(int argc, char** argv)
 
     qDebug() << QDir().currentPath(); // verify that the warehouse .txt file is in the path!
     QApplication a(argc, argv);
-    //std::cout << "Hello World!\n" << std::endl;;
+
     // Instantiate a database
     // only expected 1 instance
     Database* d = d->getInstance();
+
+    //Instantiate a warehouse map
+    // only expected 1 instance
+    WarehouseMap* Map = Map->getInstance();
 
     // Instantiate an order
     // can have multiple orders
@@ -49,6 +58,78 @@ int main(int argc, char** argv)
     d->deleteDatabase();
     d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
 
+
+    // creating a Warehouse Map
+    Map->buildWarehouseMap(d->returnDatabase());
+    json j = Map->getShelves();
+    std::cout << j.dump(4) << std::endl;
+
+    j = Map->getSingleShelf("0");
+    std::cout << j.dump(4) << std::endl;
+
+
+    o = createOrders(d, o);
+
+    std::vector<std::tuple<float, float>> locList = d->getLocList();
+    for (auto& it : locList) {
+        aLocs.append(QPointF(std::get<0>(it) * TILE_SIZE/SCALE, std::get<1>(it) * TILE_SIZE/SCALE));
+    }
+
+    // iterates through the product list
+    // and check the productID and positions of each product
+    // also adds the products to the adjacency matrix
+    std::list<Product> l = o.getProductList();
+    std::deque<Product> deq;
+    for (auto& it:l) {
+        deq.push_back(it);
+        std::cout << "ID: " << it.getProductID() << "\txPosition: " << it.getXPosition()
+            << "\tyPosition: " << it.getYPosition() << std::endl;
+        pLocs.append(QPointF(it.getXPosition() * TILE_SIZE/SCALE, it.getYPosition() * TILE_SIZE/SCALE));
+    }
+
+    Inventory inventory(aLocs, pLocs);
+
+    std::cout << "product list size: " << pLocs.size() << std::endl;
+    std::cout << "all list size: " << aLocs.size() << std::endl;
+
+    std::tuple<float, float> startLocation = std::make_tuple(0,0);
+    std::tuple<float, float> endLocation = std::make_tuple(40,21);
+
+    Product dummyStart("startLocation", startLocation);
+    Product dummyEnd("endLocation", endLocation);
+
+    //deq.push_back(dummyStart);
+    matrix.setProductList(deq);
+    matrix.populateMatrix();
+    matrix.displayMatrix();
+
+    MainWindow w;
+    w.loadAllPoints(aLocs);
+    w.loadProductPoints(pLocs);
+    w.setFixedSize(1500, 1000);
+    w.setWindowTitle("Main Warehouse Map with Path");
+
+    std::cout << "Please wait; calculating path." << std::endl;
+
+    std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
+    std::cout<<"Path for you : ";
+
+    QVector<QPointF> route = pathFinder.displayPath();
+    std::cout<<std::endl;
+    QVector <std::string> instructions = pathFinder.pathAnnotation(path);
+
+    for (auto& instruction: instructions) {
+        std::cout << instruction << std::endl;
+    }
+
+    w.loadInstructions(instructions);
+    w.loadRoutePrinter(route);
+    w.show();
+    return a.exec();
+}
+
+
+Order createOrders(Database* d, Order o) {
     // using the database, get product position
     // in this example, I am getting a tuple
     std::tuple<float, float> t = d->getProductPosition("1");
@@ -130,62 +211,7 @@ int main(int argc, char** argv)
     new(&p) Product("3401", t);
     o.addProduct(p);
 
-    std::vector<std::tuple<float, float>> locList = d->getLocList();
-    for (auto& it : locList) {
-        aLocs.append(QPointF(std::get<0>(it) * TILE_SIZE/SCALE, std::get<1>(it) * TILE_SIZE/SCALE));
-    }
-
-    // iterates through the product list
-    // and check the productID and positions of each product
-    // also adds the products to the adjacency matrix
-    std::list<Product> l = o.getProductList();
-    std::deque<Product> deq;
-    for (auto& it:l) {
-        deq.push_back(it);
-        std::cout << "ID: " << it.getProductID() << "\txPosition: " << it.getXPosition()
-            << "\tyPosition: " << it.getYPosition() << std::endl;
-        pLocs.append(QPointF(it.getXPosition() * TILE_SIZE/SCALE, it.getYPosition() * TILE_SIZE/SCALE));
-    }
-
-    Inventory inventory(aLocs, pLocs);
-
-    std::cout << "product list size: " << pLocs.size() << std::endl;
-    std::cout << "all list size: " << aLocs.size() << std::endl;
-
-    std::tuple<float, float> startLocation = std::make_tuple(0,0);
-    std::tuple<float, float> endLocation = std::make_tuple(40,21);
-
-    Product dummyStart("startLocation", startLocation);
-    Product dummyEnd("endLocation", endLocation);
-
-    //deq.push_back(dummyStart);
-    matrix.setProductList(deq);
-    matrix.populateMatrix();
-    matrix.displayMatrix();
-
-    mainwhmap w;
-    w.loadAllPoints(aLocs);
-    w.loadProductPoints(pLocs);
-    w.setFixedSize(1500, 1000);
-    w.setWindowTitle("Main Warehouse Map with Path");
-
-    std::cout << "Please wait; calculating path." << std::endl;
-
-    std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
-    std::cout<<"Path for you : ";
-
-    QVector<QPointF> route = pathFinder.displayPath();
-    std::cout<<std::endl;
-    QVector <std::string> instructions = pathFinder.pathAnnotation(path);
-
-    for (auto& instruction: instructions) {
-        std::cout << instruction << std::endl;
-    }
-
-    w.loadInstructions(instructions);
-    w.loadRoutePrinter(route);
-    w.show();
-    return a.exec();
+    return o;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

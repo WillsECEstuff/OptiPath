@@ -203,6 +203,7 @@
     <ClCompile Include="secondproductwindow.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="WarehouseApp.cpp" />
+    <ClCompile Include="WarehouseMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="WarehouseMap.h" />
     <QtMoc Include="secondproductwindow.h" />
     <ClInclude Include="Ticket.h" />
   </ItemGroup>
