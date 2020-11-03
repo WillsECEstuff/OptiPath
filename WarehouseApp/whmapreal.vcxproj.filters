@@ -70,9 +70,6 @@
     <ClCompile Include="mainwhmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h">
@@ -97,9 +94,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ticket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
