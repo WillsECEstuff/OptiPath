@@ -26,6 +26,15 @@ double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& 
     return distance;
 }
 
+/**
+ * @brief	Calculates the maximum distance to be traveled towards right
+ *
+ * @param	shelfStart		Indicates the starting shelf number
+ * @param	shelfEnd		Indicates the ending shelf number
+ *
+ * @return  Maxmimum X coordinate to be traveled aling the aisle
+ */
+
 int PathFinder::findMaxEnd(int shelfStart, int shelfEnd) {
     WarehouseMap* wMap = wMap->getInstance();
     json shelves = wMap->getShelves();
@@ -38,6 +47,15 @@ int PathFinder::findMaxEnd(int shelfStart, int shelfEnd) {
     return max;
 }
 
+/**
+ * @brief	Calculates the maximum distance to be traveled towards left
+ *
+ * @param	shelfStart		Indicates the starting shelf number
+ * @param	shelfEnd		Indicates the ending shelf number
+ *
+ * @return  Minimum X coordinate to be traveled aling the aisle
+ */
+
 int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
     WarehouseMap* wMap = wMap->getInstance();
     json shelves = wMap->getShelves();
@@ -49,6 +67,16 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
     }
     return min;
 }
+
+/**
+ * @brief	Navigates along the warehouse aisles in an S shape
+ *
+ * @param	productList		List of products to be picked up
+ * @param	startLocation   Start location deaulted to (0,0)
+ * @param   endLocation     End location defaulted to (0,0)
+ *
+ * @return  Ordered set of points to be visited
+ */
 
 QVector<QPointF> PathFinder::STraversal(
         std::deque<Product>& productList,
@@ -326,9 +354,21 @@ QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
     return instructions;
 }
 
+/**
+ * @brief	Return current position of the user. (Unused currently)
+ *
+ * @return  Tuple of coordinates
+ */
+
 std::tuple<float,float> PathFinder::getCurrentPosition(void) {
     return currentPosition;
 }
+
+/**
+ * @brief	Set current position of the user. (Unused currently)
+ *
+ * @params  pos Tuple of coordinates
+ */
 
 void PathFinder::setCurrentPosition(std::tuple<float,float>& pos) {
     currentPosition = pos;
