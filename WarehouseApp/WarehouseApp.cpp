@@ -105,13 +105,16 @@ int main(int argc, char** argv)
 
     std::cout << "Please wait; calculating path." << std::endl;
 
-    std::deque<std::tuple<float,float>> points = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+    QVector<QPointF> pointsToDisplay = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+
     std::cout<<"Points to be reached are:"<<std::endl;
-    for(auto& point : points) {
-        std::cout<<"("<<std::get<0>(point)<<","<<std::get<1>(point)<<")"<<std::endl;
+    for(auto& point : pointsToDisplay) {
+        std::cout<<"("<<point.rx()<<","<<point.ry()<<")"<<std::endl;
     }
 
-
+    w.loadRoutePrinter(pointsToDisplay);
+    w.show();
+    return a.exec();
     /*
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
     std::cout<<"Path for you : ";

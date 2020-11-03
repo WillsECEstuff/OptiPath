@@ -50,19 +50,19 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
     return min;
 }
 
-std::deque<std::tuple<float,float>> PathFinder::STraversal(
+QVector<QPointF> PathFinder::STraversal(
         std::deque<Product>& productList,
         Product& startLocation,
         Product& endLocation
         ) {
         int traversalOrder = 1; //1 -> left to right, 0-> right to left
         std::deque<std::tuple<float,float>> points;
+        QVector<QPointF> pointsToDisplay;
         std::unordered_map<int, std::vector<Product>> aisleProductMap;
 
         WarehouseMap* wMap = wMap->getInstance();
         currentPosition = startLocation.getPositionTuple();
         points.push_back(currentPosition);
-
         json shelves = wMap->getShelves();
 
         //Add aisles to be visited
@@ -159,7 +159,10 @@ std::deque<std::tuple<float,float>> PathFinder::STraversal(
         points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1)));
         points.push_back(startLocation.getPositionTuple());
 
-        return points;
+        for(auto& point : points) {
+            pointsToDisplay.push_back(QPointF(std::get<0>(point) * TILE_SIZE/SCALE,std::get<1>(point)  * TILE_SIZE/SCALE));
+        }
+        return pointsToDisplay;
 }
 
 /**

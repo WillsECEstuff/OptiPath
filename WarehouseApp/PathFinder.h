@@ -53,7 +53,7 @@ class PathFinder {
         );
 
 
-    std::deque<std::tuple<float,float>> STraversal(
+    QVector<QPointF> STraversal(
             std::deque<Product>& productList,
             Product& startLocation,
             Product& endLocation
