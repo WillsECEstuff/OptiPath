@@ -6,12 +6,13 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_mainwhmap_H
-#define UI_mainwhmap_H
+#ifndef UI_MAINWHMAP_H
+#define UI_MAINWHMAP_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/Qmainwhmap>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -22,19 +23,24 @@ class Ui_mainwhmap
 {
 public:
     QWidget *centralwidget;
+    QLineEdit *txtID;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(Qmainwhmap *mainwhmap)
+    void setupUi(QMainWindow *mainwhmap)
     {
         if (mainwhmap->objectName().isEmpty())
             mainwhmap->setObjectName(QString::fromUtf8("mainwhmap"));
-        mainwhmap->resize(800, 600);
+        mainwhmap->resize(1223, 964);
         centralwidget = new QWidget(mainwhmap);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        txtID = new QLineEdit(centralwidget);
+        txtID->setObjectName(QString::fromUtf8("txtID"));
+        txtID->setGeometry(QRect(200, 750, 50, 25));
         mainwhmap->setCentralWidget(centralwidget);
         menubar = new QMenuBar(mainwhmap);
         menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setGeometry(QRect(0, 0, 1223, 21));
         mainwhmap->setMenuBar(menubar);
         statusbar = new QStatusBar(mainwhmap);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -45,9 +51,10 @@ public:
         QMetaObject::connectSlotsByName(mainwhmap);
     } // setupUi
 
-    void retranslateUi(Qmainwhmap *mainwhmap)
+    void retranslateUi(QMainWindow *mainwhmap)
     {
         mainwhmap->setWindowTitle(QCoreApplication::translate("mainwhmap", "mainwhmap", nullptr));
+        txtID->setPlaceholderText(QCoreApplication::translate("mainwhmap", "123", nullptr));
     } // retranslateUi
 
 };
@@ -58,4 +65,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_mainwhmap_H
+#endif // UI_MAINWHMAP_H
