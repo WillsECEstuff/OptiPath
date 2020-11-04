@@ -10,6 +10,7 @@
 #include <chrono>
 
 
+
 /**
  * @brief	Calculates distance between two products on the warehouse. 
             Takes two Products as arguments.
