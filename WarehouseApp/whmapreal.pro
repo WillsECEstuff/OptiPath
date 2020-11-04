@@ -12,7 +12,6 @@ SOURCES += \
     Inventory.cpp \
     WarehouseApp.cpp \
     WarehouseMap.cpp \
-    mainwindow.cpp \
     AdjacencyMatrix.cpp \
     Database.cpp \
     Order.cpp \
