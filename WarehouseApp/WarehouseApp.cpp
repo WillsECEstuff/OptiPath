@@ -13,15 +13,13 @@
 #include "Ticket.h"
 #include "Order.h"
 #include "PathFinder.h"
-#include "mainwindow.h"
+#include "mainwhmap.h"
 #include "Inventory.h"
 #include "WarehouseMap.h"
 #include <QDir>
 #include <QDebug>
 
-
-Order createOrders(Database* d, Order o);
-
+void fillOrderDriver(Order* o, Database* d);
 
 int main(int argc, char** argv)
 {
@@ -34,14 +32,7 @@ int main(int argc, char** argv)
     // Instantiate a database
     // only expected 1 instance
     Database* d = d->getInstance();
-
-    //Instantiate a warehouse map
-    // only expected 1 instance
-    WarehouseMap* Map = Map->getInstance();
-
-    // Instantiate an order
-    // can have multiple orders
-    Order o(1,1);
+    WarehouseMap* whm = whm->getInstance();
 
     // Instantiate an adjacency matrix
     AdjacencyMatrix matrix;
@@ -58,11 +49,12 @@ int main(int argc, char** argv)
     d->deleteDatabase();
     d->populateDatabase("/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp/qvBox-warehouse-data-f20-v01.txt");
 
+    whm->buildWarehouseMap(d->returnDatabase());
+    json j = whm->getShelves();
+    std::cout << j.dump(4) << std::endl;
 
-    // creating a Warehouse Map
-    Map->buildWarehouseMap(d->returnDatabase());
-
-    o = createOrders(d, o);
+    Order o(1, 1);
+    fillOrderDriver(&o, d);
 
     std::vector<std::tuple<float, float>> locList = d->getLocList();
     for (auto& it : locList) {
@@ -97,7 +89,7 @@ int main(int argc, char** argv)
     matrix.populateMatrix();
     matrix.displayMatrix();
 
-    MainWindow w;
+    mainwhmap w;
     w.loadAllPoints(aLocs);
     w.loadProductPoints(pLocs);
     w.setFixedSize(1500, 1000);
@@ -135,8 +127,10 @@ int main(int argc, char** argv)
     */
 }
 
+void fillOrderDriver(Order* o, Database* d) {
+    // Instantiate an order
+    // can have multiple orders
 
-Order createOrders(Database* d, Order o) {
     // using the database, get product position
     // in this example, I am getting a tuple
     std::tuple<float, float> t = d->getProductPosition("1");
@@ -146,70 +140,70 @@ Order createOrders(Database* d, Order o) {
     // and add the product into the order
 
     Product p("1", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("45");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("45", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("102");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("102", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("16");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("16", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("290");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("290", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("485");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("485", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("364");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("364", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("571");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("571", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("517");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("517", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("623");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
     new(&p) Product("623", t);
-    o.addProduct(p);
+    o->addProduct(p);
 
     t = d->getProductPosition("633");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
@@ -285,9 +279,8 @@ Order createOrders(Database* d, Order o) {
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
 
-    new(&p) Product("227534", t);
-    o.addProduct(p);
-
+    new(&p) Product("3401", t);
+    o->addProduct(p);
     return o;
 }
 

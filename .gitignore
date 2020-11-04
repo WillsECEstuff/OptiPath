@@ -351,3 +351,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/WarehouseApp/ui_secondproductwindow.h
+/build-whmapreal-Desktop_Qt_5_15_1_MSVC2015_64bit-Debug

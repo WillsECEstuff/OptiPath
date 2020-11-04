@@ -11,8 +11,6 @@ CONFIG += c++11
 SOURCES += \
     Inventory.cpp \
     WarehouseApp.cpp \
-    WarehouseMap.cpp \
-    mainwindow.cpp \
     AdjacencyMatrix.cpp \
     Database.cpp \
     Order.cpp \
@@ -21,12 +19,11 @@ SOURCES += \
     Product.cpp \
     mainwhmap.cpp \
     secondproductwindow.cpp \
+    ordermenu.cpp \
     Ticket.cpp
 
 HEADERS += \
     Inventory.h \
-    WarehouseMap.h \
-    mainwindow.h \
     AdjacencyMatrix.h \
     Database.h \
     Order.h \
@@ -35,10 +32,12 @@ HEADERS += \
     Product.h \
     mainwhmap.h \
     secondproductwindow.h \
+    ordermenu.h \
     Ticket.h
 
 FORMS += \
     mainwhmap.ui \
+    ordermenu.ui \
     secondproductwindow.ui
 
 # Default rules for deployment.

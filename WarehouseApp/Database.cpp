@@ -81,7 +81,7 @@ std::tuple<float, float> Database::getProductPosition(std::string productID) {
 
 	if (it == database.end()) {
 		// return -1,-1 if not exist
-		return std::make_tuple(-1, -1);
+		return std::make_tuple((float)-1, (float)-1);
 	}
 	else {
 		return std::make_tuple((*it)[0],(*it)[1]);
@@ -106,6 +106,12 @@ std::vector<std::tuple<float, float>> Database::getLocList() {
     return locList;
 }
 
+/**
+ * @brief	This function returns the whole JSON database from
+ *			the database class.
+ * 
+ * @return	JSON
+ */
 json Database::returnDatabase(void)
 {
 	return database;

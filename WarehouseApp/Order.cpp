@@ -8,6 +8,16 @@
 
 #include "Order.h"
 
+ /**
+  * @brief	This is a constructor for the Order object. 
+  *			Default values will be set 1.
+  */
+Order::Order(void)
+{
+	priority = 1;
+	orderID = 1;
+}
+
 /**
  * @brief	This is a constructor for the Order object. This constructor
  *			requires 2 arguments

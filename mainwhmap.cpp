@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "mainwhmap.h"
+#include "ui_mainwhmap.h"
 #include <QPointF>
 #include <QVector>
 #include "Inventory.h"
@@ -14,9 +14,9 @@ const int INKSCALE = 5;
 const int MAPSCALE = 5;
 
 
-MainWindow::MainWindow(QWidget *parent)
+mainwhmap::mainwhmap(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::mainwhmap)
 {
     //ui->setupUi(this);
     p_button = new QPushButton("Enter", this);
@@ -33,33 +33,35 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-MainWindow::~MainWindow()
+mainwhmap::~mainwhmap()
 {
     delete ui;
 }
 
-void MainWindow::loadAllPoints(QVector <QPointF> ptsList) {
+void mainwhmap::loadAllPoints(QVector <QPointF> ptsList) {
     allPoints = ptsList;
     std::cout << "loaded all" << std::endl;
 }
 
-void MainWindow::loadProductPoints(QVector <QPointF> ptsList) {
+void mainwhmap::loadProductPoints(QVector <QPointF> ptsList) {
     productPoints = ptsList;
     std::cout << "loaded products" << std::endl;
 }
 
-void MainWindow::loadRoutePrinter(QVector<QPointF> route) {
+void mainwhmap::loadRoutePrinter(QVector<QPointF> route) {
     routePoints = route;
     std::cout << "loaded route" << std::endl;
 }
 
-void MainWindow::loadInstructions(QVector<std::string> instrList) {
+void mainwhmap::loadInstructions(QVector<std::string> instrList) {
     directions = instrList;
     std::cout << "loaded instructions" << std::endl;
 }
 
-void MainWindow::handleButton() {
+void mainwhmap::handleButton() {
     std::string ID = txtID->text().toStdString();
+    singleRoute.clear();
+
     secWindow = new secondProductWindow();
     secWindow->loadProductPoint(ID);
     singleRoute.push_back(routePoints[0]);
@@ -75,7 +77,7 @@ void MainWindow::handleButton() {
     secWindow->show();
 }
 
-void MainWindow::paintEvent(QPaintEvent *event)
+void mainwhmap::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setBrush(Qt::DiagCrossPattern);
