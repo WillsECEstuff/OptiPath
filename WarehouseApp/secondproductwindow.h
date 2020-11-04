@@ -28,6 +28,9 @@ public:
 private slots:
     void handleButton();
 
+signals:
+    void fromOtherMap();
+
 private:
     Ui::secondProductWindow *ui;
     std::string myPID;

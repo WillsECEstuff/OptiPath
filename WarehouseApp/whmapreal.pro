@@ -25,7 +25,6 @@ SOURCES += \
 HEADERS += \
     Inventory.h \
     WarehouseMap.h \
-    mainwindow.h \
     AdjacencyMatrix.h \
     Database.h \
     Order.h \

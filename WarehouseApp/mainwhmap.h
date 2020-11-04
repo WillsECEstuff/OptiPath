@@ -27,6 +27,10 @@ public:
 
     virtual void paintEvent(QPaintEvent *event);
 
+
+public slots:
+    void onOtherSignal();
+
 private slots:
     void handleButton();
 

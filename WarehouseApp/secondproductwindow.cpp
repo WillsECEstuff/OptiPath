@@ -8,6 +8,7 @@
 #include <QString>
 #include <string>
 #include "Database.h"
+#include "mainwhmap.h"
 
 static const int TILE_SIZE = 30;
 const int INKSCALE = 5;
@@ -86,7 +87,8 @@ void secondProductWindow::loadInstructions() {
 }
 
 void secondProductWindow::handleButton() {
-    close();
+    hide();
+    emit fromOtherMap();
 }
 
 void secondProductWindow::paintEvent(QPaintEvent *event)
