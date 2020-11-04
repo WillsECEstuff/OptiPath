@@ -7,8 +7,8 @@
  *********************************************************************/
 
 #include "PathFinder.h"
-#include <QVector>
-#include <QPointF>
+#include <chrono>
+
 
 
 /**
@@ -21,11 +21,186 @@
                             ending product
  * @return  Euclidean distance between products
  */
-double PathFinder::distanceBetweenProducts(Product& product1, Product& product2) {
+double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& product2) {
     double distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) +
                         pow(product1.getYPosition() - product2.getYPosition(),2));
     //std::cout<<"Distance between "<<product1.getProductID()<<" and "<<product2.getProductID()<<" = "<<distance<<std::endl;
     return distance;
+}
+
+/**
+ * @brief	Calculates the maximum distance to be traveled towards right
+ *
+ * @param	shelfStart		Indicates the starting shelf number
+ * @param	shelfEnd		Indicates the ending shelf number
+ *
+ * @return  Maxmimum X coordinate to be traveled aling the aisle
+ */
+
+int PathFinder::findMaxEnd(int shelfStart, int shelfEnd) {
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+    int max = 0;
+    for(int i = shelfStart; i<=shelfEnd; i+=2) {
+        std::string aisleCount = std::to_string(i);
+        int endCoord = static_cast<int>(shelves[aisleCount]["end"]) + 1;
+        max = max > std::ceil(endCoord) ? max : std::ceil(endCoord);
+    }
+    return max;
+}
+
+/**
+ * @brief	Calculates the maximum distance to be traveled towards left
+ *
+ * @param	shelfStart		Indicates the starting shelf number
+ * @param	shelfEnd		Indicates the ending shelf number
+ *
+ * @return  Minimum X coordinate to be traveled aling the aisle
+ */
+
+int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+    int min = INT_MAX;
+    for(int i = shelfStart; i<=shelfEnd; i+=2) {
+        std::string aisleCount = std::to_string(i);
+        int beginCoord = static_cast<int>(shelves[aisleCount]["begin"]) - 1;
+        min = min < std::floor(beginCoord) ? min : std::floor(beginCoord);
+    }
+    return min;
+}
+
+/**
+ * @brief	Navigates along the warehouse aisles in an S shape
+ *
+ * @param	productList		List of products to be picked up
+ * @param	startLocation   Start location deaulted to (0,0)
+ * @param   endLocation     End location defaulted to (0,0)
+ *
+ * @return  Ordered set of points to be visited
+ */
+
+QVector<QPointF> PathFinder::STraversal(
+        std::deque<Product>& productList,
+        Product& startLocation,
+        Product& endLocation
+        ) {
+        int traversalOrder = 1; //1 -> left to right, 0-> right to left
+        std::deque<std::tuple<float,float>> points;
+        QVector<QPointF> pointsToDisplay;
+        std::unordered_map<int, std::vector<Product>> aisleProductMap;
+        auto start = std::chrono::high_resolution_clock::now();
+
+        WarehouseMap* wMap = wMap->getInstance();
+        currentPosition = startLocation.getPositionTuple();
+        points.push_back(currentPosition);
+        json shelves = wMap->getShelves();
+
+        //Add aisles to be visited
+        for(auto& shelf : shelves.items()) {
+            for(auto& product : productList) {
+                if(product.getYPosition() == std::stoi(shelf.key())) {
+                    aislesToBeVisited.push_back(std::stoi(shelf.key()) + 1); //aisle "1" can access shelf "0"
+                    aisleProductMap[product.getYPosition()].push_back(product); // Add product to aisle key
+                }
+            }
+        }
+
+        std::cout<<"Aisles to be visited:"<<std::endl;
+        std::sort(aislesToBeVisited.begin(),aislesToBeVisited.end());
+
+        aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
+        for(auto& element : aislesToBeVisited) {
+            std::cout<<element<<std::endl;
+        }
+        //aislesToBeVisited is an ordered vector of aisles. (1,3,5,7,9.....)
+        for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
+            int yCoord = *it;
+            std::tuple<float,float> point;
+            /*
+            if(yCoord < 21) {
+                if(traversalOrder == 1) {
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["end"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["end"],*(it+1)));
+                    traversalOrder = 0;
+                }
+                else {
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["begin"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["begin"],*(it+1)));
+                    traversalOrder = 1;
+                }
+            }
+            */
+
+            if(yCoord < 21) { //Make sure y coordinate does not exceed 19
+                if(traversalOrder == 1) { // left to right
+
+                    //Find the right most coordinate
+                    int nextEnd = findMaxEnd(yCoord+1,*(it+1)-1);
+
+                    //Add the Left most coordinate in the aisle
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord));
+
+                    //Sort based on earliest product encountered in traversal
+                    std::sort(aisleProductMap[yCoord-1].begin(),aisleProductMap[yCoord-1].end(),[](Product a, Product b) {
+                        return a.getXPosition() < b.getXPosition();
+                    });
+
+                    //Add the product locations in the traversal
+                    for(auto& product : aisleProductMap[yCoord-1]) {
+                        points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition()));
+                    }
+
+                    //Push the rightmost coordinate in the aisle
+                    points.push_back(std::make_tuple(nextEnd,yCoord));
+
+                    //Travel to the next aisle
+                    points.push_back(std::make_tuple(nextEnd,*(it+1)));
+                    traversalOrder = 0;
+                }
+                else {//right to left
+
+                    //Find the left most coordinate
+                    int nextBegin = findMinBegin(yCoord+1,*(it+1)-1);
+
+                    //Add the Right most coordinate in the aisle
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord));
+
+                    //Sort based on earliest product encountered in traversal
+                    std::sort(aisleProductMap[yCoord-1].begin(),aisleProductMap[yCoord-1].end(),[](Product a, Product b) {
+                        return a.getXPosition() > b.getXPosition();
+                    });
+
+                    //Add the product locations in the traversal
+                    for(auto& product : aisleProductMap[yCoord-1]) {
+                        points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition()));
+                    }
+
+                    //Push the leftmost coordinate in the aisle
+                    points.push_back(std::make_tuple(nextBegin,yCoord));
+
+                    //Travel to the next aisle
+                    points.push_back(std::make_tuple(nextBegin,*(it+1)));
+                    traversalOrder = 1;
+                }
+            }
+        }
+
+       for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
+            points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition()));
+       }
+        points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1)));
+        points.push_back(startLocation.getPositionTuple());
+
+        for(auto& point : points) {
+            pointsToDisplay.push_back(QPointF(std::get<0>(point) * TILE_SIZE/SCALE,std::get<1>(point)  * TILE_SIZE/SCALE));
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
+        return pointsToDisplay;
 }
 
 /**
@@ -67,11 +242,11 @@ std::deque<Product> PathFinder::calculatePath(
             currPath.push_back(startLocation);
             for(auto entry : vertices) {
                 Product next = entry;
-                currentPathLength += distanceBetweenProducts(k,next);
+                currentPathLength += distanceBetweenProductsEuclidean(k,next);
                 k = next; 
                 currPath.push_back(next);
             }
-            currentPathLength += distanceBetweenProducts(k,endLocation);
+            currentPathLength += distanceBetweenProductsEuclidean(k,endLocation);
             currPath.push_back(endLocation);
             if(currentPathLength < pathLength){
                 path = currPath;
@@ -184,3 +359,24 @@ QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
     instructions.append(instruction);
     return instructions;
 }
+
+/**
+ * @brief	Return current position of the user. (Unused currently)
+ *
+ * @return  Tuple of coordinates
+ */
+
+std::tuple<float,float> PathFinder::getCurrentPosition(void) {
+    return currentPosition;
+}
+
+/**
+ * @brief	Set current position of the user. (Unused currently)
+ *
+ * @params  pos Tuple of coordinates
+ */
+
+void PathFinder::setCurrentPosition(std::tuple<float,float>& pos) {
+    currentPosition = pos;
+}
+
