@@ -183,7 +183,7 @@ void fillOrderDriver(Order* o, Database* d) {
 
     new(&p) Product("364", t);
     o->addProduct(p);
-
+    /*
     t = d->getProductPosition("571");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
@@ -281,6 +281,7 @@ void fillOrderDriver(Order* o, Database* d) {
 
     new(&p) Product("3401", t);
     o->addProduct(p);
+    */
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -204,7 +204,7 @@ QVector<QPointF> PathFinder::STraversal(
 }
 
 /**
- * @brief	Finds the most optimal path the user must take
+ * @brief	Finds the most optimal path the user must take (Not used currently)
  * 
  * @param   graph           Adjacency matrix of the products
  * @param   productList     List of products to be picked up
