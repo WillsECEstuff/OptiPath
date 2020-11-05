@@ -94,6 +94,7 @@ json WarehouseMap::getShelves(void)
 	return shelves;
 }
 
+
 /**
  * @brief	This function returns the nested JSON object
  *			within the shelves JSON structure. This JSON

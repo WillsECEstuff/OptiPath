@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindow.ui'
+** Form generated from reading UI file 'mainwhmap.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_MAINWINDOW_H
-#define UI_MAINWINDOW_H
+#ifndef UI_MAINWHMAP_H
+#define UI_MAINWHMAP_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -19,7 +19,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_mainwhmap
 {
 public:
     QWidget *centralwidget;
@@ -27,42 +27,42 @@ public:
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *mainwhmap)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1223, 964);
-        centralwidget = new QWidget(MainWindow);
+        if (mainwhmap->objectName().isEmpty())
+            mainwhmap->setObjectName(QString::fromUtf8("mainwhmap"));
+        mainwhmap->resize(1223, 964);
+        centralwidget = new QWidget(mainwhmap);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         txtID = new QLineEdit(centralwidget);
         txtID->setObjectName(QString::fromUtf8("txtID"));
         txtID->setGeometry(QRect(200, 750, 50, 25));
-        MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
+        mainwhmap->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(mainwhmap);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 1223, 21));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
+        mainwhmap->setMenuBar(menubar);
+        statusbar = new QStatusBar(mainwhmap);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
+        mainwhmap->setStatusBar(statusbar);
 
-        retranslateUi(MainWindow);
+        retranslateUi(mainwhmap);
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(mainwhmap);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *mainwhmap)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        txtID->setPlaceholderText(QCoreApplication::translate("MainWindow", "123", nullptr));
+        mainwhmap->setWindowTitle(QCoreApplication::translate("mainwhmap", "mainwhmap", nullptr));
+        txtID->setPlaceholderText(QCoreApplication::translate("mainwhmap", "123", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class mainwhmap: public Ui_mainwhmap {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_MAINWINDOW_H
+#endif // UI_MAINWHMAP_H

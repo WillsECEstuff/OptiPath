@@ -62,7 +62,10 @@ void mainwhmap::handleButton() {
     std::string ID = txtID->text().toStdString();
     singleRoute.clear();
 
+    this->hide();
     secWindow = new secondProductWindow();
+    connect (secWindow, SIGNAL(fromOtherMap()), this, SLOT(onOtherSignal()));
+
     secWindow->loadProductPoint(ID);
     singleRoute.push_back(routePoints[0]);
 
@@ -75,6 +78,10 @@ void mainwhmap::handleButton() {
     secWindow->setFixedSize(1500, 1000);
     secWindow->setWindowTitle("Single Product Map");
     secWindow->show();
+}
+
+void mainwhmap::onOtherSignal() {
+    show();
 }
 
 void mainwhmap::paintEvent(QPaintEvent *event)
