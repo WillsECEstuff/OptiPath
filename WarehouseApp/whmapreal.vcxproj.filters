@@ -73,6 +73,9 @@
     <ClCompile Include="WarehouseMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ordermenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h">
@@ -118,6 +121,9 @@
     <QtUic Include="mainwhmap.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ordermenu.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -127,6 +133,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="mainwhmap.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ordermenu.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

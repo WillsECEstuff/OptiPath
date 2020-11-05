@@ -29,6 +29,7 @@ int main(int argc, char** argv)
     const float SCALE = 5;
 
     qDebug() << QDir().currentPath(); // verify that the warehouse .txt file is in the path!
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication a(argc, argv);
 
     // Instantiate a database

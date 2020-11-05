@@ -197,6 +197,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="mainwhmap.cpp" />
     <ClCompile Include="Order.cpp" />
+    <ClCompile Include="ordermenu.cpp" />
     <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
     <ClCompile Include="Product.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="AdjacencyMatrix.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="Inventory.h" />
+    <QtMoc Include="ordermenu.h" />
     <ClInclude Include="WarehouseMap.h" />
     <QtMoc Include="mainwhmap.h" />
     <ClInclude Include="Order.h" />
@@ -238,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwhmap.ui" />
+    <QtUic Include="ordermenu.ui" />
     <QtUic Include="secondproductwindow.ui" />
   </ItemGroup>
   <ItemGroup>
