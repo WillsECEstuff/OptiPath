@@ -19,7 +19,7 @@ secondProductWindow::secondProductWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::secondProductWindow)
 {
-    returnButton = new QPushButton("Close", this);
+    returnButton = new QPushButton("Return to Order Menu", this);
     returnButton->setGeometry(200,800,50,25);
     connect(returnButton, SIGNAL (clicked()), this, SLOT (handleButton()));
 }
@@ -88,7 +88,7 @@ void secondProductWindow::loadInstructions() {
 
 void secondProductWindow::handleButton() {
     hide();
-    emit fromOtherMap();
+    emit fromOtherMenu();
 }
 
 void secondProductWindow::paintEvent(QPaintEvent *event)

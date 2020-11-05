@@ -18,8 +18,10 @@
 #include "WarehouseMap.h"
 #include <QDir>
 #include <QDebug>
+#include "ordermenu.h"
 
 void fillOrderDriver(Order* o, Database* d);
+void instantiateGUIs(QVector<QPointF> aLocs, QVector<QPointF> pLocs, QVector<QPointF> pointsToDisplay);
 
 int main(int argc, char** argv)
 {
@@ -89,24 +91,30 @@ int main(int argc, char** argv)
     matrix.populateMatrix();
     matrix.displayMatrix();
 
-    mainwhmap w;
-    w.loadAllPoints(aLocs);
-    w.loadProductPoints(pLocs);
-    w.setFixedSize(1500, 1000);
-    w.setWindowTitle("Main Warehouse Map with Path");
-
     std::cout << "Please wait; calculating path." << std::endl;
 
     QVector<QPointF> pointsToDisplay = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+    //instantiateGUIs(aLocs, pLocs, pointsToDisplay);
 
     std::cout<<"Points to be reached are:"<<std::endl;
     for(auto& point : pointsToDisplay) {
         std::cout<<"("<<point.rx()<<","<<point.ry()<<")"<<std::endl;
     }
 
-    w.loadRoutePrinter(pointsToDisplay);
-    w.show();
+    // load GUIs begin
+    ordermenu om;
+    om.loadAllPoints(aLocs);
+    om.loadProductPoints(pLocs);
+    om.loadRoutePrinter(pointsToDisplay);
+    om.setFixedSize(600, 500);
+
+    om.setWindowTitle("Order Menu");
+    om.show();
+    // load GUIs end
+
     return a.exec();
+
+
     /*
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
     std::cout<<"Path for you : ";
@@ -125,6 +133,17 @@ int main(int argc, char** argv)
 
     return a.exec();
     */
+}
+
+void instantiateGUIs(QVector<QPointF> aLocs, QVector<QPointF> pLocs, QVector<QPointF> pointsToDisplay) { // currently unused
+    mainwhmap w;
+    w.loadAllPoints(aLocs);
+    w.loadProductPoints(pLocs);
+    w.loadRoutePrinter(pointsToDisplay);
+
+    w.setFixedSize(1500, 1000);
+    w.setWindowTitle("Main Warehouse Map with Path");
+    w.show();
 }
 
 void fillOrderDriver(Order* o, Database* d) {
