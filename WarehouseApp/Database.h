@@ -38,3 +38,12 @@ public:
     std::vector<std::tuple<float, float>> getLocList();
 	json returnDatabase(void);
 };
+
+/*
+JSON structure for database
+{
+	"productID(string)":
+		{float, float},
+	...
+	...
+}*/
