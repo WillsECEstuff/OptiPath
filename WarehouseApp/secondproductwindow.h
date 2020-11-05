@@ -29,7 +29,7 @@ private slots:
     void handleButton();
 
 signals:
-    void fromOtherMap();
+    void fromOtherMenu();
 
 private:
     Ui::secondProductWindow *ui;

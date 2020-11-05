@@ -1,51 +1,60 @@
-#ifndef mainwhmap_H
-#define mainwhmap_H
+#ifndef ORDERMENU_H
+#define ORDERMENU_H
 
 #include <QMainWindow>
 #include <QPainter>
 #include <QVector>
 #include <QPointF>
 #include <QtWidgets>
+#include "mainwhmap.h"
 #include "secondproductwindow.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class mainwhmap; }
+namespace Ui { class ordermenu; }
 QT_END_NAMESPACE
 
-class mainwhmap : public QMainWindow
+class ordermenu : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit mainwhmap(QWidget *parent = 0);
-    ~mainwhmap();
+    ordermenu(QWidget *parent = nullptr);
+    ~ordermenu();
 
     void loadAllPoints(QVector <QPointF> ptsList);
     void loadProductPoints(QVector <QPointF> ptsList);
     void loadRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
 
-    virtual void paintEvent(QPaintEvent *event);
-
-signals:
-    void fromOtherMenu();
-/*
 public slots:
-    void onOtherSignal(); */
+    void onOtherSignal();
 
 private slots:
-    void handleButton();
+    void handleRouteButton();
+    void handleWHMapButton();
+    void handleSettingsButton();
+    void handleSingleButton();
 
 private:
-    Ui::mainwhmap *ui;
+    Ui::ordermenu *ui;
+
     QVector <QPointF> allPoints;
     QVector <QPointF> productPoints;
     QVector <QPointF> routePoints;
     QVector <std::string> directions;
-    QPushButton *p_button;
-    QLineEdit *txtID;
+
+    QPushButton *allWHMapButton;
+    QPushButton *routeButton;
+    QPushButton *enterSingleButton;
+    QPushButton *settingsButton;
+    QLabel *txtOrder;
+    QFont *font;
+    QComboBox *ordercbox;
+    QLineEdit *txtwantsingle;
     QLabel *txtLbl;
+
+    mainwhmap *routeMap;
     secondProductWindow *secWindow;
     QVector <QPointF> singleRoute;
 };
-#endif // mainwhmap_H
+#endif // ORDERMENU_H
