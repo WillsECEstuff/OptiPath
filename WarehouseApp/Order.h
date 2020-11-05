@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include<algorithm>
+#include <algorithm>
 #include <list>
 #include "Product.h"
 

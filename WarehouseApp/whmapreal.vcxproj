@@ -201,6 +201,7 @@
     <ClCompile Include="PriorityQueue.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="secondproductwindow.cpp" />
+    <ClCompile Include="OrderHelper.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="WarehouseApp.cpp" />
     <ClCompile Include="WarehouseMap.cpp" />
@@ -208,6 +209,7 @@
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h" />
     <ClInclude Include="Database.h" />
+    <ClInclude Include="OrderHelper.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="WarehouseMap.h" />
     <QtMoc Include="mainwhmap.h" />
