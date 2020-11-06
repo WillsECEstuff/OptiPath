@@ -31,8 +31,8 @@ public slots:
 
 private slots:
     void handleRouteButton();
-    void handleWHMapButton();
-    void handleSettingsButton();
+    void handleLocationButton();
+    void handleAddOrderButton();
     void handleSingleButton();
 
 private:
@@ -43,15 +43,17 @@ private:
     QVector <QPointF> routePoints;
     QVector <std::string> directions;
 
-    QPushButton *allWHMapButton;
+    QPushButton *locationButton;
     QPushButton *routeButton;
     QPushButton *enterSingleButton;
-    QPushButton *settingsButton;
+    QPushButton *addOrderButton;
     QLabel *txtOrder;
     QFont *font;
     QComboBox *ordercbox;
     QLineEdit *txtwantsingle;
-    QLabel *txtLbl;
+    QLabel *txtLblSingle;
+    QLineEdit *txtLoc;
+    QLabel *txtLblLoc;
 
     mainwhmap *routeMap;
     secondProductWindow *secWindow;
