@@ -20,7 +20,7 @@ secondProductWindow::secondProductWindow(QWidget *parent)
     , ui(new Ui::secondProductWindow)
 {
     returnButton = new QPushButton("Return to Order Menu", this);
-    returnButton->setGeometry(200,800,135,50);
+    returnButton->setGeometry(200,700,135,50);
     connect(returnButton, SIGNAL (clicked()), this, SLOT (handleButton()));
 }
 
@@ -180,7 +180,7 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::cyan, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.setFont(QFont("times",2));
     painter.drawText(routePoints[0].x()+2, routePoints[0].y()+4, "START");
-    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+4, "END");
+    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+9, "END");
 
     painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     for (int i = 1; i < routePoints.size() - 1; i++) {

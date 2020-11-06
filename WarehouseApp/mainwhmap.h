@@ -7,6 +7,9 @@
 #include <QPointF>
 #include <QtWidgets>
 #include "secondproductwindow.h"
+#include "Ticket.h"
+#include "Order.h"
+#include "PathFinder.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class mainwhmap; }
