@@ -4,9 +4,7 @@
 
 #include <iostream>
 #include <list>
-#include <string>
 #include <tuple>
-#include <vector>
 #include <QApplication>
 #include <QPointF>
 #include <QVector>
@@ -14,15 +12,16 @@
 #include "Database.h"
 #include "Ticket.h"
 #include "Order.h"
-#include "OrderHelper.h"
 #include "PathFinder.h"
 #include "mainwhmap.h"
 #include "Inventory.h"
 #include "WarehouseMap.h"
 #include <QDir>
 #include <QDebug>
+#include "ordermenu.h"
 
-std::vector<std::string> fillOrderDriver(void);
+void fillOrderDriver(Order* o, Database* d);
+void instantiateGUIs(QVector<QPointF> aLocs, QVector<QPointF> pLocs, QVector<QPointF> pointsToDisplay);
 
 int main(int argc, char** argv)
 {
@@ -30,6 +29,7 @@ int main(int argc, char** argv)
     const float SCALE = 5;
 
     qDebug() << QDir().currentPath(); // verify that the warehouse .txt file is in the path!
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication a(argc, argv);
 
     // Instantiate a database
@@ -56,8 +56,8 @@ int main(int argc, char** argv)
     json j = whm->getShelves();
     std::cout << j.dump(4) << std::endl;
 
-    std::vector<std::string> s = fillOrderDriver();
-    Order o = createOrderfromVector(d, s, 1, 1);
+    Order o(1, 1);
+    fillOrderDriver(&o, d);
 
     std::vector<std::tuple<float, float>> locList = d->getLocList();
     for (auto& it : locList) {
@@ -92,24 +92,30 @@ int main(int argc, char** argv)
     matrix.populateMatrix();
     matrix.displayMatrix();
 
-    mainwhmap w;
-    w.loadAllPoints(aLocs);
-    w.loadProductPoints(pLocs);
-    w.setFixedSize(1500, 1000);
-    w.setWindowTitle("Main Warehouse Map with Path");
-
     std::cout << "Please wait; calculating path." << std::endl;
 
     QVector<QPointF> pointsToDisplay = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+    //instantiateGUIs(aLocs, pLocs, pointsToDisplay);
 
     std::cout<<"Points to be reached are:"<<std::endl;
     for(auto& point : pointsToDisplay) {
         std::cout<<"("<<point.rx()<<","<<point.ry()<<")"<<std::endl;
     }
 
-    w.loadRoutePrinter(pointsToDisplay);
-    w.show();
+    // load GUIs begin
+    ordermenu om;
+    om.loadAllPoints(aLocs);
+    om.loadProductPoints(pLocs);
+    om.loadRoutePrinter(pointsToDisplay);
+    om.setFixedSize(600, 500);
+
+    om.setWindowTitle("Order Menu");
+    om.show();
+    // load GUIs end
+
     return a.exec();
+
+
     /*
     std::deque<Product> path = pathFinder.calculatePath(matrix.getMatrix(),deq,dummyStart,dummyEnd);
     std::cout<<"Path for you : ";
@@ -130,37 +136,171 @@ int main(int argc, char** argv)
     */
 }
 
-// just a driver for example
-std::vector<std::string> fillOrderDriver(void) {
+void instantiateGUIs(QVector<QPointF> aLocs, QVector<QPointF> pLocs, QVector<QPointF> pointsToDisplay) { // currently unused
+    mainwhmap w;
+    w.loadAllPoints(aLocs);
+    w.loadProductPoints(pLocs);
+    w.loadRoutePrinter(pointsToDisplay);
+
+    w.setFixedSize(1500, 1000);
+    w.setWindowTitle("Main Warehouse Map with Path");
+    w.show();
+}
+
+void fillOrderDriver(Order* o, Database* d) {
+    // Instantiate an order
+    // can have multiple orders
+
+    // using the database, get product position
+    // in this example, I am getting a tuple
+    std::tuple<float, float> t = d->getProductPosition("1");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
 
     // create a product class
     // and add the product into the order
 
-    std::vector<std::string> s;
-    s.push_back("1");
-    s.push_back("45");
-    s.push_back("102");
-    s.push_back("16");
-    s.push_back("209");
-    s.push_back("485");
-    s.push_back("364");
-    s.push_back("571");
-    s.push_back("517");
-    s.push_back("623");
-    s.push_back("633");
-    s.push_back("5329");
-    s.push_back("372539");
-    s.push_back("105912");
-    s.push_back("332555");
-    s.push_back("736830");
-    s.push_back("103313");
-    s.push_back("188856");
-    s.push_back("736830");
-    s.push_back("20373");
-    s.push_back("227534");
-    s.push_back("3401");
-   
-    return s;
+    Product p("1", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("45");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("45", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("102");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("102", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("16");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("16", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("290");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("290", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("485");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("485", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("364");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("364", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("571");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("571", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("517");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("517", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("623");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("623", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("633");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("633", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("5329");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("5329", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("372539");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("372539", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("105912");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("105912", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("332555");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("332555", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("736830");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("736830", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("103313");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("103313", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("188856");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("188856", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("736830");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("736830", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("20373");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("20373", t);
+    o->addProduct(p);
+
+    t = d->getProductPosition("227534");
+    std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
+    p.~Product();
+
+    new(&p) Product("3401", t);
+    o->addProduct(p);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

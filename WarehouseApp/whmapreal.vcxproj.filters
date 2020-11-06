@@ -73,7 +73,7 @@
     <ClCompile Include="WarehouseMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OrderHelper.cpp">
+    <ClCompile Include="ordermenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,9 +105,6 @@
     <ClInclude Include="WarehouseMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OrderHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -124,6 +121,9 @@
     <QtUic Include="mainwhmap.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ordermenu.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -133,6 +133,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="mainwhmap.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ordermenu.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

@@ -15,6 +15,7 @@ SOURCES += \
     AdjacencyMatrix.cpp \
     Database.cpp \
     Order.cpp \
+    ordermenu.cpp \
     PathFinder.cpp \
     PriorityQueue.cpp \
     Product.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     AdjacencyMatrix.h \
     Database.h \
     Order.h \
+    ordermenu.h \
     PathFinder.h \
     PriorityQueue.h \
     Product.h \

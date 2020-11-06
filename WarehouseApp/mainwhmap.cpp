@@ -19,15 +19,15 @@ mainwhmap::mainwhmap(QWidget *parent)
     , ui(new Ui::mainwhmap)
 {
     //ui->setupUi(this);
-    p_button = new QPushButton("Enter", this);
+    p_button = new QPushButton("Return to Order Menu", this);
     p_button->setGeometry(200,800,50,25);
-    txtID = new QLineEdit(this);
+   /* txtID = new QLineEdit(this);
     txtID->setPlaceholderText("123");
     txtID->setGeometry(200,770,50,25);
     txtID->setFocus();
     txtLbl = new QLabel(this);
     txtLbl->setText("Don't want a list of products?\nEnter a single product ID below");
-    txtLbl->setGeometry(150,730,300,30);
+    txtLbl->setGeometry(150,730,300,30); */
 
     connect(p_button, SIGNAL (clicked()), this, SLOT (handleButton()));
 
@@ -59,12 +59,12 @@ void mainwhmap::loadInstructions(QVector<std::string> instrList) {
 }
 
 void mainwhmap::handleButton() {
-    std::string ID = txtID->text().toStdString();
+    /*std::string ID = txtID->text().toStdString();
     singleRoute.clear();
 
     this->hide();
     secWindow = new secondProductWindow();
-    connect (secWindow, SIGNAL(fromOtherMap()), this, SLOT(onOtherSignal()));
+    connect (secWindow, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
 
     secWindow->loadProductPoint(ID);
     singleRoute.push_back(routePoints[0]);
@@ -77,12 +77,15 @@ void mainwhmap::handleButton() {
     secWindow->loadInstructions();
     secWindow->setFixedSize(1500, 1000);
     secWindow->setWindowTitle("Single Product Map");
-    secWindow->show();
-}
+    secWindow->show(); */
 
+    hide();
+    emit fromOtherMenu();
+}
+/*
 void mainwhmap::onOtherSignal() {
     show();
-}
+} */
 
 void mainwhmap::paintEvent(QPaintEvent *event)
 {
@@ -90,7 +93,7 @@ void mainwhmap::paintEvent(QPaintEvent *event)
     painter.setBrush(Qt::DiagCrossPattern);
     QPen pen;
 
-    int xboundary = TILE_SIZE * 40; // max 40 length? Scaled by tilesize
+    int xboundary = TILE_SIZE * 40; // max 40 length. Scaled by tilesize
     int yboundary = TILE_SIZE * 22;
     int legendX = xboundary + 100; // x = 1300, location for legend
 
