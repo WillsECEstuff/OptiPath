@@ -189,19 +189,22 @@ QVector<QPointF> PathFinder::STraversal(
             }
         }
 
+        //Visit the last aisle of products
        for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
             points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
        }
-        points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
 
+        //Go back to start location
+        points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
+        points.push_back(std::make_tuple(0,startLocation.getYPosition(),"-1"));
         points.push_back(std::make_tuple(startLocation.getXPosition(),startLocation.getYPosition(),"-1"));
 
+        //Add points to display
         for(auto it = points.begin();it!=points.end();++it) {
             pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+            pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
         }
-        for(auto it = points.begin()+1;it!=points.end();++it) {
-            pathLength += distanceBetweenPointsEuclidean(*it,*(it-1));
-        }
+
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
