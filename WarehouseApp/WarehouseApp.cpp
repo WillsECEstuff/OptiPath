@@ -196,6 +196,7 @@ void fillOrderDriver(Order* o, Database* d) {
     new(&p) Product("290", t);
     o->addProduct(p);
 
+
     t = d->getProductPosition("485");
     std::cout << std::get<0>(t) << " " << std::get<1>(t) << std::endl;
     p.~Product();
