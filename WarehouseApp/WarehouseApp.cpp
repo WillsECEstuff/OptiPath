@@ -50,7 +50,7 @@ int main(int argc, char** argv)
     // make sure database is clear before reading and populating
     // database from the text file
     d->deleteDatabase();
-    d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
+    d->populateDatabase("/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp/qvBox-warehouse-data-f20-v01.txt");
 
     whm->buildWarehouseMap(d->returnDatabase());
     json j = whm->getShelves();
@@ -102,10 +102,16 @@ int main(int argc, char** argv)
         std::cout<<"("<<point.rx()<<","<<point.ry()<<")"<<std::endl;
     }
 
+    QVector <std::string> instructions = pathFinder.pathAnnotation();
+
+    for (auto& instruction: instructions) {
+        std::cout << instruction << std::endl;
+    }
     // load GUIs begin
     ordermenu om;
     om.loadAllPoints(aLocs);
     om.loadProductPoints(pLocs);
+    om.loadInstructions(instructions);
     om.loadRoutePrinter(pointsToDisplay);
     om.setFixedSize(600, 500);
 

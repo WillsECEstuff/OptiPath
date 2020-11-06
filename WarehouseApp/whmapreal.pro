@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     Inventory.cpp \
+    OrderHelper.cpp \
     WarehouseApp.cpp \
     WarehouseMap.cpp \
     AdjacencyMatrix.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 
 HEADERS += \
     Inventory.h \
+    OrderHelper.h \
     WarehouseMap.h \
     AdjacencyMatrix.h \
     Database.h \
@@ -35,10 +37,13 @@ HEADERS += \
     Product.h \
     mainwhmap.h \
     secondproductwindow.h \
-    Ticket.h
+    Ticket.h \
+    ui_mainwhmap.h \
+    ui_singleProductWindow.h
 
 FORMS += \
     mainwhmap.ui \
+    ordermenu.ui \
     secondproductwindow.ui
 
 # Default rules for deployment.
@@ -47,4 +52,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    ClassDiagram.cd \
     qvBox-warehouse-data-f20-v01.txt

@@ -86,14 +86,13 @@ QVector<QPointF> PathFinder::STraversal(
         Product& endLocation
         ) {
         int traversalOrder = 1; //1 -> left to right, 0-> right to left
-        std::deque<std::tuple<float,float>> points;
         QVector<QPointF> pointsToDisplay;
         std::unordered_map<int, std::vector<Product>> aisleProductMap;
         auto start = std::chrono::high_resolution_clock::now();
 
         WarehouseMap* wMap = wMap->getInstance();
         currentPosition = startLocation.getPositionTuple();
-        points.push_back(currentPosition);
+        points.push_back(std::make_tuple(std::get<0>(currentPosition),std::get<1>(currentPosition),"-1"));
         json shelves = wMap->getShelves();
 
         //Add aisles to be visited
@@ -141,7 +140,7 @@ QVector<QPointF> PathFinder::STraversal(
                     int nextEnd = findMaxEnd(yCoord+1,*(it+1)-1);
 
                     //Add the Left most coordinate in the aisle
-                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord,"-1"));
 
                     //Sort based on earliest product encountered in traversal
                     std::sort(aisleProductMap[yCoord-1].begin(),aisleProductMap[yCoord-1].end(),[](Product a, Product b) {
@@ -150,14 +149,14 @@ QVector<QPointF> PathFinder::STraversal(
 
                     //Add the product locations in the traversal
                     for(auto& product : aisleProductMap[yCoord-1]) {
-                        points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition()));
+                        points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
                     }
 
                     //Push the rightmost coordinate in the aisle
-                    points.push_back(std::make_tuple(nextEnd,yCoord));
+                    points.push_back(std::make_tuple(nextEnd,yCoord,"-1"));
 
                     //Travel to the next aisle
-                    points.push_back(std::make_tuple(nextEnd,*(it+1)));
+                    points.push_back(std::make_tuple(nextEnd,*(it+1),"-1"));
                     traversalOrder = 0;
                 }
                 else {//right to left
@@ -166,7 +165,7 @@ QVector<QPointF> PathFinder::STraversal(
                     int nextBegin = findMinBegin(yCoord+1,*(it+1)-1);
 
                     //Add the Right most coordinate in the aisle
-                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord));
+                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord,"-1"));
 
                     //Sort based on earliest product encountered in traversal
                     std::sort(aisleProductMap[yCoord-1].begin(),aisleProductMap[yCoord-1].end(),[](Product a, Product b) {
@@ -175,24 +174,24 @@ QVector<QPointF> PathFinder::STraversal(
 
                     //Add the product locations in the traversal
                     for(auto& product : aisleProductMap[yCoord-1]) {
-                        points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition()));
+                        points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
                     }
 
                     //Push the leftmost coordinate in the aisle
-                    points.push_back(std::make_tuple(nextBegin,yCoord));
+                    points.push_back(std::make_tuple(nextBegin,yCoord,"-1"));
 
                     //Travel to the next aisle
-                    points.push_back(std::make_tuple(nextBegin,*(it+1)));
+                    points.push_back(std::make_tuple(nextBegin,*(it+1),"-1"));
                     traversalOrder = 1;
                 }
             }
         }
 
        for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
-            points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition()));
+            points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
        }
-        points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1)));
-        points.push_back(startLocation.getPositionTuple());
+        points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
+        points.push_back(std::make_tuple(std::get<0>(currentPosition),std::get<0>(currentPosition),"-1"));
 
         for(auto& point : points) {
             pointsToDisplay.push_back(QPointF(std::get<0>(point) * TILE_SIZE/SCALE,std::get<1>(point)  * TILE_SIZE/SCALE));
@@ -323,7 +322,58 @@ std::deque<Product> PathFinder::getPath(void) {
  * @return  return instructions in user-readable format
  */
 
-QVector <std::string> PathFinder::pathAnnotation(std::deque<Product>& path) {
+QVector <std::string> PathFinder::pathAnnotation() {
+    QVector <std::string> instructions;
+    std::stringstream xStream, yStream;
+
+    xStream << std::fixed << std::setprecision(2) << std::get<0>(points[0]);
+    yStream << std::fixed << std::setprecision(2) << std::get<1>(points[0]);
+
+    std::string instruction = "Start at start location present in (" + xStream.str()
+                                    + ',' + yStream.str() + ")";
+
+    xStream.str(""); yStream.str("");
+
+    instructions.append(instruction);
+    for(unsigned int i = 1;i < points.size()-1;++i) {
+        xStream << std::fixed << std::setprecision(2) << std::get<0>(points[i]);
+        yStream << std::fixed << std::setprecision(2) << std::get<1>(points[i]);
+
+        if(std::get<2>(points[i]) != "-1") {
+            instruction = "Go to product " + std::get<2>(points[i]) + " at (" +
+                xStream.str() +"," + yStream.str() + ")";
+        }
+
+        else {
+            instruction = "Go to point (" +
+                xStream.str() +"," + yStream.str() + ")";
+        }
+        xStream.str(""); yStream.str("");
+
+        instructions.append(instruction);
+    }
+
+    xStream << std::fixed << std::setprecision(2) << std::get<0>(points[points.size()]);
+    yStream << std::fixed << std::setprecision(2) << std::get<1>(points[points.size()]);
+
+    instruction = "Drop the products off at end location in (" + xStream.str()
+            + ',' + yStream.str() + ")";
+
+    xStream.str(""); yStream.str("");
+
+    instructions.append(instruction);
+    return instructions;
+}
+
+/**
+ * @brief	Stores instructions for user in a vector
+ *
+ * @param   path         Path output by the path finder
+ *
+ * @return  return instructions in user-readable format
+ */
+
+QVector <std::string> PathFinder::oldAnnotation(std::deque<Product>& path) {
     QVector <std::string> instructions;
     std::stringstream xStream, yStream;
 
