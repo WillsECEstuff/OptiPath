@@ -9,7 +9,23 @@
 #include "PathFinder.h"
 #include <chrono>
 
+/**
+ * @brief	Calculates distance between two points on the warehouse.
+            Takes two points as arguments.
+ *
+ * @param	point1		point1 is a location that will indicate the
+ *					        starting point
+ * @param	point2		point2 is a location that will indicate the
+                            ending point
+ * @return  Euclidean distance between points
+ */
 
+double PathFinder::distanceBetweenPointsEuclidean(std::tuple<float,float,std::string>& point1,
+                                                  std::tuple<float,float,std::string>& point2) {
+
+    return sqrt(pow(std::get<0>(point1) - std::get<1>(point1),2) +
+                pow(std::get<0>(point2) - std::get<1>(point2),2));
+}
 
 /**
  * @brief	Calculates distance between two products on the warehouse. 
@@ -115,23 +131,6 @@ QVector<QPointF> PathFinder::STraversal(
         //aislesToBeVisited is an ordered vector of aisles. (1,3,5,7,9.....)
         for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
             int yCoord = *it;
-            std::tuple<float,float> point;
-            /*
-            if(yCoord < 21) {
-                if(traversalOrder == 1) {
-                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["begin"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["end"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["end"],*(it+1)));
-                    traversalOrder = 0;
-                }
-                else {
-                    points.push_back(std::make_tuple(shelves[std::to_string(yCoord-1)]["end"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)-1)]["begin"],yCoord));
-                    points.push_back(std::make_tuple(shelves[std::to_string(*(it+1)+1)]["begin"],*(it+1)));
-                    traversalOrder = 1;
-                }
-            }
-            */
 
             if(yCoord < 21) { //Make sure y coordinate does not exceed 19
                 if(traversalOrder == 1) { // left to right
@@ -155,8 +154,10 @@ QVector<QPointF> PathFinder::STraversal(
                     //Push the rightmost coordinate in the aisle
                     points.push_back(std::make_tuple(nextEnd,yCoord,"-1"));
 
+
                     //Travel to the next aisle
                     points.push_back(std::make_tuple(nextEnd,*(it+1),"-1"));
+
                     traversalOrder = 0;
                 }
                 else {//right to left
@@ -182,6 +183,7 @@ QVector<QPointF> PathFinder::STraversal(
 
                     //Travel to the next aisle
                     points.push_back(std::make_tuple(nextBegin,*(it+1),"-1"));
+
                     traversalOrder = 1;
                 }
             }
@@ -191,14 +193,17 @@ QVector<QPointF> PathFinder::STraversal(
             points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
        }
         points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
-        points.push_back(std::make_tuple(std::get<0>(currentPosition),std::get<0>(currentPosition),"-1"));
 
-        for(auto& point : points) {
-            pointsToDisplay.push_back(QPointF(std::get<0>(point) * TILE_SIZE/SCALE,std::get<1>(point)  * TILE_SIZE/SCALE));
+        points.push_back(std::make_tuple(startLocation.getXPosition(),startLocation.getYPosition(),"-1"));
+
+        for(auto it = points.begin()+1;it!=points.end();++it) {
+            pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+            pathLength += distanceBetweenPointsEuclidean(*it,*(it-1));
         }
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
+        std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
         return pointsToDisplay;
 }
 

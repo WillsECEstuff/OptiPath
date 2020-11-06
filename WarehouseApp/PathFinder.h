@@ -62,6 +62,7 @@ class PathFinder {
     std::tuple<float,float> getCurrentPosition(void);
     void setCurrentPosition(std::tuple<float,float>&);
 
+    double distanceBetweenPointsEuclidean(std::tuple<float,float,std::string>&, std::tuple<float,float,std::string>&);
     double distanceBetweenProductsEuclidean(Product& product1, Product& product2);
 
     std::deque<Product> getPath(void);

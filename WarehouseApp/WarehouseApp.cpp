@@ -307,6 +307,7 @@ void fillOrderDriver(Order* o, Database* d) {
 
     new(&p) Product("3401", t);
     o->addProduct(p);
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
