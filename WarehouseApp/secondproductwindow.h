@@ -21,9 +21,9 @@ public:
 
     void loadProductPoint(std::string pt);
     void loadRoutePrinter(QVector <QPointF> route);
-    void loadInstructions();
+    void loadInstructions(QVector <std::string> instrList);
     void loadAllPoints(QVector <QPointF> ptsList);
-
+    void setPreview(bool b);
     virtual void paintEvent(QPaintEvent *event);
 
 private slots:
@@ -40,5 +40,6 @@ private:
     QVector <QPointF> routePoints;
     QVector <std::string> directions;
     QPushButton *returnButton;
+    bool isPreview;
 };
 #endif // SECONDPRODUCTWINDOW_H

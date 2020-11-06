@@ -20,17 +20,8 @@ mainwhmap::mainwhmap(QWidget *parent)
 {
     //ui->setupUi(this);
     p_button = new QPushButton("Return to Order Menu", this);
-    p_button->setGeometry(200,800,135,50);
-   /* txtID = new QLineEdit(this);
-    txtID->setPlaceholderText("123");
-    txtID->setGeometry(200,770,50,25);
-    txtID->setFocus();
-    txtLbl = new QLabel(this);
-    txtLbl->setText("Don't want a list of products?\nEnter a single product ID below");
-    txtLbl->setGeometry(150,730,300,30); */
-
+    p_button->setGeometry(200,700,135,50);
     connect(p_button, SIGNAL (clicked()), this, SLOT (handleButton()));
-
 }
 
 mainwhmap::~mainwhmap()
@@ -59,33 +50,9 @@ void mainwhmap::loadInstructions(QVector<std::string> instrList) {
 }
 
 void mainwhmap::handleButton() {
-    /*std::string ID = txtID->text().toStdString();
-    singleRoute.clear();
-
-    this->hide();
-    secWindow = new secondProductWindow();
-    connect (secWindow, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
-
-    secWindow->loadProductPoint(ID);
-    singleRoute.push_back(routePoints[0]);
-
-    std::cout << routePoints[routePoints.size() -2].x() << std::endl;
-    std::cout << routePoints[routePoints.size() -2].y() << std::endl;
-
-    singleRoute.push_back(routePoints[routePoints.size() -1]);
-    secWindow->loadRoutePrinter(singleRoute);
-    secWindow->loadInstructions();
-    secWindow->setFixedSize(1500, 1000);
-    secWindow->setWindowTitle("Single Product Map");
-    secWindow->show(); */
-
     hide();
     emit fromOtherMenu();
 }
-/*
-void mainwhmap::onOtherSignal() {
-    show();
-} */
 
 void mainwhmap::paintEvent(QPaintEvent *event)
 {
@@ -173,7 +140,7 @@ void mainwhmap::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::cyan, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.setFont(QFont("times",2));
     painter.drawText(routePoints[0].x()+2, routePoints[0].y()+4, "START");
-    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+4, "END");
+    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+9, "END");
 
     painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     for (int i = 1; i < routePoints.size() - 1; i++) {

@@ -64,6 +64,7 @@ class PathFinder {
 
     double distanceBetweenPointsEuclidean(std::tuple<float,float,std::string>&, std::tuple<float,float,std::string>&);
     double distanceBetweenProductsEuclidean(Product& product1, Product& product2);
+    std::tuple<double, int, int> distanceBetweenProductsTaxicab(Product& product1, Product& product2);
 
     std::deque<Product> getPath(void);
     QVector <QPointF> displayPath(void);
