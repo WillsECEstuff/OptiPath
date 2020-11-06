@@ -20,7 +20,7 @@ mainwhmap::mainwhmap(QWidget *parent)
 {
     //ui->setupUi(this);
     p_button = new QPushButton("Return to Order Menu", this);
-    p_button->setGeometry(200,800,50,25);
+    p_button->setGeometry(200,800,135,50);
    /* txtID = new QLineEdit(this);
     txtID->setPlaceholderText("123");
     txtID->setGeometry(200,770,50,25);
