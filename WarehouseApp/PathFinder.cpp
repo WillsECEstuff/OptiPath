@@ -156,7 +156,11 @@ QVector<QPointF> PathFinder::STraversal(
             std::cout<<element<<std::endl;
         }
 
-        points.push_back(std::make_tuple(startLocation.getXPosition(),aislesToBeVisited.front(),"-1"));
+        if(std::get<1>(currentPosition) != aislesToBeVisited.front()) {
+            points.push_back(std::make_tuple(0,std::get<1>(currentPosition),"-1"));
+            points.push_back(std::make_tuple(0,aislesToBeVisited.front(),"-1"));
+        }
+
         //aislesToBeVisited is an ordered vector of aisles. (1,3,5,7,9.....)
         for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
             int yCoord = *it;
