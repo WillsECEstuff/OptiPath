@@ -76,6 +76,9 @@
     <ClCompile Include="ordermenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OrderHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h">
@@ -103,6 +106,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WarehouseMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
