@@ -28,6 +28,28 @@ double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& 
     return distance;
 }
 
+std::tuple<double, int, int> distanceBetweenProductsTaxicab(Product& product1, Product& product2) { // returns tuple (distance, left/right, up/down), where -1 = left or down
+    double deltaX = product1.getXPosition() - product2.getXPosition();
+    double deltaY = product1.getYPosition() - product2.getYPosition();
+    double distance = abs(deltaX) + abs(deltaY);
+
+    std::tuple<double, int, int> taxiDist;
+
+    int leftright = 1, updown = 1;
+
+    if (deltaX < 0) {
+        leftright = -1;
+    }
+
+    if (deltaY < 0) {
+        updown = -1;
+    }
+
+    taxiDist = std::make_tuple(distance,leftright,updown);
+
+    return taxiDist;
+}
+
 /**
  * @brief	Calculates the maximum distance to be traveled towards right
  *
@@ -74,8 +96,8 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
  * @brief	Navigates along the warehouse aisles in an S shape
  *
  * @param	productList		List of products to be picked up
- * @param	startLocation   Start location deaulted to (0,0)
- * @param   endLocation     End location defaulted to (0,0)
+ * @param	startLocation   Start location deaulted to (0,1)
+ * @param   endLocation     End location defaulted to (0,1)
  *
  * @return  Ordered set of points to be visited
  */
@@ -85,6 +107,8 @@ QVector<QPointF> PathFinder::STraversal(
         Product& startLocation,
         Product& endLocation
         ) {
+
+        std::cout << "Pathfinder begin" << std::endl;
         int traversalOrder = 1; //1 -> left to right, 0-> right to left
         QVector<QPointF> pointsToDisplay;
         std::unordered_map<int, std::vector<Product>> aisleProductMap;
@@ -92,6 +116,9 @@ QVector<QPointF> PathFinder::STraversal(
 
         WarehouseMap* wMap = wMap->getInstance();
         currentPosition = startLocation.getPositionTuple();
+
+        std::cout << "starting current: " << std::get<0>(currentPosition) << " " << std::get<1>(currentPosition) << std::endl;
+
         points.push_back(std::make_tuple(std::get<0>(currentPosition),std::get<1>(currentPosition),"-1"));
         json shelves = wMap->getShelves();
 
@@ -191,7 +218,7 @@ QVector<QPointF> PathFinder::STraversal(
             points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
        }
         points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
-        points.push_back(std::make_tuple(std::get<0>(currentPosition),std::get<0>(currentPosition),"-1"));
+        points.push_back(std::make_tuple(endLocation.getXPosition(), endLocation.getYPosition(), "-1"));
 
         for(auto& point : points) {
             pointsToDisplay.push_back(QPointF(std::get<0>(point) * TILE_SIZE/SCALE,std::get<1>(point)  * TILE_SIZE/SCALE));
@@ -353,14 +380,13 @@ QVector <std::string> PathFinder::pathAnnotation() {
         instructions.append(instruction);
     }
 
-    xStream << std::fixed << std::setprecision(2) << std::get<0>(points[points.size()]);
-    yStream << std::fixed << std::setprecision(2) << std::get<1>(points[points.size()]);
+    xStream << std::fixed << std::setprecision(2) << std::get<0>(points[points.size() - 1]);
+    yStream << std::fixed << std::setprecision(2) << std::get<1>(points[points.size() - 1]);
 
     instruction = "Drop the products off at end location in (" + xStream.str()
             + ',' + yStream.str() + ")";
 
     xStream.str(""); yStream.str("");
-
     instructions.append(instruction);
     return instructions;
 }

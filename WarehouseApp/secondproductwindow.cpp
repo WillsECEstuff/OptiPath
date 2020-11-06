@@ -20,7 +20,7 @@ secondProductWindow::secondProductWindow(QWidget *parent)
     , ui(new Ui::secondProductWindow)
 {
     returnButton = new QPushButton("Return to Order Menu", this);
-    returnButton->setGeometry(200,800,135,50);
+    returnButton->setGeometry(200,700,135,50);
     connect(returnButton, SIGNAL (clicked()), this, SLOT (handleButton()));
 }
 
@@ -44,6 +44,7 @@ void secondProductWindow::loadProductPoint(std::string pID) {
 
     productPoint.setX(x * TILE_SIZE/MAPSCALE);
     productPoint.setY(y * TILE_SIZE/MAPSCALE);
+    isPreview = false;
     std::cout << "loaded product" << std::endl;
 }
 
@@ -53,47 +54,22 @@ void secondProductWindow::loadAllPoints(QVector <QPointF> ptsList) {
 }
 
 void secondProductWindow::loadRoutePrinter(QVector<QPointF> route) {
-    routePoints.clear();
-    QPointF temp = route.back();
     routePoints = route;
-    routePoints.pop_back();
-    routePoints.push_back(productPoint);
-    routePoints.push_back(temp);
-    std::cout << routePoints.size() << std::endl;
     std::cout << "loaded route" << std::endl;
 }
 
-void secondProductWindow::loadInstructions() {
-    directions.clear();
-    for (int i = 0; i < routePoints.size() - 1; i++) {
-        int leftOrRight = 1; // 1 = right, -1 = left
-        int upOrDown = 1; // 1 = down, -1 = up
-        std::string updown = "down";
-        std::string leftright = "right";
-
-        float dx = (routePoints[i+1].x() - routePoints[i].x()) * MAPSCALE / TILE_SIZE;
-        float dy = (routePoints[i+1].y() - routePoints[i].y()) * MAPSCALE / TILE_SIZE;
-
-        if (dx < 0) {
-            leftOrRight = -1;
-            leftright = "left";
-        }
-
-        if (dy < 0) {
-            upOrDown = -1;
-            updown = "up";
-        }
-
-        std::string temp = "Go " + std::to_string(dx) + " " + leftright + ", then go " + std::to_string(dy) + " " + updown + ".\n";
-        directions.push_back(temp);
-    }
-
+void secondProductWindow::loadInstructions(QVector <std::string> instrList) {
+    directions = instrList;
     std::cout << "loaded instructions" << std::endl;
 }
 
 void secondProductWindow::handleButton() {
     hide();
     emit fromOtherMenu();
+}
+
+void secondProductWindow::setPreview(bool b) {
+    isPreview = b;
 }
 
 void secondProductWindow::paintEvent(QPaintEvent *event)
@@ -130,37 +106,55 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
     }
     // create and label grid end
 
-    // write instructions begin
-    painter.drawText(xboundary/2 + 40, yboundary + 40, "Instructions");
-    painter.drawText(xboundary/2 - 25, yboundary + 45, "--------------------------------------------------");
-    for (int i = 0; i < directions.size(); i++) {
-        std::string toBeNumbered = std::to_string(i+1) + ". " + directions[i];
-        QString temp = QString::fromStdString(toBeNumbered);
-        painter.drawText(xboundary/2 - 25, yboundary + 60 + i*20, temp);
+    if (isPreview == false) {
+        // write instructions begin
+        painter.drawText(xboundary/2 + 40, yboundary + 40, "Instructions");
+        painter.drawText(xboundary/2 - 25, yboundary + 45, "--------------------------------------------------");
+        for (int i = 0; i < directions.size(); i++) {
+            std::string toBeNumbered = std::to_string(i+1) + ". " + directions[i];
+            QString temp = QString::fromStdString(toBeNumbered);
+            painter.drawText(xboundary/2 - 25, yboundary + 60 + i*20, temp);
+        }
+        // write instructions end
+
+        // create legend begin, for single product map
+        painter.drawText(legendX + 40, 30, "LEGEND");
+        painter.drawText(legendX - 25, 35, "-------------------------------------------");
+        painter.drawText(legendX + 25, 60, "Unselected Product");
+        painter.drawText(legendX + 25, 90, "Selected Product");
+        painter.drawText(legendX + 25, 120, "Route, numbered from");
+        painter.drawText(legendX + 25, 130, "start->1->...->end");
+        painter.drawText(legendX + 25, 150, "Start and End points");
+
+        painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        painter.scale(MAPSCALE, MAPSCALE);
+        painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 60 / MAPSCALE));
+
+        painter.setPen(QPen(Qt::green, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 90 / MAPSCALE));
+
+        painter.setPen(QPen(Qt::blue, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        painter.drawLine((legendX + 5) / MAPSCALE, 120 / MAPSCALE, (legendX + 15) / MAPSCALE, 120 / MAPSCALE);
+
+        painter.setPen(QPen(Qt::cyan, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 150 / MAPSCALE));
+        // create legend end
     }
-    // write instructions end
 
-    // create legend begin
-    painter.drawText(legendX + 40, 30, "LEGEND");
-    painter.drawText(legendX - 25, 35, "-------------------------------------------");
-    painter.drawText(legendX + 25, 60, "Unselected Product");
-    painter.drawText(legendX + 25, 90, "Selected Product");
-    painter.drawText(legendX + 25, 120, "Route, numbered from");
-    painter.drawText(legendX + 25, 130, "start->1->...->end");
-    painter.drawText(legendX + 25, 150, "Start and End points");
+    else {
+        // create legend begin, for preview only
+        painter.drawText(legendX + 40, 30, "LEGEND");
+        painter.drawText(legendX - 25, 35, "-------------------------------------------");
+        painter.drawText(legendX + 25, 60, "Unselected Product");
+        painter.drawText(legendX + 25, 90, "Start and End points");
 
-    painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter.scale(MAPSCALE, MAPSCALE);
-    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 60 / MAPSCALE));
+        painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        painter.scale(MAPSCALE, MAPSCALE);
+        painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 60 / MAPSCALE));
 
-    painter.setPen(QPen(Qt::green, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 90 / MAPSCALE));
-
-    painter.setPen(QPen(Qt::blue, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter.drawLine((legendX + 5) / MAPSCALE, 120 / MAPSCALE, (legendX + 15) / MAPSCALE, 120 / MAPSCALE);
-
-    painter.setPen(QPen(Qt::cyan, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 150 / MAPSCALE));
+        painter.setPen(QPen(Qt::cyan, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        painter.drawPoint(QPointF((legendX + 15) / MAPSCALE, 90 / MAPSCALE));
+    }
     // create legend end
 
     // draw map contents begin
@@ -170,8 +164,10 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
         painter.drawPoint(it);
     }
 
-    painter.setPen(QPen(Qt::green, 10/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter.drawPoint(productPoint);
+    if (isPreview == false) { // draw the single product point, only if not in preview mode
+        painter.setPen(QPen(Qt::green, 10/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        painter.drawPoint(productPoint);
+    }
 
     painter.setPen(QPen(Qt::cyan, 10/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.drawPoint(routePoints[0].x(), routePoints[0].y());
@@ -180,14 +176,16 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::cyan, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.setFont(QFont("times",2));
     painter.drawText(routePoints[0].x()+2, routePoints[0].y()+4, "START");
-    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+4, "END");
+    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+9, "END");
 
-    painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    for (int i = 1; i < routePoints.size() - 1; i++) {
-        painter.drawLine(routePoints[i-1].x(), routePoints[i-1].y(), routePoints[i].x(), routePoints[i].y());
-        painter.drawText(routePoints[i].x()+2, routePoints[i].y()+4, QString::number(i));
+    if (isPreview == false) { // draw route. used only for product map
+        painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
+        for (int i = 1; i < routePoints.size() - 1; i++) {
+            painter.drawLine(routePoints[i-1].x(), routePoints[i-1].y(), routePoints[i].x(), routePoints[i].y());
+            painter.drawText(routePoints[i].x()+2, routePoints[i].y()+4, QString::number(i));
+        }
+        painter.drawLine(routePoints[routePoints.size() - 2].x(), routePoints[routePoints.size() - 2].y(), routePoints[routePoints.size() - 1].x(), routePoints[routePoints.size() - 1].y());
     }
-    painter.drawLine(routePoints[routePoints.size() - 2].x(), routePoints[routePoints.size() - 2].y(), routePoints[routePoints.size() - 1].x(), routePoints[routePoints.size() - 1].y());
     // draw map contents end
 }
 

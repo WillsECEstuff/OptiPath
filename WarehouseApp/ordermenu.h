@@ -8,6 +8,10 @@
 #include <QtWidgets>
 #include "mainwhmap.h"
 #include "secondproductwindow.h"
+#include "Ticket.h"
+#include "Order.h"
+#include "PathFinder.h"
+#include "Database.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ordermenu; }
@@ -21,10 +25,11 @@ public:
     ordermenu(QWidget *parent = nullptr);
     ~ordermenu();
 
-    void loadAllPoints(QVector <QPointF> ptsList);
+    /*void loadAllPoints(QVector <QPointF> ptsList);
     void loadProductPoints(QVector <QPointF> ptsList);
     void loadRoutePrinter(QVector <QPointF> route);
-    void loadInstructions(QVector <std::string> instrList);
+    void loadInstructions(QVector <std::string> instrList); */
+    void processOrder(Order* o, Database* d, int oIdx);
 
 public slots:
     void onOtherSignal();
@@ -32,8 +37,9 @@ public slots:
 private slots:
     void handleRouteButton();
     void handleLocationButton();
-    void handleAddOrderButton();
+    void handleCreateOrderButton();
     void handleSingleButton();
+    void handleAddProductButton();
 
 private:
     Ui::ordermenu *ui;
@@ -42,11 +48,17 @@ private:
     QVector <QPointF> productPoints;
     QVector <QPointF> routePoints;
     QVector <std::string> directions;
+    QVector <std::string> prodIDs;
+    QVector <QVector <std::string>> orderList;
+    std::tuple<float, float> startLocation;
+    std::tuple<float, float> endLocation;
 
     QPushButton *locationButton;
     QPushButton *routeButton;
     QPushButton *enterSingleButton;
     QPushButton *addOrderButton;
+    QPushButton *settingsButton;
+    QPushButton *addProdButton;
     QLabel *txtOrder;
     QFont *font;
     QComboBox *ordercbox;
@@ -54,6 +66,8 @@ private:
     QLabel *txtLblSingle;
     QLineEdit *txtLoc;
     QLabel *txtLblLoc;
+    QLineEdit *txtAddOrder;
+    QLabel *txtLblOrder;
 
     mainwhmap *routeMap;
     secondProductWindow *secWindow;
