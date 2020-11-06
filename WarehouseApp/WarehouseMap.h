@@ -39,7 +39,7 @@ public:
 	void buildWarehouseMap(json productDatabase);
 	json getShelves(void);
     json getSingleShelf(std::string shelf);
-    std::vector<std::tuple<std::string, int, int>> getShelfSpecs();
+    std::vector<std::tuple<int, int, int>> getShelfSpecs();
 };
 
 
@@ -64,4 +64,10 @@ json structure for WarehouseDimensions
 	"x"	:	int,
 	"y"	:	int
 }
+*/
+
+/*
+tuple structure and meaning for getShelfSpecs
+<int, int, int>
+<shelf#, start, end>
 */
