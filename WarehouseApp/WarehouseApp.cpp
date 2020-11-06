@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     // make sure database is clear before reading and populating
     // database from the text file
     d->deleteDatabase();
-    d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
+    d->populateDatabase("/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp/qvBox-warehouse-data-f20-v01.txt");
 
     whm->buildWarehouseMap(d->returnDatabase());
     json j = whm->getShelves();
@@ -75,9 +75,9 @@ int main(int argc, char** argv)
     w.loadRoutePrinter(route);
     w.show();
 
+
     return a.exec();
     */
-
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 

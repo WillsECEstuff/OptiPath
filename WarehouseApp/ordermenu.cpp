@@ -82,8 +82,8 @@ ordermenu::ordermenu(QWidget *parent)
         allPoints.append(QPointF(std::get<0>(it) * TILE_SIZE/SCALE, std::get<1>(it) * TILE_SIZE/SCALE));
     }
 
-    startLocation = std::make_tuple(0,1);
-    endLocation = std::make_tuple(0,1);
+    startLocation = std::make_tuple(0,0);
+    endLocation = std::make_tuple(0,0);
 }
 
 ordermenu::~ordermenu()
