@@ -28,7 +28,7 @@ class PathFinder {
     double pathLength;
     std::tuple<float,float> currentPosition;
     std::vector<int> aislesToBeVisited;
-    std::tuple<float,float> points;
+    std::deque<std::tuple<float,float,std::string>> points;
     std::deque<Product> path;
     const std::string NOT_PRODUCT = "-1";
     const float TILE_SIZE = 30;
@@ -66,6 +66,8 @@ class PathFinder {
 
     std::deque<Product> getPath(void);
     QVector <QPointF> displayPath(void);
-    QVector <std::string> pathAnnotation(std::deque<Product>& path);
+
+    QVector <std::string> pathAnnotation();
+    QVector <std::string> oldAnnotation(std::deque<Product>& path);
 
 };
