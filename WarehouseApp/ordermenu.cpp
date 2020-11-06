@@ -130,7 +130,7 @@ void ordermenu::handleRouteButton() {
     if (orderIdx < 1) {
         QMessageBox notifyUser;
         notifyUser.setText("Please select an order from the drop-down menu.");
-        notifyUser.setWindowTitle("Error - Couldn't read order");
+        notifyUser.setWindowTitle("Error - Couldn't Read Order");
         notifyUser.exec();
     }
 
@@ -241,28 +241,37 @@ void ordermenu::handleLocationButton() {
 }
 
 void ordermenu::handleCreateOrderButton() {
-    orderList.push_back(prodIDs);
-    std::string chain = "";
-    int orderNum = orderList.size();
-
-    for (int i = 0; i < prodIDs.size(); i++) {
-        std::string temp = prodIDs[i] + " | ";
-        chain = chain + temp;
+    if (prodIDs.size() == 0) { // user tried to enter an empty order
+        QMessageBox notifyUser;
+        notifyUser.setText("Your order is currently empty!");
+        notifyUser.setWindowTitle("Error - Empty Order");
+        notifyUser.exec();
     }
 
-    QMessageBox notifyUser;
-    std::string pinnedOrder = "Order " + std::to_string(orderNum) + ", containing " + std::to_string(prodIDs.size());
-    ordercbox->addItem(QString::fromStdString(pinnedOrder));
+    else {
+        orderList.push_back(prodIDs);
+        std::string chain = "";
+        int orderNum = orderList.size();
 
-    std::string notify = pinnedOrder + " products\nContents: " + chain;
-    notifyUser.setText(QString::fromStdString(notify));
-    notifyUser.setWindowTitle("Order Created");
-    prodIDs.clear();
-    notifyUser.exec();
+        for (int i = 0; i < prodIDs.size(); i++) {
+            std::string temp = prodIDs[i] + " | ";
+            chain = chain + temp;
+        }
 
-    std::cout << "big order size: " << orderList.size() << std::endl;
-    int idx = orderList.size() - 1;
-    std::cout << "order size: " << orderList[idx].size() << std::endl;
+        QMessageBox notifyUser;
+        std::string pinnedOrder = "Order " + std::to_string(orderNum) + ", containing " + std::to_string(prodIDs.size());
+        ordercbox->addItem(QString::fromStdString(pinnedOrder));
+
+        std::string notify = pinnedOrder + " products\nContents: " + chain;
+        notifyUser.setText(QString::fromStdString(notify));
+        notifyUser.setWindowTitle("Order Created");
+        prodIDs.clear();
+        notifyUser.exec();
+
+        std::cout << "big order size: " << orderList.size() << std::endl;
+        int idx = orderList.size() - 1;
+        std::cout << "order size: " << orderList[idx].size() << std::endl;
+    }
 }
 
 void ordermenu::handleAddProductButton() {
