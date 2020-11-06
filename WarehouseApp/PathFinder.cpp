@@ -196,8 +196,10 @@ QVector<QPointF> PathFinder::STraversal(
 
         points.push_back(std::make_tuple(startLocation.getXPosition(),startLocation.getYPosition(),"-1"));
 
-        for(auto it = points.begin()+1;it!=points.end();++it) {
+        for(auto it = points.begin();it!=points.end();++it) {
             pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+        }
+        for(auto it = points.begin()+1;it!=points.end();++it) {
             pathLength += distanceBetweenPointsEuclidean(*it,*(it-1));
         }
         auto end = std::chrono::high_resolution_clock::now();
