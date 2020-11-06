@@ -28,6 +28,7 @@ private:
 	json shelves;	/* A JSON object structure can be seen below */
 	json WarehouseDimensions; /* A JSON object structure can be seen below */
 	json aisles; /* currently unused */
+    std::vector<std::tuple<std::string, int, int>> shelfSpecs; // for retrieving shelf specs
 	static WarehouseMap* instance;
 	/* Private constructor so that no objects can be created explicitly */
 	WarehouseMap() {};
@@ -37,7 +38,8 @@ public:
 	static WarehouseMap* getInstance(void);
 	void buildWarehouseMap(json productDatabase);
 	json getShelves(void);
-	json getSingleShelf(std::string shelf);
+    json getSingleShelf(std::string shelf);
+    std::vector<std::tuple<std::string, int, int>> getShelfSpecs();
 };
 
 

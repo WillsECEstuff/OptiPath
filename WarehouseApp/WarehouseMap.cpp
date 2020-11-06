@@ -80,7 +80,7 @@ void WarehouseMap::buildWarehouseMap(json productDatabase)
 	findShelveEnds();
 
 	//print json with pretty printing
-	std::cout << shelves.dump(4) << std::endl;
+    //std::cout << shelves.dump(4) << std::endl;
 }
 
 /**
@@ -126,11 +126,11 @@ json WarehouseMap::getSingleShelf(std::string shelf)
  * 
  */
 void WarehouseMap::findShelveEnds(void) {
+    std::tuple<std::string, int, int> temp;
 
-	for (auto it : shelves.items()) {
-		json j = it.value();
+    for (auto it : shelves.items()) {
+        json j = it.value();
 		//std::cout <<j.dump(4) << std::endl;
-
 		std::set<int> set = j["occupied"];
 		std::set<int>::iterator sit;
 		std::set<int>::reverse_iterator rsit;
@@ -144,5 +144,9 @@ void WarehouseMap::findShelveEnds(void) {
 
 	}
 }
+
+/*std::vector<std::tuple<std::string, int, int>> WarehouseMap::getShelfSpecs() {
+
+} */
 
 
