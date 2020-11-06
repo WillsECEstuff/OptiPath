@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     // make sure database is clear before reading and populating
     // database from the text file
     d->deleteDatabase();
-    d->populateDatabase("/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp/qvBox-warehouse-data-f20-v01.txt");
+    d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
 
     whm->buildWarehouseMap(d->returnDatabase());
     json j = whm->getShelves();

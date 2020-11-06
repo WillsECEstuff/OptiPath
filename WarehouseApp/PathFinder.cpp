@@ -229,7 +229,7 @@ QVector<QPointF> PathFinder::STraversal(
         points.push_back(std::make_tuple(startLocation.getXPosition(),startLocation.getYPosition(),"-1"));
 
         //Add points to display
-        for(auto it = points.begin();it!=points.end();++it) {
+        for(auto it = points.begin();it!=points.end()-1;++it) {
             pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
             pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
         }
