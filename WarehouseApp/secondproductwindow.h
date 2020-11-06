@@ -22,6 +22,7 @@ public:
     void loadProductPoint(std::string pt);
     void loadRoutePrinter(QVector <QPointF> route);
     void loadInstructions();
+    void loadAllPoints(QVector <QPointF> ptsList);
 
     virtual void paintEvent(QPaintEvent *event);
 
@@ -35,6 +36,7 @@ private:
     Ui::secondProductWindow *ui;
     std::string myPID;
     QPoint productPoint;
+    QVector <QPointF> allPoints;
     QVector <QPointF> routePoints;
     QVector <std::string> directions;
     QPushButton *returnButton;
