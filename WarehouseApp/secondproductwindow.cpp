@@ -65,7 +65,7 @@ void secondProductWindow::loadInstructions(QVector <std::string> instrList) {
 }
 
 void secondProductWindow::handleButton() {
-    hide();
+    close();
     emit fromOtherMenu();
 }
 

@@ -62,7 +62,7 @@ void mainwhmap::loadInstructions(QVector<std::string> instrs) {
 }
 
 void mainwhmap::handleButton() {
-    hide();
+    close();
     emit fromOtherMenu();
 }
 
