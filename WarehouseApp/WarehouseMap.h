@@ -39,7 +39,7 @@ public:
 	void buildWarehouseMap(json productDatabase);
 	json getShelves(void);
     json getSingleShelf(std::string shelf);
-    std::vector<std::tuple<int, int, int>> getShelfSpecs();
+    std::vector<std::tuple<int, int, int>> getShelfSpecs(void);
 };
 
 

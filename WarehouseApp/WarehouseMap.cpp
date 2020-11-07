@@ -145,7 +145,15 @@ void WarehouseMap::findShelveEnds(void) {
 	}
 }
 
-std::vector<std::tuple<int, int, int>> WarehouseMap::getShelfSpecs() {
+/**
+ * @brief	Return a brief portion of the shelves database.
+ *			The function will return a vector of tuples of 3 ints.
+ *			The first int will be the shelf row number, followed
+ *			by the beginning position, and then the ending position.
+ * 
+ * @return	vector of tuples<int, int int>
+ */
+std::vector<std::tuple<int, int, int>> WarehouseMap::getShelfSpecs(void) {
 	std::vector<std::tuple<int, int, int>> v;
 	
 	for (auto it : shelves.items()) {
