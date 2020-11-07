@@ -7,6 +7,7 @@
 #include <QPointF>
 #include <QtWidgets>
 #include "secondproductwindow.h"
+#include "WarehouseMap.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class mainwhmap; }
@@ -47,5 +48,8 @@ private:
     QLabel *txtLbl;
     secondProductWindow *secWindow;
     QVector <QPointF> singleRoute;
+    QVBoxLayout *instrList;
+    QScrollArea *instrArea;
+    QWidget *dockArea;
 };
 #endif // mainwhmap_H
