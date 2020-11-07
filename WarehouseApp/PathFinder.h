@@ -23,8 +23,14 @@
 #include "AdjacencyMatrix.h"
 #include "WarehouseMap.h"
 
+enum Compass { North = 0, NorthWest, West, SouthWest, South, SouthEast, 
+    East, NorthEast, Stay};
+
 class PathFinder {
     private:
+
+    const std::vector<std::string> dir = { "North", "NorthWest", "West", 
+        "SouthWest", "South", "SouthEast", "East", "NorthEast", "Stay"};
     double pathLength;
     std::tuple<float,float> currentPosition;
     std::vector<int> aislesToBeVisited;
@@ -33,6 +39,9 @@ class PathFinder {
     const std::string NOT_PRODUCT = "-1";
     const float TILE_SIZE = 30;
     const float SCALE = 5;
+
+    Compass getHeading(std::tuple<float, float, std::string> p1,
+        std::tuple<float, float, std::string> p2);
 
     public:
 
