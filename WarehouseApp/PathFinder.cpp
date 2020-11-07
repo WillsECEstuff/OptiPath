@@ -23,8 +23,8 @@
 double PathFinder::distanceBetweenPointsEuclidean(std::tuple<float,float,std::string>& point1,
                                                   std::tuple<float,float,std::string>& point2) {
 
-    return sqrt(pow(std::get<0>(point1) - std::get<1>(point1),2) +
-                pow(std::get<0>(point2) - std::get<1>(point2),2));
+    return sqrt(pow(std::get<0>(point1) - std::get<0>(point2),2) +
+                pow(std::get<1>(point1) - std::get<1>(point2),2));
 }
 
 /**
@@ -367,7 +367,7 @@ std::deque<Product> PathFinder::getPath(void) {
 
 QVector <std::string> PathFinder::pathAnnotation() {
     QVector <std::string> instructions;
-    std::stringstream xStream, yStream;
+    std::stringstream xStream, yStream, distanceStream;
 
     xStream << std::fixed << std::setprecision(2) << std::get<0>(points[0]);
     yStream << std::fixed << std::setprecision(2) << std::get<1>(points[0]);
@@ -381,17 +381,32 @@ QVector <std::string> PathFinder::pathAnnotation() {
     for(unsigned int i = 1;i < points.size()-1;++i) {
         xStream << std::fixed << std::setprecision(2) << std::get<0>(points[i]);
         yStream << std::fixed << std::setprecision(2) << std::get<1>(points[i]);
+        Compass c = getHeading(points[i - 1], points[i]);
+        distanceStream << std::fixed << std::setprecision(2) <<
+            distanceBetweenPointsEuclidean(points[i - 1], points[i]);
 
         if(std::get<2>(points[i]) != "-1") {
-            instruction = "Go to product " + std::get<2>(points[i]) + " at (" +
-                xStream.str() +"," + yStream.str() + ")";
+            if (c == Compass::Stay) {
+                instruction = "Stay at product (" + xStream.str() + "," + yStream.str() + ")";
+            }
+            else {
+                instruction = "Go " + distanceStream.str() + " units " + dir[c] + " to product " +
+                    std::get<2>(points[i]) + " at (" + xStream.str() + "," + yStream.str() + ")";
+            }
+            
         }
 
         else {
-            instruction = "Go to point (" +
-                xStream.str() +"," + yStream.str() + ")";
+            if (c == Compass::Stay) {
+                instruction = "Stay at point (" + xStream.str() + "," + yStream.str() + ")";
+            }
+            else {
+                instruction = "Go " + distanceStream.str() + " units " + dir[c] + " to point (" +
+                    xStream.str() + "," + yStream.str() + ")";
+            }
+            
         }
-        xStream.str(""); yStream.str("");
+        xStream.str(""); yStream.str(""); distanceStream.str("");
 
         instructions.append(instruction);
     }
@@ -472,3 +487,48 @@ void PathFinder::setCurrentPosition(std::tuple<float,float>& pos) {
     currentPosition = pos;
 }
 
+/**
+ * @brief   returns the general direction of 2 points.
+ * 
+ * @param   p1     tuple of coordinates
+ * @param   p2     tuple of coordinates
+ * @return  enum direction, info can be found in the
+ *                      header file
+ */
+Compass PathFinder::getHeading(std::tuple<float, float, std::string> p1,
+    std::tuple<float, float, std::string> p2)
+{
+    // to get direction headed, do p2.x - p1.x and
+    // p2.y-p1.y
+    
+    float x = std::get<0>(p2) - std::get<0>(p1);
+    float y = std::get<1>(p2) - std::get<1>(p1);
+    // North is when x = 0, and y is negative
+    if (x == 0.0 && y < 0.0) {
+        return Compass::North;
+    }// NorthEast is when x is positive and y is negative
+    else if (x > 0.0 && y < 0.0) {
+        return Compass::NorthEast;
+    }// East is when x is positive and y = 0
+    else if (x > 0.0 && y == 0.0) {
+        return Compass::East;
+    }// SouthEast is when x is positive and y is positive 
+    else if (x > 0.0 && y > 0.0) {
+        return Compass::SouthEast;
+    }// South is when x is 0 and y is positive
+    else if (x == 0.0 && y > 0.0) {
+        return Compass::South;
+    }// SouthWest is when x is negative and y is positive
+    else if (x < 0.0 && y > 0.0) {
+        return Compass::SouthWest;
+    }// West is when x is negative and y is 0
+    else if (x < 0.0 && y == 0.0) {
+        return Compass::West;
+    }// NorthWest is when x is negative and y is positive
+    else if (x < 0.0 && y < 0.0) {
+        return Compass::NorthWest;
+    }// else dont move
+    else {
+        return Compass::Stay;
+    }
+}
