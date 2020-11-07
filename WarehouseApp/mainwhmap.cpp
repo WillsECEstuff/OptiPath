@@ -1,3 +1,8 @@
+/*****************************************************************//**
+ * @file   mainwhmap.cpp
+ * @brief  This source file contains the definitions for mainwhmap.h
+ * @date   October 2020
+ *********************************************************************/
 #include "mainwhmap.h"
 #include "ui_mainwhmap.h"
 #include <QPointF>

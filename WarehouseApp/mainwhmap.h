@@ -1,3 +1,8 @@
+/*******************************************************************
+ * @file   mainwhmap.h
+ * @brief  This header includes the mainwhmap class.
+ * @date   October 2020
+ *********************************************************************/
 #ifndef mainwhmap_H
 #define mainwhmap_H
 

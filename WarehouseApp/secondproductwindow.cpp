@@ -1,3 +1,8 @@
+/*****************************************************************//**
+ * @file   secondproductwindow.cpp
+ * @brief  This source file contains the definition for secondproductwindow.h
+ * @date   October 2020
+ *********************************************************************/
 #include "secondproductwindow.h"
 #include "ui_secondproductwindow.h"
 #include <QPointF>

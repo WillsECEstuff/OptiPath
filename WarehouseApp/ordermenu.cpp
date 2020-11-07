@@ -1,3 +1,8 @@
+/*****************************************************************//**
+ * @file   ordermenu.cpp
+ * @brief  This file is contains the definitions for ordermenu.h
+ * @date   November 2020
+ *********************************************************************/
 #include "ordermenu.h"
 #include "ui_ordermenu.h"
 #include <QMainWindow>

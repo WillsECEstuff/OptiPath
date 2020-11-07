@@ -1,3 +1,8 @@
+/*******************************************************************
+ * @file   secondProductWindow.h
+ * @brief  This header includes the secondProductWindow class.
+ * @date   October 2020
+ *********************************************************************/
 #ifndef SECONDPRODUCTWINDOW_H
 #define SECONDPRODUCTWINDOW_H
 
