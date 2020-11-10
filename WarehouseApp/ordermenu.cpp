@@ -3,6 +3,8 @@
  * @brief  This file is contains the definitions for ordermenu.h
  * @date   November 2020
  *********************************************************************/
+
+
 #include "ordermenu.h"
 #include "ui_ordermenu.h"
 #include <QMainWindow>
@@ -18,6 +20,12 @@
 #include "Ticket.h"
 #include "Order.h"
 #include "PathFinder.h"
+
+#ifdef _DEBUG
+
+#include "MST.h"
+
+#endif
 
 const float TILE_SIZE = 30;
 const float SCALE = 5;
@@ -155,6 +163,16 @@ void ordermenu::handleRouteButton() {
         Product dummyStart("startLocation", startLocation);
         Product dummyEnd("endLocation", endLocation);
         std::cout << "starting: " << dummyStart.getXPosition() << ", " << dummyStart.getYPosition() << std::endl;
+
+#ifdef _DEBUG
+
+        MST mst(o, dummyEnd);
+        mst.printAdjacencyMatrix();
+        std::cout << "Lower bound is: " <<
+            mst.findLowerBound() << std::endl;
+
+#endif // 
+
 
         PathFinder pathFinder;
         routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);

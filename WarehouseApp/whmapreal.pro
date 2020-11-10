@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     Inventory.cpp \
+    MST.cpp \
     OrderHelper.cpp \
     WarehouseApp.cpp \
     WarehouseMap.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     Inventory.h \
+    MST.h \
     OrderHelper.h \
     WarehouseMap.h \
     AdjacencyMatrix.h \
