@@ -196,6 +196,7 @@
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="mainwhmap.cpp" />
+    <ClCompile Include="MST.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="ordermenu.cpp" />
     <ClCompile Include="PathFinder.cpp" />
@@ -210,6 +211,7 @@
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h" />
     <ClInclude Include="Database.h" />
+    <ClInclude Include="MST.h" />
     <ClInclude Include="OrderHelper.h" />
     <ClInclude Include="Inventory.h" />
     <QtMoc Include="ordermenu.h" />
