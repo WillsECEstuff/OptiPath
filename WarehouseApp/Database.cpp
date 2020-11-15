@@ -51,7 +51,16 @@ void Database::populateDatabase(std::string filename) {
 
 	if (!(infile >> s1 >> s2 >> s3)) {
 		/* error, could not read first line!*/
-        std::cout << "ERROR!" << std::endl;
+		std::cout << "ERROR: Unable to read first line." << std::endl;
+		std::string errorMSG = "Error opening " + filename + ". Please check file.";
+		throw std::runtime_error(errorMSG);
+	}
+
+	if (s1 != "ProductID" || s2 != "xLocation" || s3 != "yLocation") {
+
+		std::cout << "ERROR: File format not expected." << std::endl;
+		std::string errorMSG = "Formatting error in " + filename + ". Please check file.";
+		throw std::runtime_error(errorMSG);
 	}
 
 	while (infile >> productID >> x >> y) {
@@ -115,4 +124,14 @@ std::vector<std::tuple<float, float>> Database::getLocList() {
 json Database::returnDatabase(void)
 {
 	return database;
+}
+
+/**
+ * @brief	returns a boolean if the database is empty or not
+ *			i.e. returns true if no key/value pair is in JSON
+ * 
+ * @return	boolean
+ */
+bool Database::isDatabaseEmpty(void) {
+	return database.empty();
 }

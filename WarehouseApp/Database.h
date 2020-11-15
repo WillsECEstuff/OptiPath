@@ -18,6 +18,7 @@
 #include <string>
 #include <map>
 #include <fstream>
+#include <stdexcept>
 #include "third_party/nlohmann/single_include/nlohmann/json.hpp"
 
 using json = nlohmann::json;
@@ -37,6 +38,7 @@ public:
 	std::tuple<float, float> getProductPosition(std::string productID);
     std::vector<std::tuple<float, float>> getLocList();
 	json returnDatabase(void);
+	bool isDatabaseEmpty(void);
 };
 
 /*
