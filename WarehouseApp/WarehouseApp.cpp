@@ -40,7 +40,27 @@ int main(int argc, char** argv)
     // make sure database is clear before reading and populating
     // database from the text file
     d->deleteDatabase();
-    d->populateDatabase("qvBox-warehouse-data-f20-v01.txt");
+    std::string path = "qvBox-warehouse-data-f20-v01.txt";
+    while (d->isDatabaseEmpty()) {
+        try {
+            d->populateDatabase(path);
+        }
+        catch (std::exception& ex) {
+            std::cout << ex.what() << std::endl;
+            QString msg(ex.what());
+            QMessageBox msgBox;
+            msgBox.setText(msg);
+            msgBox.exec();
+            
+            
+            QString qs = QFileDialog::getOpenFileName(NULL,
+                QObject::tr("Open Database File"), a.applicationDirPath(), 
+                QObject::tr("Text File (*.txt)"));
+            path = qs.toStdString();
+            
+        }
+    }
+    
 
     whm->buildWarehouseMap(d->returnDatabase());
     json j = whm->getShelves();
