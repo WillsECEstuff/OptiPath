@@ -109,6 +109,152 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
 }
 
 /**
+ * @brief	Branch and Bound Algorithm
+ *
+ * @param	productList		List of products to be picked up
+ * @param	startLocation   Start location deaulted to (0,1)
+ * @param   endLocation     End location defaulted to (0,1)
+ *
+ * @return  Ordered set of points to be visited
+ */
+
+
+int PathFinder :: firstMin(std::vector<std::vector<int> >& matrix, int i)
+{
+    int min = INT_MAX;
+    for (int k=0; k<(int)matrix.size(); k++)
+        if (matrix[i][k]<min && i != k)
+            min = matrix[i][k];
+    return min;
+}
+
+int PathFinder :: secondMin(std::vector<std::vector<int> >& matrix, int i)
+{
+    int first = INT_MAX, second = INT_MAX;
+    for (int j=0; j<(int)matrix.size(); j++)
+    {
+        if (i == j)
+            continue;
+
+        if (matrix[i][j] <= first)
+        {
+            second = first;
+            first = matrix[i][j];
+        }
+        else if (matrix[i][j] <= second &&
+                 matrix[i][j] != first)
+            second = matrix[i][j];
+    }
+    return second;
+}
+
+void PathFinder :: TSPRec(std::vector<std::vector<int> >& matrix, int curr_bound, int curr_weight,
+            int level, std::vector<int>& currPath)
+{
+
+    if (level== (int)matrix.size())
+    {
+
+        if (matrix[currPath[level-1]][currPath[0]] != 0)
+        {
+
+            int curr_res = curr_weight +
+                    matrix[currPath[level-1]][currPath[0]];
+
+            if (curr_res < minPathLength)
+            {
+                copyToFinal(currPath);
+                final_res = curr_res;
+            }
+        }
+        return;
+    }
+
+    for (int i=0; i<N; i++)
+    {
+        // Consider next vertex if it is not same (diagonal
+        // entry in adjacency matrix and not visited
+        // already)
+        if (adj[currPath[level-1]][i] != 0 &&
+            visited[i] == false)
+        {
+            int temp = curr_bound;
+            curr_weight += adj[currPath[level-1]][i];
+
+            // different computation of curr_bound for
+            // level 2 from the other levels
+            if (level==1)
+              curr_bound -= ((firstMin(adj, currPath[level-1]) +
+                             firstMin(adj, i))/2);
+            else
+              curr_bound -= ((secondMin(adj, currPath[level-1]) +
+                             firstMin(adj, i))/2);
+
+            // curr_bound + curr_weight is the actual lower bound
+            // for the node that we have arrived on
+            // If current lower bound < final_res, we need to explore
+            // the node further
+            if (curr_bound + curr_weight < final_res)
+            {
+                currPath[level] = i;
+                visited[i] = true;
+
+                // call TSPRec for the next level
+                TSPRec(adj, curr_bound, curr_weight, level+1,
+                       currPath);
+            }
+
+            // Else we have to prune the node by resetting
+            // all changes to curr_weight and curr_bound
+            curr_weight -= adj[currPath[level-1]][i];
+            curr_bound = temp;
+
+            // Also reset the visited array
+            memset(visited, false, sizeof(visited));
+            for (int j=0; j<=level-1; j++)
+                visited[currPath[j]] = true;
+        }
+    }
+}
+
+QVector<QPointF> PathFinder :: branchAndBound(
+        std::deque<Product>& productList,
+        Product& startLocation,
+        Product& endLocation
+        ) {
+
+        std::vector<int> currPath(productList.size()+1,-1);
+        std::vector<std::vector<int> > matrix(productList.size(),std::vector<int>(productList.size()));
+
+        for(int i = 0;i<(int)matrix.size();++i) {
+            for(int j = 0;i<(int)matrix[0].size();++i) {
+                matrix[i][j] = distanceBetweenProductsEuclidean(*indexToProduct[i],*indexToProduct[j]);
+            }
+        }
+
+        int currBound = 0;
+        for(int i  = 0;i<(int)productList.size();++i) {
+            visited[&productList[i]] = false;
+            indexToProduct[i] = &productList[i];
+        }
+
+        for (int i=0; i<(int)matrix.size(); i++)
+            currBound += (firstMin(matrix, i) +
+                           secondMin(matrix, i));
+
+        currBound = (currBound&1)? currBound/2 + 1 :
+                                     currBound/2;
+
+
+        visited[indexToProduct[0]] = true;
+        currPath[0] = 0;
+
+        TSPRec(matrix, currBound, 0, 1, currPath);
+}
+
+
+
+/**
  * @brief	Navigates along the warehouse aisles in an S shape
  *
  * @param	productList		List of products to be picked up
@@ -246,7 +392,7 @@ QVector<QPointF> PathFinder::STraversal(
 }
 
 /**
- * @brief	Finds the most optimal path the user must take
+ * @brief	Finds the most optimal path the user must take (O(n!) solution. Not used)
  * 
  * @param   graph           Adjacency matrix of the products
  * @param   productList     List of products to be picked up
