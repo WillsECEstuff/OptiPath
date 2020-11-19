@@ -144,3 +144,63 @@ void addProducttoExistingOrder(std::string pID, Order* o)
 	}
 
 }
+
+
+/**
+ * @brief	Create orders from a given file. Orders are expected to be 
+ *			separated by a new line, and products are expected to be
+ *			separated by commas. This function will return a vector of 
+ *			orders, starting with a supplied orderID. orderID will be 
+ *			incremented by 1 per new order.
+ * 
+ * @param	filePath	string,	a valid filepath
+ * @param	orderID		int,	starting orderID given to the orders
+ * @param	priority	int,	priority of order. default is 1
+ * @return	vector of Order objects
+ */
+std::vector<Order> createOrdersfromFile(std::string filePath, int orderID, int priority)
+{
+	int oID = orderID;
+	std::string line;
+	std::ifstream infile(filePath);
+	std::vector<Order> o;
+
+	// goes through all the lines in the file
+	while (std::getline(infile, line)) {
+		o.push_back(createOrderfromString(line, oID++, priority));
+	}
+	
+	return o;
+}
+
+/**
+ * @brief	Creates an order from a string. The string is expected
+ *			to have product IDs separated by a comma.
+ * 
+ * @param	products		string containing product IDs separated
+ *							by a comma
+ * @param	orderID			int,	orderID
+ * @param	priority		int,	priority of order. default is 1
+ * @return	Order
+ */
+Order createOrderfromString(std::string products, int orderID, int priority)
+{
+	std::istringstream iss(products);
+	std::vector<std::string> tokens;
+
+	// tokenizes the line with the comma as a delimiter
+	for (std::string each; std::getline(iss, each, ',');) {
+
+		// remove white space
+		tokens.push_back(trim(each));
+	}
+
+	return createOrderfromVector(tokens, orderID, 1);
+}
+
+std::string trim(const std::string& line) {
+	const char* WhiteSpace = " \t\v\r\n";
+	std::size_t start = line.find_first_not_of(WhiteSpace);
+	std::size_t end = line.find_last_not_of(WhiteSpace);
+	return start == end ? std::string() : line.substr(start, end - start + 1);
+}

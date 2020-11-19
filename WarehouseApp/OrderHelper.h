@@ -13,9 +13,11 @@
 
 #pragma once
 
-#include <vector>
+#include <fstream>
+#include <sstream>
 #include <string>
 #include <stdexcept>
+#include <vector>
 
 #include "Database.h"
 #include "Order.h"
@@ -31,3 +33,9 @@ void addVectortoExistingOrder(std::vector<std::string> productList,
 	Order* o);
 
 void addProducttoExistingOrder(std::string pID, Order* o);
+
+std::vector<Order> createOrdersfromFile(std::string filePath, int orderID = 1, int priority = 1);
+
+Order createOrderfromString(std::string products, int orderID = 1, int priority = 1);
+
+std::string trim(const std::string& line);
