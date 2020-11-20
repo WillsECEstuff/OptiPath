@@ -39,11 +39,12 @@ class PathFinder {
     const std::string NOT_PRODUCT = "-1";
     const float TILE_SIZE = 30;
     const float SCALE = 5;
-    double minPathLength = (double)INT_MAX;
+    int minPathLength = INT_MAX;
 
     //Branch and bound stuff
-    std::unordered_map<Product*,bool> visited;
+    std::vector<bool> visited;
     std::unordered_map<int, Product*> indexToProduct;
+    std::vector<int> finalPath;
 
 
     Compass getHeading(std::tuple<float, float, std::string> p1,
@@ -73,12 +74,19 @@ class PathFinder {
             Product& startLocation,
             Product& endLocation
             );
-
+    //Branch and bound stuff
     QVector<QPointF> branchAndBound(
             std::deque<Product>& productList,
             Product& startLocation,
             Product& endLocation
             );
+
+    int firstMin(std::vector<std::vector<int> >& matrix, int i);
+    int secondMin(std::vector<std::vector<int> >& matrix, int i);
+    void copyToFinal(std::vector<int>& currPath);
+    void TSPRec(std::vector<std::vector<int> >& matrix, int currBound, int currWeight,
+                int level, std::vector<int>&, std::deque<Product>&);
+
 
     std::tuple<float,float> getCurrentPosition(void);
     void setCurrentPosition(std::tuple<float,float>&);
@@ -86,12 +94,6 @@ class PathFinder {
     double distanceBetweenPointsEuclidean(std::tuple<float,float,std::string>&, std::tuple<float,float,std::string>&);
     double distanceBetweenProductsEuclidean(Product& product1, Product& product2);
     std::tuple<double, int, int> distanceBetweenProductsTaxicab(Product& product1, Product& product2);
-
-    int firstMin(std::vector<std::vector<int> >& matrix, int i);
-    int secondMin(std::vector<std::vector<int> >& matrix, int i);
-    void TSPRec(std::vector<std::vector<int> >& matrix, int currBound, int currWeight,
-                int level, std::vector<int>&);
-
 
     std::deque<Product> getPath(void);
     QVector <QPointF> displayPath(void);
