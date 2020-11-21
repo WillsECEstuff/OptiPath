@@ -44,6 +44,11 @@ double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& 
     return distance;
 }
 
+
+std::vector<int> PathFinder::nextOpenAisle(float xPositionStart, float xPositionEnd) {
+
+}
+
 std::tuple<double, int, int> distanceBetweenProductsTaxicab(Product& product1, Product& product2) { // returns tuple (distance, left/right, up/down), where -1 = left or down
     double deltaX = product1.getXPosition() - product2.getXPosition();
     double deltaY = product1.getYPosition() - product2.getYPosition();

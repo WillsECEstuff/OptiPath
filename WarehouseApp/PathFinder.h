@@ -28,7 +28,6 @@ enum Compass { North = 0, NorthWest, West, SouthWest, South, SouthEast,
 
 class PathFinder {
     private:
-
     const std::vector<std::string> dir = { "North", "NorthWest", "West", 
         "SouthWest", "South", "SouthEast", "East", "NorthEast", "Stay"};
     double pathLength;
@@ -47,6 +46,8 @@ class PathFinder {
 
     int findMaxEnd(int, int);
     int findMinBegin(int, int);
+
+    std::vector<int> nextOpenAisle(float xPositionStart, float xPositionEnd);
 
     std::deque<Product> calculatePath(
         std::unordered_map<Product*, std::deque<Product>> graph,
