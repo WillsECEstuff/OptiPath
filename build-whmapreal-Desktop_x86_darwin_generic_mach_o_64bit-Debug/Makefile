@@ -60,6 +60,7 @@ SOURCES       = ../WarehouseApp/Inventory.cpp \
 		../WarehouseApp/AdjacencyMatrix.cpp \
 		../WarehouseApp/Database.cpp \
 		../WarehouseApp/Order.cpp \
+		../WarehouseApp/branchandbound.cpp \
 		../WarehouseApp/ordermenu.cpp \
 		../WarehouseApp/PathFinder.cpp \
 		../WarehouseApp/PriorityQueue.cpp \
@@ -77,6 +78,7 @@ OBJECTS       = Inventory.o \
 		AdjacencyMatrix.o \
 		Database.o \
 		Order.o \
+		branchandbound.o \
 		ordermenu.o \
 		PathFinder.o \
 		PriorityQueue.o \
@@ -305,6 +307,7 @@ DIST          = ../WarehouseApp/ClassDiagram.cd \
 		../WarehouseApp/AdjacencyMatrix.h \
 		../WarehouseApp/Database.h \
 		../WarehouseApp/Order.h \
+		../WarehouseApp/branchandbound.h \
 		../WarehouseApp/ordermenu.h \
 		../WarehouseApp/PathFinder.h \
 		../WarehouseApp/PriorityQueue.h \
@@ -321,6 +324,7 @@ DIST          = ../WarehouseApp/ClassDiagram.cd \
 		../WarehouseApp/AdjacencyMatrix.cpp \
 		../WarehouseApp/Database.cpp \
 		../WarehouseApp/Order.cpp \
+		../WarehouseApp/branchandbound.cpp \
 		../WarehouseApp/ordermenu.cpp \
 		../WarehouseApp/PathFinder.cpp \
 		../WarehouseApp/PriorityQueue.cpp \
@@ -807,8 +811,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.15.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../WarehouseApp/Inventory.h ../WarehouseApp/MST.h ../WarehouseApp/OrderHelper.h ../WarehouseApp/WarehouseMap.h ../WarehouseApp/AdjacencyMatrix.h ../WarehouseApp/Database.h ../WarehouseApp/Order.h ../WarehouseApp/ordermenu.h ../WarehouseApp/PathFinder.h ../WarehouseApp/PriorityQueue.h ../WarehouseApp/Product.h ../WarehouseApp/mainwhmap.h ../WarehouseApp/secondproductwindow.h ../WarehouseApp/Ticket.h ../WarehouseApp/ui_mainwhmap.h ../WarehouseApp/ui_singleProductWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../WarehouseApp/Inventory.cpp ../WarehouseApp/MST.cpp ../WarehouseApp/OrderHelper.cpp ../WarehouseApp/WarehouseApp.cpp ../WarehouseApp/WarehouseMap.cpp ../WarehouseApp/AdjacencyMatrix.cpp ../WarehouseApp/Database.cpp ../WarehouseApp/Order.cpp ../WarehouseApp/ordermenu.cpp ../WarehouseApp/PathFinder.cpp ../WarehouseApp/PriorityQueue.cpp ../WarehouseApp/Product.cpp ../WarehouseApp/mainwhmap.cpp ../WarehouseApp/secondproductwindow.cpp ../WarehouseApp/Ticket.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../WarehouseApp/Inventory.h ../WarehouseApp/MST.h ../WarehouseApp/OrderHelper.h ../WarehouseApp/WarehouseMap.h ../WarehouseApp/AdjacencyMatrix.h ../WarehouseApp/Database.h ../WarehouseApp/Order.h ../WarehouseApp/branchandbound.h ../WarehouseApp/ordermenu.h ../WarehouseApp/PathFinder.h ../WarehouseApp/PriorityQueue.h ../WarehouseApp/Product.h ../WarehouseApp/mainwhmap.h ../WarehouseApp/secondproductwindow.h ../WarehouseApp/Ticket.h ../WarehouseApp/ui_mainwhmap.h ../WarehouseApp/ui_singleProductWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../WarehouseApp/Inventory.cpp ../WarehouseApp/MST.cpp ../WarehouseApp/OrderHelper.cpp ../WarehouseApp/WarehouseApp.cpp ../WarehouseApp/WarehouseMap.cpp ../WarehouseApp/AdjacencyMatrix.cpp ../WarehouseApp/Database.cpp ../WarehouseApp/Order.cpp ../WarehouseApp/branchandbound.cpp ../WarehouseApp/ordermenu.cpp ../WarehouseApp/PathFinder.cpp ../WarehouseApp/PriorityQueue.cpp ../WarehouseApp/Product.cpp ../WarehouseApp/mainwhmap.cpp ../WarehouseApp/secondproductwindow.cpp ../WarehouseApp/Ticket.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../WarehouseApp/mainwhmap.ui ../WarehouseApp/ordermenu.ui ../WarehouseApp/secondproductwindow.ui $(DISTDIR)/
 
 
@@ -1507,6 +1511,19 @@ Order.o: ../WarehouseApp/Order.cpp ../WarehouseApp/Order.h \
 		../WarehouseApp/Product.h \
 		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Order.o ../WarehouseApp/Order.cpp
+
+branchandbound.o: ../WarehouseApp/branchandbound.cpp ../WarehouseApp/branchandbound.h \
+		../WarehouseApp/PathFinder.h \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QPointF \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qpoint.h \
+		../WarehouseApp/AdjacencyMatrix.h \
+		../WarehouseApp/Database.h \
+		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp \
+		../WarehouseApp/Product.h \
+		../WarehouseApp/WarehouseMap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o branchandbound.o ../WarehouseApp/branchandbound.cpp
 
 ordermenu.o: ../WarehouseApp/ordermenu.cpp ../WarehouseApp/ordermenu.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \

@@ -175,26 +175,26 @@ void ordermenu::handleRouteButton() {
 
 
         PathFinder pathFinder;
-        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
-        routePoints = pathFinder.branchAndBound(deq,dummyStart,dummyEnd);
+        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+        //routePoints = pathFinder.branchAndBound(deq,dummyStart,dummyEnd);
 
         std::cout<<"Points to be reached are:"<<std::endl;
         for(auto& point : routePoints) {
             std::cout<<"("<<point.rx()/6<<","<<point.ry()/6<<")"<<std::endl;
         }
 
-        /*
+
         directions = pathFinder.pathAnnotation();
         for (auto& instruction: directions) {
             std::cout << instruction << std::endl;
         }
-        */
+
 
         std::cout << "test" << std::endl;
         routeMap->loadAllPoints(allPoints);
         routeMap->loadProductPoints(productPoints);
         routeMap->loadRoutePrinter(routePoints);
-        //routeMap->loadInstructions(directions);
+        routeMap->loadInstructions(directions);
         routeMap->setFixedSize(1500, 1000);
         routeMap->setWindowTitle("Warehouse Map with Route");
         this->hide();

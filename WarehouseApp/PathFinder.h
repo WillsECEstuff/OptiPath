@@ -39,13 +39,6 @@ class PathFinder {
     const std::string NOT_PRODUCT = "-1";
     const float TILE_SIZE = 30;
     const float SCALE = 5;
-    int minPathLength = INT_MAX;
-
-    //Branch and bound stuff
-    std::vector<bool> visited;
-    std::unordered_map<int, Product*> indexToProduct;
-    std::vector<int> finalPath;
-
 
     Compass getHeading(std::tuple<float, float, std::string> p1,
         std::tuple<float, float, std::string> p2);
@@ -75,17 +68,6 @@ class PathFinder {
             Product& endLocation
             );
     //Branch and bound stuff
-    QVector<QPointF> branchAndBound(
-            std::deque<Product>& productList,
-            Product& startLocation,
-            Product& endLocation
-            );
-
-    int firstMin(std::vector<std::vector<int> >& matrix, int i);
-    int secondMin(std::vector<std::vector<int> >& matrix, int i);
-    void copyToFinal(std::vector<int>& currPath);
-    void TSPRec(std::vector<std::vector<int> >& matrix, int currBound, int currWeight,
-                int level, std::vector<int>&, std::deque<Product>&);
 
 
     std::tuple<float,float> getCurrentPosition(void);
