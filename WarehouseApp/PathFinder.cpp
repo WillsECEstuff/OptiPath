@@ -45,8 +45,26 @@ double PathFinder::distanceBetweenProductsEuclidean(Product& product1, Product& 
 }
 
 
-std::vector<int> PathFinder::nextOpenAisle(float xPositionStart, float xPositionEnd) {
-
+std::vector<int> PathFinder::nextOpenAisle(Product& product1, Product& product2) {
+    std::vector<int> shelvesToBeCrossed;
+    std::vector<int> gapsToBeVisited;
+    int currXPos = product1.getXPosition();
+    int minDist = INT_MAX;
+    int nextXCoord = 0;
+    for(int i = product1.getYPosition()+2;i<=product2.getYPosition();i+=2) {
+        shelvesToBeCrossed.push_back(i);
+    }
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+    for(int i = 0;i<(int)shelvesToBeCrossed.size();++i) {
+        for(int j = 0;j<(int)shelves[std::to_string(i)]["open"].size();++j) {
+            if(currXPos - (int)shelves[std::to_string(i)]["open"][j] < minDist) {
+                nextXCoord = (int)shelves[std::to_string(i)]["open"][j];
+            }
+        }
+        gapsToBeVisited.push_back(nextXCoord);
+    }
+    return gapsToBeVisited;
 }
 
 std::tuple<double, int, int> distanceBetweenProductsTaxicab(Product& product1, Product& product2) { // returns tuple (distance, left/right, up/down), where -1 = left or down
@@ -111,6 +129,105 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
         min = min < std::floor(beginCoord) ? min : std::floor(beginCoord);
     }
     return min;
+}
+
+/**
+ * @brief	Navigates along the warehouse aisles in an T shape
+ *
+ * @param	productList		List of products to be picked up
+ * @param	startLocation   Start location deaulted to (0,1)
+ * @param   endLocation     End location defaulted to (0,1)
+ *
+ * @return  Ordered set of points to be visited
+ */
+
+QVector<QPointF> PathFinder :: ReturnTraversal(
+        std::deque<Product>& productList,
+        Product& startLocation,
+        Product& endLocation
+        ) {
+    QVector<QPointF> pointsToDisplay;
+    std::unordered_map<int, std::vector<Product>> aisleProductMap;
+    auto start = std::chrono::high_resolution_clock::now();
+
+    WarehouseMap* wMap = wMap->getInstance();
+    currentPosition = startLocation.getPositionTuple();
+
+    std::cout << "starting current: " << std::get<0>(currentPosition) << " " << std::get<1>(currentPosition) << std::endl;
+
+    points.push_back(std::make_tuple(std::get<0>(currentPosition),std::get<1>(currentPosition),"-1"));
+    json shelves = wMap->getShelves();
+
+    //Add aisles to be visited
+    for(auto& shelf : shelves.items()) {
+        for(auto& product : productList) {
+            if(product.getYPosition() == std::stoi(shelf.key())) {
+                aislesToBeVisited.push_back(std::stoi(shelf.key()) + 1); //aisle "1" can access shelf "0"
+                aisleProductMap[product.getYPosition()].push_back(product); // Add product to aisle key
+            }
+        }
+    }
+
+    std::cout<<"Aisles to be visited:"<<std::endl;
+    std::sort(aislesToBeVisited.begin(),aislesToBeVisited.end());
+
+    aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
+    for(auto& element : aislesToBeVisited) {
+        std::cout<<element<<std::endl;
+    }
+
+    if(std::get<1>(currentPosition) != aislesToBeVisited.front()) {
+        points.push_back(std::make_tuple(0,std::get<1>(currentPosition),"-1"));
+        points.push_back(std::make_tuple(0,aislesToBeVisited.front(),"-1"));
+    }
+
+    for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
+        int yCoord = *it;
+
+        if(yCoord < 21) { //Make sure y coordinate does not exceed 19
+
+            int nextBegin = findMinBegin(yCoord+1,*(it+1)-1);
+
+            //Sort based on earliest product encountered in traversal
+            std::sort(aisleProductMap[yCoord-1].begin(),aisleProductMap[yCoord-1].end(),[](Product a, Product b) {
+                return a.getXPosition() < b.getXPosition();
+            });
+
+            //Add the product locations in the traversal
+            for(auto& product : aisleProductMap[yCoord-1]) {
+                points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+            }
+
+            //Push the leftmost coordinate in the aisle
+            points.push_back(std::make_tuple(nextBegin,yCoord,"-1"));
+
+            //Travel to the next aisle
+            points.push_back(std::make_tuple(nextBegin,*(it+1),"-1"));
+
+        }
+    }
+
+    for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
+         points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+    }
+
+     //Go back to start location
+     points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
+     points.push_back(std::make_tuple(0,startLocation.getYPosition(),"-1"));
+     points.push_back(std::make_tuple(startLocation.getXPosition(),startLocation.getYPosition(),"-1"));
+
+     //Add points to display
+     for(auto it = points.begin();it!=points.end()-1;++it) {
+         pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+         pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
+     }
+
+     auto end = std::chrono::high_resolution_clock::now();
+     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+     std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
+     std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
+
+    return pointsToDisplay;
 }
 
 

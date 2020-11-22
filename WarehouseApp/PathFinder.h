@@ -47,7 +47,7 @@ class PathFinder {
     int findMaxEnd(int, int);
     int findMinBegin(int, int);
 
-    std::vector<int> nextOpenAisle(float xPositionStart, float xPositionEnd);
+    std::vector<int> nextOpenAisle(Product& product1, Product& product2);
 
     std::deque<Product> calculatePath(
         std::unordered_map<Product*, std::deque<Product>> graph,
@@ -62,8 +62,19 @@ class PathFinder {
         Product& endLocation
         );
 
+    QVector<QPointF> STraversalGaps(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation
+            );
 
     QVector<QPointF> STraversal(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation
+            );
+
+    QVector<QPointF> ReturnTraversal(
             std::deque<Product>& productList,
             Product& startLocation,
             Product& endLocation

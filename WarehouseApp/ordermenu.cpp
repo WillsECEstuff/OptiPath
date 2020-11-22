@@ -175,8 +175,9 @@ void ordermenu::handleRouteButton() {
 
 
         PathFinder pathFinder;
-        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
         //routePoints = pathFinder.branchAndBound(deq,dummyStart,dummyEnd);
+        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd);
 
         std::cout<<"Points to be reached are:"<<std::endl;
         for(auto& point : routePoints) {

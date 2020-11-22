@@ -72,6 +72,7 @@ void WarehouseMap::buildWarehouseMap(json productDatabase)
 		}
 	}
 
+    //Add the gaps in shelves for easier routing
     for(int i = 0;i<=20;i+=2) {
         std::set<int> open;
         for(int j = 0;j<40;++j) {
