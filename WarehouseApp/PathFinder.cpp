@@ -133,24 +133,6 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
 }
 
 /**
- * @brief	Navigates along the warehouse aisles in an S-T shape
- *
- * @param	productList		List of products to be picked up
- * @param	startLocation   Start location deaulted to (0,1)
- * @param   endLocation     End location defaulted to (0,1)
- *
- * @return  Ordered set of points to be visited
- */
-
-QVector<QPointF> HybridTraversal(
-        std::deque<Product>& productList,
-        Product& startLocation,
-        Product& endLocation
-        ) {
-
-
-}
-/**
  * @brief	Navigates along the warehouse aisles in an T shape
  *
  * @param	productList		List of products to be picked up

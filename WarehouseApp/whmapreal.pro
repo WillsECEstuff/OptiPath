@@ -11,13 +11,13 @@ CONFIG += c++11
 SOURCES += \
     Inventory.cpp \
     MST.cpp \
+    NN.cpp \
     OrderHelper.cpp \
     WarehouseApp.cpp \
     WarehouseMap.cpp \
     AdjacencyMatrix.cpp \
     Database.cpp \
     Order.cpp \
-    branchandbound.cpp \
     ordermenu.cpp \
     PathFinder.cpp \
     PriorityQueue.cpp \
@@ -29,12 +29,12 @@ SOURCES += \
 HEADERS += \
     Inventory.h \
     MST.h \
+    NN.h \
     OrderHelper.h \
     WarehouseMap.h \
     AdjacencyMatrix.h \
     Database.h \
     Order.h \
-    branchandbound.h \
     ordermenu.h \
     PathFinder.h \
     PriorityQueue.h \

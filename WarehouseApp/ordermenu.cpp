@@ -20,6 +20,7 @@
 #include "Ticket.h"
 #include "Order.h"
 #include "PathFinder.h"
+#include "NN.h"
 
 #ifdef _DEBUG
 
@@ -175,10 +176,10 @@ void ordermenu::handleRouteButton() {
 
 
         PathFinder pathFinder;
+        NN NNFinder;
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
-        //routePoints = pathFinder.branchAndBound(deq,dummyStart,dummyEnd);
         routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd);
-
+        //routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd);
         std::cout<<"Points to be reached are:"<<std::endl;
         for(auto& point : routePoints) {
             std::cout<<"("<<point.rx()/6<<","<<point.ry()/6<<")"<<std::endl;
