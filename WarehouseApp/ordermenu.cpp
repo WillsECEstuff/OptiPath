@@ -39,15 +39,17 @@ ordermenu::ordermenu(QWidget *parent)
     settingsButton->setGeometry(100,200,135,50);
     routeButton = new QPushButton("Show Route", this);
     routeButton->setGeometry(345,200,135,50);
-    locationButton = new QPushButton("Change Starting Location", this);
-    locationButton->setGeometry(100,300,135,50);
+    startLocationButton = new QPushButton("Change Starting Location", this);
+    startLocationButton->setGeometry(100,300,135,50);
     enterSingleButton = new QPushButton("Search for Single Product/\nMap Preview", this);
     enterSingleButton->setGeometry(345,300,135,50);
 
+    endLocationButton = new QPushButton("Change Ending Location", this);
+    endLocationButton->setGeometry(100,480,135,50);
     addOrderButton = new QPushButton("Create Order", this);
-    addOrderButton->setGeometry(235,480,135,50);
-    addProdButton = new QPushButton("Add Product", this);
-    addProdButton->setGeometry(235,650,135,50);
+    addOrderButton->setGeometry(345,480,135,50);
+    //addProdButton = new QPushButton("Add Product", this);
+    //addProdButton->setGeometry(235,650,135,50);
 
     txtOrder = new QLabel(this);
     QFont font = txtOrder->font();
@@ -61,17 +63,24 @@ ordermenu::ordermenu(QWidget *parent)
 
     txtLblOrder = new QLabel(this);
     txtLblOrder->setText("Keep entering Product ID(s) below\nand click 'Add Product' to continue making the order,\nthen click on 'Create Order' when finished.");
-    txtLblOrder->setGeometry(235,540,300,50);
+    txtLblOrder->setGeometry(345,540,300,50);
     txtAddOrder = new QLineEdit(this);
     txtAddOrder->setPlaceholderText("123");
-    txtAddOrder->setGeometry(280,605,50,25);
+    txtAddOrder->setGeometry(345,605,50,25);
 
-    txtLblLoc = new QLabel(this);
-    txtLblLoc->setText("Enter a location below\nas (x,y) without parentheses,\nthen click on 'Change Starting Location.'\nThis also sets ending location.");
-    txtLblLoc->setGeometry(100,360,300,60);
-    txtLoc = new QLineEdit(this);
-    txtLoc->setPlaceholderText("0,0");
-    txtLoc->setGeometry(145,425,50,25);
+    txtLblSLoc = new QLabel(this);
+    txtLblSLoc->setText("Enter a location below\nas (x,y) without parentheses,\nthen click on 'Change Starting Location.'");
+    txtLblSLoc->setGeometry(100,360,300,60);
+    txtSLoc = new QLineEdit(this);
+    txtSLoc->setPlaceholderText("0,0");
+    txtSLoc->setGeometry(145,425,50,25);
+
+    txtLblELoc = new QLabel(this);
+    txtLblELoc->setText("Enter a location below\nas (x,y) without parentheses,\nthen click on 'Change Ending Location.'");
+    txtLblELoc->setGeometry(100,540,300,60);
+    txtELoc = new QLineEdit(this);
+    txtELoc->setPlaceholderText("0,0");
+    txtELoc->setGeometry(145,425,50,25);
 
     txtLblSingle = new QLabel(this);
     txtLblSingle->setText("Just want a single product?\nEnter a single product ID below,\nthen click on 'Search for Single Product.'\nLeave empty for map preview.");
@@ -81,7 +90,7 @@ ordermenu::ordermenu(QWidget *parent)
     txtwantsingle->setGeometry(390,425,50,25);
 
     connect(routeButton, SIGNAL (clicked()), this, SLOT (handleRouteButton()));
-    connect(locationButton, SIGNAL (clicked()), this, SLOT (handleLocationButton()));
+    connect(startLocationButton, SIGNAL (clicked()), this, SLOT (handleLocationButton()));
     connect(enterSingleButton, SIGNAL(clicked()), this, SLOT(handleSingleButton()));
 
     connect(addProdButton, SIGNAL(clicked()), this, SLOT(handleAddProductButton()));
@@ -218,7 +227,7 @@ void ordermenu::processOrder(Order *o, Database *db, int oIdx) {
 }
 
 void ordermenu::handleLocationButton() {
-    std::string sLoc = txtLoc->text().toStdString();
+    std::string sLoc = txtSLoc->text().toStdString();
     int idx = (int)sLoc.find(",");
     std::string xLoc = sLoc.substr(0, idx);
     std::string yLoc = sLoc.substr(idx+1);
@@ -282,7 +291,7 @@ void ordermenu::handleCreateOrderButton() {
         }
 
         QMessageBox notifyUser;
-        std::string pinnedOrder = "Order " + std::to_string(orderNum) + ", containing " + std::to_string(prodIDs.size());
+        std::string pinnedOrder = "Order " + std::to_string(orderNum) + ", containing " + std::to_string(prodIDs.size()) + " items";
         ordercbox->addItem(QString::fromStdString(pinnedOrder));
 
         std::string notify = pinnedOrder + " products\nContents: " + chain;
@@ -291,9 +300,9 @@ void ordermenu::handleCreateOrderButton() {
         prodIDs.clear();
         notifyUser.exec();
 
-        std::cout << "big order size: " << orderList.size() << std::endl;
-        int idx = orderList.size() - 1;
-        std::cout << "order size: " << orderList[idx].size() << std::endl;
+        //std::cout << "big order size: " << orderList.size() << std::endl;
+        //int idx = orderList.size() - 1;
+        //std::cout << "order size: " << orderList[idx].size() << std::endl;
     }
 }
 

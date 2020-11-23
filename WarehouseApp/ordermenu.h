@@ -58,7 +58,8 @@ private:
     std::tuple<float, float> startLocation;
     std::tuple<float, float> endLocation;
 
-    QPushButton *locationButton;
+    QPushButton *startLocationButton;
+    QPushButton *endLocationButton;
     QPushButton *routeButton;
     QPushButton *enterSingleButton;
     QPushButton *addOrderButton;
@@ -69,8 +70,10 @@ private:
     QComboBox *ordercbox;
     QLineEdit *txtwantsingle;
     QLabel *txtLblSingle;
-    QLineEdit *txtLoc;
-    QLabel *txtLblLoc;
+    QLineEdit *txtSLoc;
+    QLabel *txtLblSLoc;
+    QLineEdit *txtELoc;
+    QLabel *txtLblELoc;
     QLineEdit *txtAddOrder;
     QLabel *txtLblOrder;
 
