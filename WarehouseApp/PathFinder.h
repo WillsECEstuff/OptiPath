@@ -79,6 +79,12 @@ class PathFinder {
             Product& startLocation,
             Product& endLocation
             );
+
+    QVector<QPointF> HybridTraversal(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation
+            );
     //Branch and bound stuff
 
 

@@ -7,6 +7,7 @@
  *********************************************************************/
 
 #include "PathFinder.h"
+#include <unordered_set>
 #include <chrono>
 
 /**
@@ -132,6 +133,24 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
 }
 
 /**
+ * @brief	Navigates along the warehouse aisles in an S-T shape
+ *
+ * @param	productList		List of products to be picked up
+ * @param	startLocation   Start location deaulted to (0,1)
+ * @param   endLocation     End location defaulted to (0,1)
+ *
+ * @return  Ordered set of points to be visited
+ */
+
+QVector<QPointF> HybridTraversal(
+        std::deque<Product>& productList,
+        Product& startLocation,
+        Product& endLocation
+        ) {
+
+
+}
+/**
  * @brief	Navigates along the warehouse aisles in an T shape
  *
  * @param	productList		List of products to be picked up
@@ -159,6 +178,7 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     json shelves = wMap->getShelves();
 
     //Add aisles to be visited
+
     for(auto& shelf : shelves.items()) {
         for(auto& product : productList) {
             if(product.getYPosition() == std::stoi(shelf.key())) {
@@ -172,8 +192,26 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     std::sort(aislesToBeVisited.begin(),aislesToBeVisited.end());
 
     aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
+
+    //aisle "3" can access shelf "2" and shelf "4"
+    /*
+    for(int i = 0;i<(int)aislesToBeVisited.size()-1;++i) {
+        if(aislesToBeVisited[i+1] == aislesToBeVisited[i]+2) {
+            aislesToBeVisited[i+1] = aislesToBeVisited[i];
+            aisleProductMap[aislesToBeVisited[i]-1].insert(aisleProductMap[aislesToBeVisited[i]-1].end(),aisleProductMap[aislesToBeVisited[i]+1].begin(),aisleProductMap[aislesToBeVisited[i]+1].end());
+            aisleProductMap[aislesToBeVisited[i]+1].erase(aisleProductMap[aislesToBeVisited[i]+1].begin(),aisleProductMap[aislesToBeVisited[i]+1].end());
+            i++;
+        }
+    }
+    aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
+    */
+
     for(auto& element : aislesToBeVisited) {
         std::cout<<element<<std::endl;
+    }
+
+    for(auto& element : aisleProductMap) {
+        std::cout<<element.first<<std::endl;
     }
 
     if(std::get<1>(currentPosition) != aislesToBeVisited.front()) {
@@ -193,9 +231,11 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
                 return a.getXPosition() < b.getXPosition();
             });
 
-            //Add the product locations in the traversal
+            //Add the product locations in the traversal - modified. Now does not travel through shelves
             for(auto& product : aisleProductMap[yCoord-1]) {
+                points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
                 points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+                points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
             }
 
             //Push the leftmost coordinate in the aisle
@@ -208,7 +248,9 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     }
 
     for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
-         points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+        points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
+        points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+        points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
     }
 
      //Go back to start location
