@@ -29,9 +29,13 @@ Order createOrderfromVector(std::vector<std::string> productList,
 	
 	Order o(oID, priority);
 	std::tuple<float, float> t;
-
-	for (std::vector<std::string>::iterator it = productList.begin(); it != productList.end(); ++it) {
+    std::cout << "productList size: " << productList.size() << std::endl;
+    std::cout << "product ID: " << productList[0] << std::endl;
+    for (std::vector<std::string>::iterator it = productList.begin(); it != productList.end(); ++it) {
+        //std::cout << "product ID: " << *it << std::endl;
 		t = d->getProductPosition(*it);
+
+        std::cout << "product location: " << std::get<0>(t) << "," << std::get<1>(t) << std::endl;
 
 		// skip if the tuple x or y value is less than 0
 		if (!(std::get<0>(t) < 0 || std::get<1>(t) < 0)) {
@@ -190,12 +194,14 @@ Order createOrderfromString(std::string products, int orderID, int priority)
 
 	// tokenizes the line with the comma as a delimiter
 	for (std::string each; std::getline(iss, each, ',');) {
-
 		// remove white space
+        std::cout << "each: " + each + "|" << std::endl;
 		tokens.push_back(trim(each));
 	}
 
-	return createOrderfromVector(tokens, orderID, 1);
+    std::cout << "token size: " << tokens.size() << std::endl;
+
+    return createOrderfromVector(tokens, orderID, priority);
 }
 
 std::string trim(const std::string& line) {

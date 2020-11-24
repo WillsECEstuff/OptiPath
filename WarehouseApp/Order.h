@@ -31,6 +31,7 @@ public:
 	void addProduct(Product p);
 	std::list<Product> getProductList(void);
 	void changePriority(int p);
+    int getSize(void);
 	int getPriority(void);
 };
 
