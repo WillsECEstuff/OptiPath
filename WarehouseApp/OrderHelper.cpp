@@ -193,20 +193,16 @@ Order createOrderfromString(std::string products, int orderID, int priority)
 	std::vector<std::string> tokens;
 
 	// tokenizes the line with the comma as a delimiter
-	for (std::string each; std::getline(iss, each, ',');) {
+    for (std::string each; std::getline(iss, each, ',');) {
 		// remove white space
-        std::cout << "each: " + each + "|" << std::endl;
 		tokens.push_back(trim(each));
 	}
-
-    std::cout << "token size: " << tokens.size() << std::endl;
-
     return createOrderfromVector(tokens, orderID, priority);
 }
 
 std::string trim(const std::string& line) {
-	const char* WhiteSpace = " \t\v\r\n";
-	std::size_t start = line.find_first_not_of(WhiteSpace);
-	std::size_t end = line.find_last_not_of(WhiteSpace);
-	return start == end ? std::string() : line.substr(start, end - start + 1);
+    const char* WhiteSpace = " \t\v\r\n";
+    std::size_t start = line.find_first_not_of(WhiteSpace);
+    std::size_t end = line.find_last_not_of(WhiteSpace);
+    return line.substr(start, end - start + 1);
 }
