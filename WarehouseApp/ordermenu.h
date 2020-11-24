@@ -17,6 +17,7 @@
 #include "Order.h"
 #include "PathFinder.h"
 #include "Database.h"
+#include "OrderHelper.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ordermenu; }
@@ -30,10 +31,6 @@ public:
     ordermenu(QWidget *parent = nullptr);
     ~ordermenu();
 
-    /*void loadAllPoints(QVector <QPointF> ptsList);
-    void loadProductPoints(QVector <QPointF> ptsList);
-    void loadRoutePrinter(QVector <QPointF> route);
-    void loadInstructions(QVector <std::string> instrList); */
     void processOrder(Order* o, Database* d, int oIdx);
 
 public slots:
@@ -41,38 +38,44 @@ public slots:
 
 private slots:
     void handleRouteButton();
-    void handleLocationButton();
+    void handleSLocationButton();
+    void handleELocationButton();
     void handleCreateOrderButton();
     void handleSingleButton();
-    void handleAddProductButton();
+    void handleTimerButton();
 
 private:
     Ui::ordermenu *ui;
-
+    float myTimer;
     QVector <QPointF> allPoints;
     QVector <QPointF> productPoints;
     QVector <QPointF> routePoints;
     QVector <std::string> directions;
-    QVector <std::string> prodIDs;
-    QVector <QVector <std::string>> orderList;
+    //QVector <std::string> prodIDs;
+    QVector <Order> orderList;
     std::tuple<float, float> startLocation;
     std::tuple<float, float> endLocation;
 
-    QPushButton *locationButton;
+    QPushButton *startLocationButton;
+    QPushButton *endLocationButton;
     QPushButton *routeButton;
     QPushButton *enterSingleButton;
     QPushButton *addOrderButton;
     QPushButton *settingsButton;
-    QPushButton *addProdButton;
+    QPushButton *timerButton;
     QLabel *txtOrder;
     QFont *font;
     QComboBox *ordercbox;
     QLineEdit *txtwantsingle;
     QLabel *txtLblSingle;
-    QLineEdit *txtLoc;
-    QLabel *txtLblLoc;
+    QLineEdit *txtSLoc;
+    QLabel *txtLblSLoc;
+    QLineEdit *txtELoc;
+    QLabel *txtLblELoc;
     QLineEdit *txtAddOrder;
     QLabel *txtLblOrder;
+    QLineEdit *txtTimer;
+    QLabel *txtLblTimer;
 
     mainwhmap *routeMap;
     secondProductWindow *secWindow;
