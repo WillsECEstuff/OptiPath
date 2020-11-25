@@ -200,9 +200,23 @@ Order createOrderfromString(std::string products, int orderID, int priority)
     return createOrderfromVector(tokens, orderID, priority);
 }
 
+
+/**
+ * @brief	Removes white space in front and at the end of the string.
+ *			
+ * 
+ * @param	line,		string
+ * @return	string
+ */
 std::string trim(const std::string& line) {
     const char* WhiteSpace = " \t\v\r\n";
-    std::size_t start = line.find_first_not_of(WhiteSpace);
-    std::size_t end = line.find_last_not_of(WhiteSpace);
-    return line.substr(start, end - start + 1);
+
+	const auto strBegin = line.find_first_not_of(WhiteSpace);
+	if (strBegin == std::string::npos) {
+		return ""; // empty string
+	}
+	const auto strEnd = line.find_last_not_of(WhiteSpace);
+	const auto strRange = strEnd - strBegin + 1;
+    
+    return line.substr(strBegin, strRange);
 }
