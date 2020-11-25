@@ -15,6 +15,7 @@ public:
     std::vector<bool> visited;
     std::unordered_map<int, Product*> indexToProduct;
     std::vector<int> finalPath;
+    std::unordered_map<double,bool> canVisit;
 
     double distanceBetweenProductsEuclidean(Product& product1, Product& product2);
 

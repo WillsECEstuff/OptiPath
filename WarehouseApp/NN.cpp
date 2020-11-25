@@ -71,10 +71,7 @@ QVector<QPointF> NN :: NNAlgorithm(
             }
         }
 
-//        for(int i = 0;i<(int)productList.size();++i) {
-//            points.push_back(QPointF(productList[i].getXPosition() * TILE_SIZE/SCALE,productList[i].getYPosition() * TILE_SIZE/SCALE));
-//        }
-        points.push_back(QPointF(startLocation.getXPosition() * TILE_SIZE/SCALE,startLocation.getYPosition() * TILE_SIZE/SCALE));
+        points.push_back(QPointF(endLocation.getXPosition() * TILE_SIZE/SCALE,endLocation.getYPosition() * TILE_SIZE/SCALE));
         return points;
 }
 
