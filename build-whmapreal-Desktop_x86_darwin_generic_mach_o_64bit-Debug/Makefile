@@ -53,6 +53,8 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../WarehouseApp/Inventory.cpp \
+		../WarehouseApp/MST.cpp \
+		../WarehouseApp/NN.cpp \
 		../WarehouseApp/OrderHelper.cpp \
 		../WarehouseApp/WarehouseApp.cpp \
 		../WarehouseApp/WarehouseMap.cpp \
@@ -69,6 +71,8 @@ SOURCES       = ../WarehouseApp/Inventory.cpp \
 		moc_mainwhmap.cpp \
 		moc_secondproductwindow.cpp
 OBJECTS       = Inventory.o \
+		MST.o \
+		NN.o \
 		OrderHelper.o \
 		WarehouseApp.o \
 		WarehouseMap.o \
@@ -267,6 +271,7 @@ DIST          = ../WarehouseApp/ClassDiagram.cd \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/spec_post.prf \
+		../WarehouseApp/.qmake.stash \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/toolchain.prf \
@@ -296,6 +301,8 @@ DIST          = ../WarehouseApp/ClassDiagram.cd \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/lex.prf \
 		../WarehouseApp/whmapreal.pro ../WarehouseApp/Inventory.h \
+		../WarehouseApp/MST.h \
+		../WarehouseApp/NN.h \
 		../WarehouseApp/OrderHelper.h \
 		../WarehouseApp/WarehouseMap.h \
 		../WarehouseApp/AdjacencyMatrix.h \
@@ -310,6 +317,8 @@ DIST          = ../WarehouseApp/ClassDiagram.cd \
 		../WarehouseApp/Ticket.h \
 		../WarehouseApp/ui_mainwhmap.h \
 		../WarehouseApp/ui_singleProductWindow.h ../WarehouseApp/Inventory.cpp \
+		../WarehouseApp/MST.cpp \
+		../WarehouseApp/NN.cpp \
 		../WarehouseApp/OrderHelper.cpp \
 		../WarehouseApp/WarehouseApp.cpp \
 		../WarehouseApp/WarehouseMap.cpp \
@@ -525,6 +534,7 @@ Makefile: ../WarehouseApp/whmapreal.pro ../../../../Qt/5.15.1/clang_64/mkspecs/m
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/toolchain.prf \
@@ -738,6 +748,7 @@ Makefile: ../WarehouseApp/whmapreal.pro ../../../../Qt/5.15.1/clang_64/mkspecs/m
 ../../../../Qt/5.15.1/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.15.1/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.15.1/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.15.1/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.15.1/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.15.1/clang_64/mkspecs/features/toolchain.prf:
@@ -800,8 +811,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.15.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../WarehouseApp/Inventory.h ../WarehouseApp/OrderHelper.h ../WarehouseApp/WarehouseMap.h ../WarehouseApp/AdjacencyMatrix.h ../WarehouseApp/Database.h ../WarehouseApp/Order.h ../WarehouseApp/ordermenu.h ../WarehouseApp/PathFinder.h ../WarehouseApp/PriorityQueue.h ../WarehouseApp/Product.h ../WarehouseApp/mainwhmap.h ../WarehouseApp/secondproductwindow.h ../WarehouseApp/Ticket.h ../WarehouseApp/ui_mainwhmap.h ../WarehouseApp/ui_singleProductWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../WarehouseApp/Inventory.cpp ../WarehouseApp/OrderHelper.cpp ../WarehouseApp/WarehouseApp.cpp ../WarehouseApp/WarehouseMap.cpp ../WarehouseApp/AdjacencyMatrix.cpp ../WarehouseApp/Database.cpp ../WarehouseApp/Order.cpp ../WarehouseApp/ordermenu.cpp ../WarehouseApp/PathFinder.cpp ../WarehouseApp/PriorityQueue.cpp ../WarehouseApp/Product.cpp ../WarehouseApp/mainwhmap.cpp ../WarehouseApp/secondproductwindow.cpp ../WarehouseApp/Ticket.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../WarehouseApp/Inventory.h ../WarehouseApp/MST.h ../WarehouseApp/NN.h ../WarehouseApp/OrderHelper.h ../WarehouseApp/WarehouseMap.h ../WarehouseApp/AdjacencyMatrix.h ../WarehouseApp/Database.h ../WarehouseApp/Order.h ../WarehouseApp/ordermenu.h ../WarehouseApp/PathFinder.h ../WarehouseApp/PriorityQueue.h ../WarehouseApp/Product.h ../WarehouseApp/mainwhmap.h ../WarehouseApp/secondproductwindow.h ../WarehouseApp/Ticket.h ../WarehouseApp/ui_mainwhmap.h ../WarehouseApp/ui_singleProductWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../WarehouseApp/Inventory.cpp ../WarehouseApp/MST.cpp ../WarehouseApp/NN.cpp ../WarehouseApp/OrderHelper.cpp ../WarehouseApp/WarehouseApp.cpp ../WarehouseApp/WarehouseMap.cpp ../WarehouseApp/AdjacencyMatrix.cpp ../WarehouseApp/Database.cpp ../WarehouseApp/Order.cpp ../WarehouseApp/ordermenu.cpp ../WarehouseApp/PathFinder.cpp ../WarehouseApp/PriorityQueue.cpp ../WarehouseApp/Product.cpp ../WarehouseApp/mainwhmap.cpp ../WarehouseApp/secondproductwindow.cpp ../WarehouseApp/Ticket.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../WarehouseApp/mainwhmap.ui ../WarehouseApp/ordermenu.ui ../WarehouseApp/secondproductwindow.ui $(DISTDIR)/
 
 
@@ -812,6 +823,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r whmapreal.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -978,6 +990,14 @@ moc_ordermenu.cpp: ../WarehouseApp/ordermenu.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/qtwidgetsversion.h \
 		../WarehouseApp/mainwhmap.h \
 		../WarehouseApp/secondproductwindow.h \
+		../WarehouseApp/WarehouseMap.h \
+		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp \
+		../WarehouseApp/Ticket.h \
+		../WarehouseApp/Order.h \
+		../WarehouseApp/Product.h \
+		../WarehouseApp/PathFinder.h \
+		../WarehouseApp/AdjacencyMatrix.h \
+		../WarehouseApp/Database.h \
 		moc_predefs.h \
 		../../../../Qt/5.15.1/clang_64/bin/moc
 	/Users/abinavkrishna/Qt/5.15.1/clang_64/bin/moc $(DEFINES) --include /Users/abinavkrishna/GIT/OptiPath/OptiPath/build-whmapreal-Desktop_x86_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/Users/abinavkrishna/Qt/5.15.1/clang_64/mkspecs/macx-clang -I/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp -I/Users/abinavkrishna/Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/abinavkrishna/Qt/5.15.1/clang_64/lib/QtGui.framework/Headers -I/Users/abinavkrishna/Qt/5.15.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/abinavkrishna/Qt/5.15.1/clang_64/lib ../WarehouseApp/ordermenu.h -o moc_ordermenu.cpp
@@ -1120,6 +1140,8 @@ moc_mainwhmap.cpp: ../WarehouseApp/mainwhmap.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/qwizard.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/qtwidgetsversion.h \
 		../WarehouseApp/secondproductwindow.h \
+		../WarehouseApp/WarehouseMap.h \
+		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp \
 		moc_predefs.h \
 		../../../../Qt/5.15.1/clang_64/bin/moc
 	/Users/abinavkrishna/Qt/5.15.1/clang_64/bin/moc $(DEFINES) --include /Users/abinavkrishna/GIT/OptiPath/OptiPath/build-whmapreal-Desktop_x86_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/Users/abinavkrishna/Qt/5.15.1/clang_64/mkspecs/macx-clang -I/Users/abinavkrishna/GIT/OptiPath/OptiPath/WarehouseApp -I/Users/abinavkrishna/Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/abinavkrishna/Qt/5.15.1/clang_64/lib/QtGui.framework/Headers -I/Users/abinavkrishna/Qt/5.15.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/abinavkrishna/Qt/5.15.1/clang_64/lib ../WarehouseApp/mainwhmap.h -o moc_mainwhmap.cpp
@@ -1302,6 +1324,25 @@ Inventory.o: ../WarehouseApp/Inventory.cpp ../WarehouseApp/Inventory.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QVector \
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qvector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Inventory.o ../WarehouseApp/Inventory.cpp
+
+MST.o: ../WarehouseApp/MST.cpp ../WarehouseApp/MST.h \
+		../WarehouseApp/Order.h \
+		../WarehouseApp/Product.h \
+		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MST.o ../WarehouseApp/MST.cpp
+
+NN.o: ../WarehouseApp/NN.cpp ../WarehouseApp/NN.h \
+		../WarehouseApp/PathFinder.h \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QPointF \
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qpoint.h \
+		../WarehouseApp/AdjacencyMatrix.h \
+		../WarehouseApp/Database.h \
+		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp \
+		../WarehouseApp/Product.h \
+		../WarehouseApp/WarehouseMap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NN.o ../WarehouseApp/NN.cpp
 
 OrderHelper.o: ../WarehouseApp/OrderHelper.cpp ../WarehouseApp/OrderHelper.h \
 		../WarehouseApp/Database.h \
@@ -1623,11 +1664,19 @@ ordermenu.o: ../WarehouseApp/ordermenu.cpp ../WarehouseApp/ordermenu.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/qtwidgetsversion.h \
 		../WarehouseApp/mainwhmap.h \
 		../WarehouseApp/secondproductwindow.h \
-		ui_ordermenu.h \
-		../WarehouseApp/Database.h \
+		../WarehouseApp/WarehouseMap.h \
 		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp \
+		../WarehouseApp/Ticket.h \
+		../WarehouseApp/Order.h \
+		../WarehouseApp/Product.h \
+		../WarehouseApp/PathFinder.h \
+		../WarehouseApp/AdjacencyMatrix.h \
+		../WarehouseApp/Database.h \
+		ui_ordermenu.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QString \
-		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qstring.h
+		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		../WarehouseApp/MST.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ordermenu.o ../WarehouseApp/ordermenu.cpp
 
 PathFinder.o: ../WarehouseApp/PathFinder.cpp ../WarehouseApp/PathFinder.h \
@@ -1790,6 +1839,8 @@ mainwhmap.o: ../WarehouseApp/mainwhmap.cpp ../WarehouseApp/mainwhmap.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/qwizard.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtWidgets.framework/Headers/qtwidgetsversion.h \
 		../WarehouseApp/secondproductwindow.h \
+		../WarehouseApp/WarehouseMap.h \
+		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp \
 		../WarehouseApp/ui_mainwhmap.h \
 		../WarehouseApp/Inventory.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QDebug \
@@ -1944,7 +1995,8 @@ secondproductwindow.o: ../WarehouseApp/secondproductwindow.cpp ../WarehouseApp/s
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../WarehouseApp/Database.h \
 		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp \
-		../WarehouseApp/mainwhmap.h
+		../WarehouseApp/mainwhmap.h \
+		../WarehouseApp/WarehouseMap.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o secondproductwindow.o ../WarehouseApp/secondproductwindow.cpp
 
 Ticket.o: ../WarehouseApp/Ticket.cpp ../WarehouseApp/Ticket.h

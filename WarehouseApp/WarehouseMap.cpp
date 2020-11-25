@@ -71,7 +71,19 @@ void WarehouseMap::buildWarehouseMap(json productDatabase)
 			shelves[s_row] = newObj;
 		}
 	}
-	
+
+    //Add the gaps in shelves for easier routing
+    for(int i = 0;i<=20;i+=2) {
+        std::set<int> open;
+        for(int j = 0;j<40;++j) {
+            std::cout<<i<<"  "<<j<<std::endl;
+            if(std::find(shelves[std::to_string(i)]["occupied"].begin(),shelves[std::to_string(i)]["occupied"].end(),j)== shelves[std::to_string(i)]["occupied"].end()) {
+                std::cout<<"Not occupied : "<<i<<std::endl;
+                open.insert(j);
+            }
+        }
+        shelves[std::to_string(i)]["open"] = open;
+    }
 
 	// add 1 to xDimension and yDimension for final warehouse size
 	WarehouseDimensions["x"] = ++xDimension;

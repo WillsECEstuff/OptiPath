@@ -28,7 +28,6 @@ enum Compass { North = 0, NorthWest, West, SouthWest, South, SouthEast,
 
 class PathFinder {
     private:
-
     const std::vector<std::string> dir = { "North", "NorthWest", "West", 
         "SouthWest", "South", "SouthEast", "East", "NorthEast", "Stay"};
     double pathLength;
@@ -48,6 +47,8 @@ class PathFinder {
     int findMaxEnd(int, int);
     int findMinBegin(int, int);
 
+    std::vector<int> nextOpenAisle(Product& product1, Product& product2);
+
     std::deque<Product> calculatePath(
         std::unordered_map<Product*, std::deque<Product>> graph,
         std::deque<Product>& productList,
@@ -61,6 +62,11 @@ class PathFinder {
         Product& endLocation
         );
 
+    QVector<QPointF> STraversalGaps(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation
+            );
 
     QVector<QPointF> STraversal(
             std::deque<Product>& productList,
@@ -68,6 +74,20 @@ class PathFinder {
             Product& endLocation,
             float userTimer
             );
+
+    QVector<QPointF> ReturnTraversal(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation
+            );
+
+    QVector<QPointF> HybridTraversal(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation
+            );
+    //Branch and bound stuff
+
 
     std::tuple<float,float> getCurrentPosition(void);
     void setCurrentPosition(std::tuple<float,float>&);
