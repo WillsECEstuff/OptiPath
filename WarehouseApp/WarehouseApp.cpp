@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 
     // load GUIs begin
     ordermenu om;
-    om.setFixedSize(600, 750);
+    om.setFixedSize(600, 850);
     om.setWindowTitle("Order Menu");
     om.show();
     // load GUIs end

@@ -93,4 +93,13 @@ int Order::getPriority(void) {
 	return priority;
 }
 
+/**
+ * @brief	Get the Order size.
+ *
+ * @return	returns an integer indicating the object's size.
+ */
+int Order::getSize(void) {
+    return productList.size();
+}
+
 

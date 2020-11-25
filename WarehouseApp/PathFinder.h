@@ -71,7 +71,8 @@ class PathFinder {
     QVector<QPointF> STraversal(
             std::deque<Product>& productList,
             Product& startLocation,
-            Product& endLocation
+            Product& endLocation,
+            float userTimer
             );
 
     QVector<QPointF> ReturnTraversal(
