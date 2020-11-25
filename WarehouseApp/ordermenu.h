@@ -46,7 +46,7 @@ private slots:
 
 private:
     Ui::ordermenu *ui;
-    float myTimer;
+    float myTimer = 60.0;
     QVector <QPointF> allPoints;
     QVector <QPointF> productPoints;
     QVector <QPointF> routePoints;
