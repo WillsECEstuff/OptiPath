@@ -28,6 +28,7 @@ public:
     void loadRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
     void loadAllPoints(QVector <QPointF> ptsList);
+    void loadUncovertedPoints(QVector <QPointF> ptsList);
     void setPreview(bool b);
     virtual void paintEvent(QPaintEvent *event);
 
@@ -46,5 +47,8 @@ private:
     QVector <std::string> directions;
     QPushButton *returnButton;
     bool isPreview;
+
+    int width;
+    int height;
 };
 #endif // SECONDPRODUCTWINDOW_H

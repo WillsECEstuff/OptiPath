@@ -27,7 +27,9 @@ public:
     ~mainwhmap();
 
     void loadAllPoints(QVector <QPointF> ptsList);
+    void loadUncovertedPoints(QVector <QPointF> ptsList);
     void loadProductPoints(QVector <QPointF> ptsList);
+    void loadUnconvertedProductPoints(QVector<QPointF> ptsList);
     void loadRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
 
@@ -56,5 +58,13 @@ private:
     QVBoxLayout *instrList;
     QScrollArea *instrArea;
     QWidget *dockArea;
+    int width;
+    int height;
+
+    void createGrid(QPainter* painter);
+    void drawContents(QPainter* painter);
+    void drawInstructions(QPainter* painter);
+    void drawLegend(QPainter* painter);
+    void drawShelves(QPainter* painter);
 };
 #endif // mainwhmap_H

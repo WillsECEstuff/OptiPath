@@ -28,6 +28,9 @@ secondProductWindow::secondProductWindow(QWidget *parent)
     returnButton = new QPushButton("Return to Order Menu", this);
     returnButton->setGeometry(200,700,135,50);
     connect(returnButton, SIGNAL (clicked()), this, SLOT (handleButton()));
+
+    height = 22;
+    width = 40;
 }
 
 secondProductWindow::~secondProductWindow()
@@ -57,6 +60,16 @@ void secondProductWindow::loadProductPoint(std::string pID) {
 void secondProductWindow::loadAllPoints(QVector <QPointF> ptsList) {
     allPoints = ptsList;
     std::cout << "loaded all" << std::endl;
+}
+
+void secondProductWindow::loadUncovertedPoints(QVector<QPointF> ptsList)
+{
+    for (auto& it : ptsList) {
+        QPointF f(it.x() * TILE_SIZE / MAPSCALE, ((float)height - it.y()) * TILE_SIZE / MAPSCALE);
+        allPoints.append(f);
+    }
+
+    std::cout << "coverted all points" << std::endl;
 }
 
 void secondProductWindow::loadRoutePrinter(QVector<QPointF> route) {
