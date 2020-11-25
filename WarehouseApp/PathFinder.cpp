@@ -227,7 +227,7 @@ QVector<QPointF> PathFinder::STraversal(
             points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
        }
 
-        //Go back to start location
+        //Go back to start location. (Rolled back; was using endLocation instead of startLocation
         points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
         points.push_back(std::make_tuple(0,startLocation.getYPosition(),"-1"));
         points.push_back(std::make_tuple(startLocation.getXPosition(),startLocation.getYPosition(),"-1"));

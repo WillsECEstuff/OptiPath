@@ -172,7 +172,6 @@ void ordermenu::handleRouteButton() {
 
 #endif // 
 
-
         PathFinder pathFinder;
         routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
 
@@ -250,7 +249,6 @@ void ordermenu::handleSLocationButton() {
             std::get<1>(startLocation) = y;
 
             std::cout << "Start X = " << std::get<0>(startLocation) << ", start Y = " << std::get<1>(startLocation) << std::endl;
-            //std::cout << "End X = " << std::get<0>(endLocation) << ", end Y = " << std::get<1>(endLocation) << std::endl;
 
             QMessageBox notifyUser;
             std::string notify = "Location entered successfully. X = " + std::to_string(std::get<0> (startLocation)) + ", Y = " + std::to_string(std::get<1> (startLocation));
@@ -262,10 +260,10 @@ void ordermenu::handleSLocationButton() {
 }
 
 void ordermenu::handleELocationButton() {
-    std::string sLoc = txtSLoc->text().toStdString();
-    int idx = (int)sLoc.find(",");
-    std::string xLoc = sLoc.substr(0, idx);
-    std::string yLoc = sLoc.substr(idx+1);
+    std::string eLoc = txtELoc->text().toStdString();
+    int idx = (int)eLoc.find(",");
+    std::string xLoc = eLoc.substr(0, idx);
+    std::string yLoc = eLoc.substr(idx+1);
     std::string notify = "Please enter a valid location (0 <= X <= 40, 0 <= Y <= 22). Y must be odd; even Y is a shelf.";
 
     float x = 0, y = 0;
@@ -294,7 +292,6 @@ void ordermenu::handleELocationButton() {
             std::get<0>(endLocation) = x;
             std::get<1>(endLocation) = y;
 
-            //std::cout << "Start X = " << std::get<0>(startLocation) << ", start Y = " << std::get<1>(startLocation) << std::endl;
             std::cout << "End X = " << std::get<0>(endLocation) << ", end Y = " << std::get<1>(endLocation) << std::endl;
 
             QMessageBox notifyUser;
@@ -328,12 +325,22 @@ void ordermenu::handleCreateOrderButton() {
         Order o;
         std::cout << order << std::endl;
         o = createOrderfromString(order, orderIdx, orderIdx);
+        int orderSize = o.getSize();
+        std::list<Product> tempPList = o.getProductList();
+
+        if (o.getSize() == 0) {
+            QMessageBox notifyUser;
+            notifyUser.setText("Your order had invalid products, so it's empty!");
+            notifyUser.setWindowTitle("Error - Empty Order");
+            notifyUser.exec();
+            return;
+        }
+
         orderList.push_back(o);
         std::string chain = "";
         int orderNum = orderList.size(); // this is always the number of orders now in the system (at least 1 at this point)
-        int orderSize = o.getSize();
+
         std::cout << "ordersize now: " << orderSize << std::endl;
-        std::list<Product> tempPList = o.getProductList();
         std::list<Product>::iterator it;
 
         for (it = tempPList.begin(); it != tempPList.end(); it++) {
