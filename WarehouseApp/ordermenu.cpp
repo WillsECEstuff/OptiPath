@@ -173,7 +173,8 @@ void ordermenu::handleRouteButton() {
 #endif // 
 
         PathFinder pathFinder;
-        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
+        std::cout << "routePoints size: " << routePoints.size() << std::endl;
 
         std::cout<<"Points to be reached are:"<<std::endl;
         for(auto& point : routePoints) {
@@ -470,7 +471,7 @@ void ordermenu::handleSingleButton() {
         Product dummyStart("startLocation", startLocation);
         Product dummyEnd("endLocation", endLocation);
         PathFinder pathFinder;
-        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
 
         directions = pathFinder.pathAnnotation();
 
