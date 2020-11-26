@@ -31,7 +31,7 @@ public:
     {
         if (mainwhmap->objectName().isEmpty())
             mainwhmap->setObjectName(QString::fromUtf8("mainwhmap"));
-        mainwhmap->resize(1223, 964);
+        mainwhmap->resize(1280, 900);
         centralwidget = new QWidget(mainwhmap);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         txtID = new QLineEdit(centralwidget);
@@ -40,7 +40,7 @@ public:
         mainwhmap->setCentralWidget(centralwidget);
         menubar = new QMenuBar(mainwhmap);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1223, 21));
+        menubar->setGeometry(QRect(0, 0, 1280, 22));
         mainwhmap->setMenuBar(menubar);
         statusbar = new QStatusBar(mainwhmap);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

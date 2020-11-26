@@ -202,7 +202,7 @@ void ordermenu::handleRouteButton() {
         //routeMap->loadRoutePrinter(routePoints);
         routeMap->loadUnconvertedRoutePrinter(routePoints);
         routeMap->loadInstructions(directions);
-        routeMap->setFixedSize(1500, 1000);
+        routeMap->setFixedSize(1500, 800);
         routeMap->setWindowTitle("Warehouse Map with Route");
         this->hide();
         routeMap->show();
@@ -461,7 +461,7 @@ void ordermenu::handleSingleButton() {
         routePoints.push_back(endPt);
         secWindow->loadRoutePrinter(routePoints);
         //secWindow->loadUnconvertedRoutePrinter(routePoints);
-        secWindow->setFixedSize(1500, 1000);
+        secWindow->setFixedSize(1500, 800);
         secWindow->setWindowTitle("Map Preview");
         secWindow->setPreview(true);
         this->hide();
