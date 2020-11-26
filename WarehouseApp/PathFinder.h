@@ -49,11 +49,11 @@ class PathFinder {
 
     std::vector<int> nextOpenAisle(Product& product1, Product& product2);
 
-    std::deque<Product> calculatePath(
-        std::unordered_map<Product*, std::deque<Product>> graph,
+    QVector<QPointF> calculatePath(
         std::deque<Product>& productList,
         Product& startLocation,
-        Product& endLocation
+        Product& endLocation,
+        float userTimer
         );
 
     std::deque<Product> singleProductPath(
@@ -78,7 +78,8 @@ class PathFinder {
     QVector<QPointF> ReturnTraversal(
             std::deque<Product>& productList,
             Product& startLocation,
-            Product& endLocation
+            Product& endLocation,
+            float userInput
             );
 
     QVector<QPointF> HybridTraversal(

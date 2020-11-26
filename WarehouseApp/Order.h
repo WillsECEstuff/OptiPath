@@ -19,22 +19,33 @@
 
 class Order
 {
-private:
-	int priority;
-	int orderID;
-
-	std::list<Product> productList;
 public:
-	Order(void);
-	Order(int oID, int p = 1);
+    enum Status {
+        ORDER_PENDING,
+        ORDER_EXECUTED
+    };
+
+    Order(void);
+    Order(int oID, int p = 1);
+    Order(int oID, int p, Status);
 
 	void addProduct(Product p);
 	std::list<Product> getProductList(void);
+    void orderCompleted();
+    void orderPending();
+    Status getOrderStatus();
 	void changePriority(int p);
     int getSize(void);
 	int getPriority(void);
-};
 
+private:
+    int priority;
+    int orderID;
+
+
+    Order::Status status;
+    std::list<Product> productList;
+};
 
 
 
