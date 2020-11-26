@@ -13,6 +13,7 @@
 #include <QtWidgets>
 #include "mainwhmap.h"
 #include "secondproductwindow.h"
+#include "settingsmenu.h"
 #include "Ticket.h"
 #include "Order.h"
 #include "PathFinder.h"
@@ -35,7 +36,7 @@ public:
 
 public slots:
     void onOtherSignal();
-    void onOrderCompleteSignal();
+    void onSettingsSignal();
 
 private slots:
     void handleRouteButton();
@@ -44,6 +45,7 @@ private slots:
     void handleCreateOrderButton();
     void handleSingleButton();
     void handleTimerButton();
+    void handleSettingsButton();
 
 private:
     Ui::ordermenu *ui;
@@ -80,8 +82,7 @@ private:
 
     mainwhmap *routeMap;
     secondProductWindow *secWindow;
+    settingsmenu *settingsWindow;
     QVector <QPointF> singleRoute;
-
-    int currentOrderIDx;
 };
 #endif // ORDERMENU_H

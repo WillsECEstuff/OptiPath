@@ -24,6 +24,7 @@ SOURCES += \
     Product.cpp \
     mainwhmap.cpp \
     secondproductwindow.cpp \
+    settingsmenu.cpp \
     Ticket.cpp
 
 HEADERS += \
@@ -41,14 +42,17 @@ HEADERS += \
     Product.h \
     mainwhmap.h \
     secondproductwindow.h \
+    settingsmenu.h \
     Ticket.h \
     ui_mainwhmap.h \
+    ui_settingsmenu.h \
     ui_singleProductWindow.h
 
 FORMS += \
     mainwhmap.ui \
     ordermenu.ui \
-    secondproductwindow.ui
+    secondproductwindow.ui \
+    settingsmenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
