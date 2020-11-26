@@ -27,7 +27,7 @@ public:
 
     Order(void);
     Order(int oID, int p = 1);
-    Order(int oID, int p, Status stat = ORDER_PENDING);
+    Order(int oID, int p, Status stat);
 
 	void addProduct(Product p);
 	std::list<Product> getProductList(void);
