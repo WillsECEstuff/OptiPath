@@ -128,6 +128,10 @@ void ordermenu::onOtherSignal() {
     show();
 }
 
+void ordermenu::onOrderCompleteSignal() {
+
+}
+
 void ordermenu::handleRouteButton() {
     Database *d = d->getInstance();
     routePoints.clear();
@@ -139,6 +143,7 @@ void ordermenu::handleRouteButton() {
 
     routeMap = new mainwhmap();
     connect (routeMap, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
+    connect(routeMap, SIGNAL(COB()), this, SLOT(onOrderCompleteSignal()));
 
     if (orderIdx < 1) {
         QMessageBox notifyUser;

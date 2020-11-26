@@ -35,6 +35,7 @@ public:
 
 public slots:
     void onOtherSignal();
+    void onOrderCompleteSignal();
 
 private slots:
     void handleRouteButton();

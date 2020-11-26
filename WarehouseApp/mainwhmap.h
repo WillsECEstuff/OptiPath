@@ -34,16 +34,20 @@ public:
     void loadUnconvertedRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
 
+    
+
     virtual void paintEvent(QPaintEvent *event);
 
 signals:
     void fromOtherMenu();
+    void COB();
 /*
 public slots:
     void onOtherSignal(); */
 
 private slots:
     void handleButton();
+    void handleCompleteOrderButton();
 
 private:
     Ui::mainwhmap *ui;
@@ -52,6 +56,7 @@ private:
     QVector <QPointF> routePoints;
     QVector <std::string> directions;
     QPushButton *p_button;
+    QPushButton* completeOrder_button;
     QLineEdit *txtID;
     QLabel *txtLbl;
     secondProductWindow *secWindow;

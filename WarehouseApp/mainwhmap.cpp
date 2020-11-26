@@ -31,6 +31,10 @@ mainwhmap::mainwhmap(QWidget *parent)
     p_button->setGeometry(200,700,135,50);
     connect(p_button, SIGNAL (clicked()), this, SLOT (handleButton()));
 
+    completeOrder_button = new QPushButton("Complete Order", this);
+    completeOrder_button->setGeometry(400, 700, 135, 50);
+    connect(p_button, SIGNAL(clicked()), this, SLOT(handleButton()));
+
     int instX = xboundary + 100; // x = 1300, location for instructions
     int instY = 250; // underneath the legend
 
@@ -113,6 +117,11 @@ void mainwhmap::loadInstructions(QVector<std::string> instrs) {
 }
 
 void mainwhmap::handleButton() {
+    close();
+    emit fromOtherMenu();
+}
+
+void mainwhmap::handleCompleteOrderButton() {
     close();
     emit fromOtherMenu();
 }
