@@ -31,7 +31,7 @@ mainwhmap::mainwhmap(QWidget *parent)
     p_button->setGeometry(200,700,135,50);
     connect(p_button, SIGNAL (clicked()), this, SLOT (handleButton()));
 
-    completeOrder_button = new QPushButton("Complete Order", this);
+    completeOrder_button = new QPushButton("Complete Order and Return", this);
     completeOrder_button->setGeometry(400, 700, 135, 50);
     connect(p_button, SIGNAL(clicked()), this, SLOT(handleButton()));
 
@@ -114,6 +114,11 @@ void mainwhmap::loadInstructions(QVector<std::string> instrs) {
     }
     instrArea->setLayout(instrList);
     instrArea->setWidgetResizable(true); */
+}
+
+void mainwhmap::loadOrderStatus(Order::Status stat)
+{
+    status = stat;
 }
 
 void mainwhmap::handleButton() {
@@ -259,6 +264,10 @@ void mainwhmap::drawInstructions(QPainter* painter)
     }
     
 
+}
+
+void mainwhmap::drawOrderStatus(QPainter* painter)
+{
 }
 
 /**

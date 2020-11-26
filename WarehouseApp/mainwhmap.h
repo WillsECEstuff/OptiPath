@@ -11,6 +11,7 @@
 #include <QVector>
 #include <QPointF>
 #include <QtWidgets>
+#include "Order.h"
 #include "secondproductwindow.h"
 #include "WarehouseMap.h"
 
@@ -33,8 +34,7 @@ public:
     void loadRoutePrinter(QVector <QPointF> route);
     void loadUnconvertedRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
-
-    
+    void loadOrderStatus(Order::Status stat);
 
     virtual void paintEvent(QPaintEvent *event);
 
@@ -67,11 +67,14 @@ private:
     int width;
     int height;
     bool flag;
+    Order::Status status;
 
     void createGrid(QPainter* painter);
     void drawContents(QPainter* painter);
     void drawInstructions(QPainter* painter);
+    void drawOrderStatus(QPainter* painter);
     void drawLegend(QPainter* painter);
     void drawShelves(QPainter* painter);
+    
 };
 #endif // mainwhmap_H
