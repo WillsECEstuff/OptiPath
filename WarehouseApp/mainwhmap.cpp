@@ -267,6 +267,11 @@ void mainwhmap::drawInstructions(QPainter* painter)
 
 }
 
+/**
+ * @brief   Draw the order status on the window
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawOrderStatus(QPainter* painter)
 {
     int odX = xboundary + 100; // x = 1300, location for order status
