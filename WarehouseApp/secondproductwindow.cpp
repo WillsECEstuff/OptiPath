@@ -62,7 +62,7 @@ void secondProductWindow::loadAllPoints(QVector <QPointF> ptsList) {
     std::cout << "loaded all" << std::endl;
 }
 
-void secondProductWindow::loadUncovertedPoints(QVector<QPointF> ptsList)
+void secondProductWindow::loadUnconvertedPoints(QVector<QPointF> ptsList)
 {
     for (auto& it : ptsList) {
         QPointF f(it.x() * TILE_SIZE / MAPSCALE, ((float)height - it.y()) * TILE_SIZE / MAPSCALE);

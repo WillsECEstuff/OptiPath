@@ -36,8 +36,6 @@ ordermenu::ordermenu(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ordermenu)
 {
-
-    //
     //ui->setupUi(this);
     settingsButton = new QPushButton("Settings", this);
     settingsButton->setGeometry(100,200,135,50);
@@ -106,6 +104,7 @@ ordermenu::ordermenu(QWidget *parent)
     connect(enterSingleButton, SIGNAL(clicked()), this, SLOT(handleSingleButton()));
     connect(timerButton, SIGNAL(clicked()), this, SLOT(handleTimerButton()));
     connect(addOrderButton, SIGNAL(clicked()), this, SLOT(handleCreateOrderButton()));
+    connect(settingsButton, SIGNAL(clicked()), this, SLOT(handleSettingsButton()));
 
     Database *d = d->getInstance();
 
@@ -126,6 +125,32 @@ ordermenu::~ordermenu()
 
 void ordermenu::onOtherSignal() {
     show();
+}
+
+void ordermenu::onSettingsSignal() {
+    myTimer = settingsWindow->getTimer();
+    startLocation = settingsWindow->getSLocation();
+    endLocation = settingsWindow->getELocation();
+    std::cout << "startLocation: " << std::get<0>(startLocation) << "," << std::get<1>(startLocation) << std::endl;
+    std::cout << "endLocation: " << std::get<0>(endLocation) << "," << std::get<1>(endLocation) << std::endl;
+    std::cout << "timer: " << myTimer << std::endl;
+    settingsWindow->close();
+    show();
+}
+
+void ordermenu::handleSettingsButton() {
+    settingsWindow = new settingsmenu();
+    connect (settingsWindow, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
+    connect (settingsWindow, SIGNAL(fromSettingsMenu()), this, SLOT(onSettingsSignal()));
+    settingsWindow->setTimer(myTimer);
+    settingsWindow->setSLocation(startLocation);
+    settingsWindow->setELocation(endLocation);
+    settingsWindow->setTextFields();
+
+    settingsWindow->setFixedSize(575, 700);
+    settingsWindow->setWindowTitle("Settings");
+    this->hide();
+    settingsWindow->show();
 }
 
 void ordermenu::handleRouteButton() {
@@ -175,9 +200,8 @@ void ordermenu::handleRouteButton() {
 
         PathFinder pathFinder;
         NN NNFinder;
-        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
-        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd,myTimer);
-        //routePoints = pathFinder.calculatePath(deq,dummyStart,dummyEnd,myTimer);
+        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
+        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd);
         //routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd);
 
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
@@ -197,7 +221,7 @@ void ordermenu::handleRouteButton() {
 
         std::cout << "test" << std::endl;
         //routeMap->loadAllPoints(allPoints);
-        routeMap->loadUncovertedPoints(allPoints);
+        routeMap->loadUnconvertedPoints(allPoints);
         //routeMap->loadProductPoints(productPoints);
         routeMap->loadUnconvertedProductPoints(productPoints);
         //routeMap->loadRoutePrinter(routePoints);
@@ -445,7 +469,7 @@ void ordermenu::handleSingleButton() {
 
     if (ID == "") { // map preview
         //secWindow->loadAllPoints(allPoints);
-        secWindow->loadUncovertedPoints(allPoints);
+        secWindow->loadUnconvertedPoints(allPoints);
         QPointF startPt, endPt;
 
         float xS = std::get<0>(startLocation);
@@ -486,8 +510,6 @@ void ordermenu::handleSingleButton() {
         //Product dummyEnd("endLocation", endLocation);
         //PathFinder pathFinder;
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
-        //routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
-
 
         //directions = pathFinder.pathAnnotation();
 

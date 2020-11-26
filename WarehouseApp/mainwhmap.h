@@ -27,7 +27,7 @@ public:
     ~mainwhmap();
 
     void loadAllPoints(QVector <QPointF> ptsList);
-    void loadUncovertedPoints(QVector <QPointF> ptsList);
+    void loadUnconvertedPoints(QVector <QPointF> ptsList);
     void loadProductPoints(QVector <QPointF> ptsList);
     void loadUnconvertedProductPoints(QVector<QPointF> ptsList);
     void loadRoutePrinter(QVector <QPointF> route);
