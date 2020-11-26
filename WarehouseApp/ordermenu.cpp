@@ -180,8 +180,9 @@ void ordermenu::handleRouteButton() {
 
         PathFinder pathFinder;
         NN NNFinder;
-        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
-        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd);
+        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
+        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd,myTimer);
+        //routePoints = pathFinder.calculatePath(deq,dummyStart,dummyEnd,myTimer);
         //routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd);
 
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
@@ -490,6 +491,8 @@ void ordermenu::handleSingleButton() {
         //Product dummyEnd("endLocation", endLocation);
         //PathFinder pathFinder;
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
+        //routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
+
 
         //directions = pathFinder.pathAnnotation();
 

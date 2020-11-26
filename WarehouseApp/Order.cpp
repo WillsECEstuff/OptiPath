@@ -14,8 +14,8 @@
   */
 Order::Order(void)
 {
-	priority = 1;
-	orderID = 1;
+    priority = 1;
+    orderID = 1;
 }
 
 /**
@@ -41,6 +41,35 @@ Order::Order(int oID, int p) {
 
 	productList.clear();
 }
+
+/**
+ * @brief	This is a constructor for the Order object. This constructor
+ *			requires 3 arguments
+ *
+ * @param	oID		oID is the assigned orderID. oID should not be a
+ *					negative number
+ * @param	p		p is the assigned priority. p's default is 1. p
+ *					should be a value between 1 and 100 inclusive
+ *
+ * @param   stat    Status enum object
+ *                  ORDER_PENDING - 0
+                    ORDER_EXECUTED - 1
+ */
+Order::Order(int oID,int p, Status stat) {
+    orderID = oID;
+    if (p < 1) {
+        priority = 1;
+    }
+    else if (p > 100) {
+        priority = 100;
+    }
+    else {
+        priority = p;
+    }
+    status = stat;
+    productList.clear();
+}
+
 
 /**
  * @brief	This function adds an already constructed Product object
@@ -102,4 +131,26 @@ int Order::getSize(void) {
     return productList.size();
 }
 
+/**
+ * @brief	Set the Order status to ORDER_EXECUTED.
+ */
+void Order::orderCompleted() {
+    status = ORDER_EXECUTED;
+}
+
+/**
+ * @brief	Set the Order status to ORDER_PENDING.
+ */
+void Order::orderPending() {
+    status = ORDER_PENDING;
+}
+
+/**
+ * @brief	Get the Order status.
+ *
+ * @return	returns an enum Object of type Status
+ */
+Order::Status Order::getOrderStatus() {
+    return status;
+}
 
