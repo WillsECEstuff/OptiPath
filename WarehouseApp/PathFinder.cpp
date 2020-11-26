@@ -148,7 +148,8 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
         Product& endLocation,
         float userTimer
         ) {
-    QVector<QPointF> pointsToDisplay;
+    //QVector<QPointF> pointsToDisplay;
+    QVector<QPointF> pointsFinished;
     std::unordered_map<int, std::vector<Product>> aisleProductMap;
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -249,7 +250,8 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
 
      //Add points to display
      for(auto it = points.begin();it!=points.end()-1;++it) {
-         pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+         //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+         pointsFinished.push_back(QPointF(std::get<0>(*it), std::get<1>(*it)));
          pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
      }
 
@@ -258,7 +260,7 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
      std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
      std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
 
-    return pointsToDisplay;
+    return pointsFinished;
 }
 
 
@@ -280,7 +282,8 @@ QVector<QPointF> PathFinder::STraversal(
 
         std::cout << "Pathfinder begin" << std::endl;
         int traversalOrder = 1; //1 -> left to right, 0-> right to left
-        QVector<QPointF> pointsToDisplay;
+        //QVector<QPointF> pointsToDisplay;
+        QVector<QPointF> pointsFinished;
         std::unordered_map<int, std::vector<Product>> aisleProductMap;
         auto start = std::chrono::high_resolution_clock::now();
 
@@ -398,7 +401,8 @@ QVector<QPointF> PathFinder::STraversal(
 
         // Add points to display
         for(auto it = points.begin();it!=points.end();++it) {
-            pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it) * TILE_SIZE/SCALE));
+            //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it) * TILE_SIZE/SCALE));
+            pointsFinished.push_back(QPointF(std::get<0>(*it), std::get<1>(*it)));
 
             if (it == points.begin()) {
                 continue;
@@ -411,7 +415,7 @@ QVector<QPointF> PathFinder::STraversal(
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
         std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
-        return pointsToDisplay;
+        return pointsFinished;
 }
 
 /**

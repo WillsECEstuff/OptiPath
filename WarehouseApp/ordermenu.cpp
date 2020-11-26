@@ -112,7 +112,7 @@ ordermenu::ordermenu(QWidget *parent)
     // store all points from database
     std::vector<std::tuple<float, float>> locList = d->getLocList();
     for (auto& it : locList) {
-        allPoints.append(QPointF(std::get<0>(it) * TILE_SIZE/SCALE, std::get<1>(it) * TILE_SIZE/SCALE));
+        allPoints.append(QPointF(std::get<0>(it), std::get<1>(it)));
     }
 
     startLocation = std::make_tuple(0,0);
@@ -157,7 +157,7 @@ void ordermenu::handleRouteButton() {
             deq.push_back(it);
             std::cout << "ID: " << it.getProductID() << "\txPosition: " << it.getXPosition()
                 << "\tyPosition: " << it.getYPosition() << std::endl;
-            productPoints.append(QPointF(it.getXPosition() * TILE_SIZE/SCALE, it.getYPosition() * TILE_SIZE/SCALE));
+            productPoints.append(QPointF(it.getXPosition(),  it.getYPosition() ));
         }
 
         Product dummyStart("startLocation", startLocation);
@@ -195,9 +195,12 @@ void ordermenu::handleRouteButton() {
 
 
         std::cout << "test" << std::endl;
-        routeMap->loadAllPoints(allPoints);
-        routeMap->loadProductPoints(productPoints);
-        routeMap->loadRoutePrinter(routePoints);
+        //routeMap->loadAllPoints(allPoints);
+        routeMap->loadUncovertedPoints(allPoints);
+        //routeMap->loadProductPoints(productPoints);
+        routeMap->loadUnconvertedProductPoints(productPoints);
+        //routeMap->loadRoutePrinter(routePoints);
+        routeMap->loadUnconvertedRoutePrinter(routePoints);
         routeMap->loadInstructions(directions);
         routeMap->setFixedSize(1500, 1000);
         routeMap->setWindowTitle("Warehouse Map with Route");
@@ -434,12 +437,14 @@ void ordermenu::handleSingleButton() {
     std::tuple<float, float> isReal = d->getProductPosition(ID);
     float x = std::get<0>(isReal);
     float y = std::get<1>(isReal);
+    int height = 22;
 
     secWindow = new secondProductWindow();
     connect (secWindow, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
 
     if (ID == "") { // map preview
-        secWindow->loadAllPoints(allPoints);
+        //secWindow->loadAllPoints(allPoints);
+        secWindow->loadUncovertedPoints(allPoints);
         QPointF startPt, endPt;
 
         float xS = std::get<0>(startLocation);
@@ -448,13 +453,14 @@ void ordermenu::handleSingleButton() {
         float yE = std::get<1>(endLocation);
 
         startPt.setX(xS * TILE_SIZE/SCALE);
-        startPt.setY(yS * TILE_SIZE/SCALE);
+        startPt.setY(( (float) height - yS) * TILE_SIZE/SCALE);
         endPt.setX(xE * TILE_SIZE/SCALE);
-        endPt.setY(yE * TILE_SIZE/SCALE);
+        endPt.setY(((float)height - yE) * TILE_SIZE/SCALE);
 
         routePoints.push_back(startPt);
         routePoints.push_back(endPt);
         secWindow->loadRoutePrinter(routePoints);
+        //secWindow->loadUnconvertedRoutePrinter(routePoints);
         secWindow->setFixedSize(1500, 1000);
         secWindow->setWindowTitle("Map Preview");
         secWindow->setPreview(true);
@@ -475,34 +481,36 @@ void ordermenu::handleSingleButton() {
         Product p(ID, isReal);
         deq.push_back(p);
 
-        Product dummyStart("startLocation", startLocation);
-        Product dummyEnd("endLocation", endLocation);
-        PathFinder pathFinder;
-        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
-        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
+        //Product dummyStart("startLocation", startLocation);
+        //Product dummyEnd("endLocation", endLocation);
+        //PathFinder pathFinder;
+        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);
+        //routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
 
-        directions = pathFinder.pathAnnotation();
 
-        for (auto& instruction: directions) {
-            std::cout << instruction << std::endl;
-        }
+        //directions = pathFinder.pathAnnotation();
 
-        secWindow->loadAllPoints(allPoints);
-        secWindow->loadProductPoint(ID);
-        secWindow->loadRoutePrinter(routePoints);
-        secWindow->loadInstructions(directions);
-        secWindow->setPreview(false);
-        secWindow->setFixedSize(1500, 1000);
-        secWindow->setWindowTitle("Single Product Map");
+        //for (auto& instruction: directions) {
+        //    std::cout << instruction << std::endl;
+        //}
 
-        this->hide();
+        //secWindow->loadAllPoints(allPoints);
+        //secWindow->loadProductPoint(ID);
+        //secWindow->loadRoutePrinter(routePoints);
+        //secWindow->loadInstructions(directions);
+        //secWindow->setPreview(false);
+        //secWindow->setFixedSize(1500, 1000);
+        //secWindow->setWindowTitle("Single Product Map");
+
+        //this->hide();
 
         QMessageBox notifyUser;
-        std::string notify = "Product Location: " + std::to_string(p.getXPosition()) + ", " +  std::to_string(p.getYPosition()) + "\nClick to see map.";
+        //std::string notify = "Product Location: " + std::to_string(p.getXPosition()) + ", " +  std::to_string(p.getYPosition()) + "\nClick to see map.";
+        std::string notify = "Product Location: " + std::to_string(p.getXPosition()) + ", " + std::to_string(p.getYPosition());
         notifyUser.setText(QString::fromStdString(notify));
         notifyUser.setWindowTitle("Selected Product Location");
         notifyUser.exec();
 
-        secWindow->show();
+        //secWindow->show();
     }
 }
