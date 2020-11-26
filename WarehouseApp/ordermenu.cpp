@@ -175,8 +175,9 @@ void ordermenu::handleRouteButton() {
 
         PathFinder pathFinder;
         NN NNFinder;
-        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd);
-        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd,myTimer);
+        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
+        //routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd,myTimer);
+        //routePoints = pathFinder.calculatePath(deq,dummyStart,dummyEnd,myTimer);
         //routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd);
 
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd, myTimer);

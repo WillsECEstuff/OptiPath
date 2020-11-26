@@ -206,7 +206,7 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
 
         auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         if(duration.count() >= userTimer*1000) break;
         int yCoord = *it;
 
@@ -256,7 +256,7 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
      }
 
      auto end = std::chrono::high_resolution_clock::now();
-     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
      std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
      std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
 
@@ -322,7 +322,7 @@ QVector<QPointF> PathFinder::STraversal(
         for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
             int yCoord = *it;
             auto end = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
             if(duration.count() >= userTimer*1000) break;
 
             if(yCoord < 21) { //Make sure y coordinate does not exceed 19
@@ -339,10 +339,13 @@ QVector<QPointF> PathFinder::STraversal(
                         return a.getXPosition() < b.getXPosition();
                     });
 
-                    //Add the product locations in the traversal
+                    //Add the product locations in the traversal - modified. Now does not travel through shelves
                     for(auto& product : aisleProductMap[yCoord-1]) {
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
                         points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
                     }
+
 
                     //Push the rightmost coordinate in the aisle
                     points.push_back(std::make_tuple(nextEnd,yCoord,"-1"));
@@ -366,9 +369,11 @@ QVector<QPointF> PathFinder::STraversal(
                         return a.getXPosition() > b.getXPosition();
                     });
 
-                    //Add the product locations in the traversal
+                    //Add the product locations in the traversal - modified. Now does not travel through shelves
                     for(auto& product : aisleProductMap[yCoord-1]) {
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
                         points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
                     }
 
                     //Push the leftmost coordinate in the aisle
@@ -384,7 +389,9 @@ QVector<QPointF> PathFinder::STraversal(
 
         // Visit the last aisle of products
         for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
+            points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
             points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
+            points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
         }
 
         std::cout << "points size b4: " << points.size() << std::endl;
@@ -412,7 +419,7 @@ QVector<QPointF> PathFinder::STraversal(
         }
 
         auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
         std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
         return pointsFinished;
@@ -428,14 +435,16 @@ QVector<QPointF> PathFinder::STraversal(
  *
  * @return  Ordered list of products in the path
  */
-std::deque<Product> PathFinder::calculatePath(
-    std::unordered_map<Product*, std::deque<Product>> graph,
+QVector<QPointF> PathFinder::calculatePath(
     std::deque<Product>& productList,
     Product& startLocation,
-    Product& endLocation
+    Product& endLocation,
+    float userTimer
     ) {
         long numItr = 0;
+        QVector<QPointF> pointsToBeVisited;
         std::vector<Product> vertices;
+        auto start = std::chrono::high_resolution_clock::now();
         for(auto& entry : productList) {
             if(entry.getProductID() != startLocation.getProductID())
                 vertices.push_back(entry);
@@ -451,6 +460,9 @@ std::deque<Product> PathFinder::calculatePath(
 
         //Go through all permutations and find the lowest path length
         do {
+            auto end = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+            if(duration.count() > userTimer*1000) break;
             double currentPathLength = 0;
             Product k = startLocation;
             std::deque<Product> currPath;
@@ -474,7 +486,16 @@ std::deque<Product> PathFinder::calculatePath(
         }));
         //Print out number of paths evaluated
         std::cout<<"Number of paths evaluated = "<<numItr<<std::endl;
-    return path;  
+        for(auto& point : path) {
+            pointsToBeVisited.push_back(QPointF(point.getXPosition(), point.getYPosition()));
+            points.push_back(std::make_tuple(point.getXPosition(),point.getYPosition(),point.getProductID()));
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
+        std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
+
+    return pointsToBeVisited;
 }
 
 /**
