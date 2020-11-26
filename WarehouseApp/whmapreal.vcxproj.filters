@@ -82,6 +82,9 @@
     <ClCompile Include="MST.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="settingsmenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjacencyMatrix.h">
@@ -136,6 +139,9 @@
     <QtUic Include="ordermenu.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="settingsmenu.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -148,6 +154,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ordermenu.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="settingsmenu.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

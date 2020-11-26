@@ -204,6 +204,7 @@
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="secondproductwindow.cpp" />
     <ClCompile Include="OrderHelper.cpp" />
+    <ClCompile Include="settingsmenu.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="WarehouseApp.cpp" />
     <ClCompile Include="WarehouseMap.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="OrderHelper.h" />
     <ClInclude Include="Inventory.h" />
     <QtMoc Include="ordermenu.h" />
+    <QtMoc Include="settingsmenu.h" />
     <ClInclude Include="WarehouseMap.h" />
     <QtMoc Include="mainwhmap.h" />
     <ClInclude Include="Order.h" />
@@ -246,6 +248,7 @@
     <QtUic Include="mainwhmap.ui" />
     <QtUic Include="ordermenu.ui" />
     <QtUic Include="secondproductwindow.ui" />
+    <QtUic Include="settingsmenu.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
