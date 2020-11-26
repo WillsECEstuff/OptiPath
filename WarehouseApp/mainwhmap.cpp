@@ -51,7 +51,6 @@ void mainwhmap::loadUncovertedPoints(QVector<QPointF> ptsList)
         QPointF f( it.x() * TILE_SIZE / MAPSCALE, ((float)height - it.y()) * TILE_SIZE / MAPSCALE) ;
         allPoints.append(f);
     }
-    
     std::cout << "coverted all points" << std::endl;
 }
 
@@ -71,6 +70,15 @@ void mainwhmap::loadUnconvertedProductPoints(QVector <QPointF> ptsList) {
 
 void mainwhmap::loadRoutePrinter(QVector<QPointF> route) {
     routePoints = route;
+    std::cout << "loaded route" << std::endl;
+}
+
+void mainwhmap::loadUnconvertedRoutePrinter(QVector<QPointF> route)
+{
+    for (auto& it : route) {
+        QPointF f(it.x() * TILE_SIZE / MAPSCALE, ((float)height - it.y()) * TILE_SIZE / MAPSCALE);
+        routePoints.append(f);
+    }
     std::cout << "loaded route" << std::endl;
 }
 
@@ -169,13 +177,13 @@ void mainwhmap::drawContents(QPainter* painter)
 
     painter->setPen(QPen(Qt::cyan, 1 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter->setFont(QFont("times", 2));
-    painter->drawText(routePoints[0].x() + 2, routePoints[0].y() + 4, "START");
-    painter->drawText(routePoints[routePoints.size() - 1].x() + 2, routePoints[routePoints.size() - 1].y() + 6, "END");
+    painter->drawText(routePoints[0].x() + 2, routePoints[0].y() + 3, "START");
+    painter->drawText(routePoints[routePoints.size() - 1].x() + 2, routePoints[routePoints.size() - 1].y() - 3, "END");
 
     painter->setPen(QPen(Qt::blue, 1 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
     for (int i = 1; i < routePoints.size() - 1; i++) {
         painter->drawLine(routePoints[i - 1].x(), routePoints[i - 1].y(), routePoints[i].x(), routePoints[i].y());
-        painter->drawText(routePoints[i].x() + 2, routePoints[i].y() + 4, QString::number(i));
+        painter->drawText(routePoints[i].x() + 2, routePoints[i].y() - 1, QString::number(i));
     }
     painter->drawLine(routePoints[routePoints.size() - 2].x(), routePoints[routePoints.size() - 2].y(), routePoints[routePoints.size() - 1].x(), routePoints[routePoints.size() - 1].y());
     // draw map contents end

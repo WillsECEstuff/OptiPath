@@ -26,11 +26,14 @@ public:
 
     void loadProductPoint(std::string pt);
     void loadRoutePrinter(QVector <QPointF> route);
+    void loadUnconvertedRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
     void loadAllPoints(QVector <QPointF> ptsList);
     void loadUncovertedPoints(QVector <QPointF> ptsList);
     void setPreview(bool b);
     virtual void paintEvent(QPaintEvent *event);
+
+    
 
 private slots:
     void handleButton();
@@ -50,5 +53,8 @@ private:
 
     int width;
     int height;
+
+    void createGrid(QPainter* painter);
+    void drawShelves(QPainter* painter);
 };
 #endif // SECONDPRODUCTWINDOW_H

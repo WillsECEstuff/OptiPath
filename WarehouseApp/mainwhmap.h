@@ -31,6 +31,7 @@ public:
     void loadProductPoints(QVector <QPointF> ptsList);
     void loadUnconvertedProductPoints(QVector<QPointF> ptsList);
     void loadRoutePrinter(QVector <QPointF> route);
+    void loadUnconvertedRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
 
     virtual void paintEvent(QPaintEvent *event);
@@ -60,6 +61,7 @@ private:
     QWidget *dockArea;
     int width;
     int height;
+    int bufferpx = 10;
 
     void createGrid(QPainter* painter);
     void drawContents(QPainter* painter);

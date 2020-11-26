@@ -199,7 +199,8 @@ void ordermenu::handleRouteButton() {
         routeMap->loadUncovertedPoints(allPoints);
         //routeMap->loadProductPoints(productPoints);
         routeMap->loadUnconvertedProductPoints(productPoints);
-        routeMap->loadRoutePrinter(routePoints);
+        //routeMap->loadRoutePrinter(routePoints);
+        routeMap->loadUnconvertedRoutePrinter(routePoints);
         routeMap->loadInstructions(directions);
         routeMap->setFixedSize(1500, 1000);
         routeMap->setWindowTitle("Warehouse Map with Route");
@@ -436,6 +437,7 @@ void ordermenu::handleSingleButton() {
     std::tuple<float, float> isReal = d->getProductPosition(ID);
     float x = std::get<0>(isReal);
     float y = std::get<1>(isReal);
+    int height = 22;
 
     secWindow = new secondProductWindow();
     connect (secWindow, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
@@ -451,13 +453,14 @@ void ordermenu::handleSingleButton() {
         float yE = std::get<1>(endLocation);
 
         startPt.setX(xS * TILE_SIZE/SCALE);
-        startPt.setY(yS * TILE_SIZE/SCALE);
+        startPt.setY(( (float) height - yS) * TILE_SIZE/SCALE);
         endPt.setX(xE * TILE_SIZE/SCALE);
-        endPt.setY(yE * TILE_SIZE/SCALE);
+        endPt.setY(((float)height - yE) * TILE_SIZE/SCALE);
 
         routePoints.push_back(startPt);
         routePoints.push_back(endPt);
         secWindow->loadRoutePrinter(routePoints);
+        //secWindow->loadUnconvertedRoutePrinter(routePoints);
         secWindow->setFixedSize(1500, 1000);
         secWindow->setWindowTitle("Map Preview");
         secWindow->setPreview(true);

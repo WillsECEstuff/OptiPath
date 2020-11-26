@@ -52,7 +52,7 @@ void secondProductWindow::loadProductPoint(std::string pID) {
     }
 
     productPoint.setX(x * TILE_SIZE/MAPSCALE);
-    productPoint.setY(y * TILE_SIZE/MAPSCALE);
+    productPoint.setY( ( (float) height - y) * TILE_SIZE/MAPSCALE);
     isPreview = false;
     std::cout << "loaded product" << std::endl;
 }
@@ -74,6 +74,15 @@ void secondProductWindow::loadUncovertedPoints(QVector<QPointF> ptsList)
 
 void secondProductWindow::loadRoutePrinter(QVector<QPointF> route) {
     routePoints = route;
+    std::cout << "loaded route" << std::endl;
+}
+
+void secondProductWindow::loadUnconvertedRoutePrinter(QVector<QPointF> route)
+{
+    for (auto& it : route) {
+        QPointF f(it.x() * TILE_SIZE / MAPSCALE, ((float)height - it.y()) * TILE_SIZE / MAPSCALE);
+        routePoints.append(f);
+    }
     std::cout << "loaded route" << std::endl;
 }
 
@@ -108,25 +117,8 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
     //pen.setColor(Qt::green);
     pen.setWidth(5);
 
-    // create and label grid begin. scaling coordinates by 30. Max product coordinate is 37.98 (*30 to scale)
-    for (int i = 0; i < xboundary+1; i += TILE_SIZE) {     // make a 40x22 map with 30 pixels per square
-        painter.drawLine(i, 0, i, yboundary);
-    }
-
-    for (int j = 0; j < yboundary+1; j += TILE_SIZE) {
-        painter.drawLine(0, j, xboundary, j);
-    }
-
-    for (int i = 0; i < xboundary-1; i += TILE_SIZE*5) { // label the 40x22 map
-        painter.drawText(i, yboundary+9, QString::number(i / TILE_SIZE));
-    }
-
-    painter.drawText(xboundary - 5, yboundary+9, QString::number(xboundary / TILE_SIZE)); // x = 40
-
-    for (int j = 0; j < yboundary+1; j += TILE_SIZE*5) {
-        painter.drawText(xboundary+3, j+4, QString::number(j / TILE_SIZE));
-    }
-    // create and label grid end
+    // create and label grid
+    createGrid(&painter);
 
     if (isPreview == false) {
         // write instructions begin
@@ -187,22 +179,8 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
     }
     // create legend end
 
-    // draw shelves begin
-    painter.setPen(QPen(orangeColor, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-
-    QPointF beginPt, endPt;
-    for (size_t i = 0; i < v.size(); i++) {
-        int shelfNum = std::get<0>(v[i]); // y level
-        int begin = std::get<1>(v[i]);
-        int end = std::get<2>(v[i]) + 1;
-
-        beginPt.setX(begin*TILE_SIZE/MAPSCALE);
-        beginPt.setY(shelfNum * TILE_SIZE/MAPSCALE);
-        endPt.setX(end*TILE_SIZE/MAPSCALE);
-        endPt.setY(shelfNum * TILE_SIZE/MAPSCALE);
-        painter.drawLine(beginPt.x(), beginPt.y(), endPt.x(), endPt.y());
-    }
-    // draw shelves end
+    // draw shelves
+    drawShelves(&painter);
 
     // draw map contents begin
     painter.setPen(QPen(Qt::red, 5/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
@@ -222,8 +200,8 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
 
     painter.setPen(QPen(Qt::cyan, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter.setFont(QFont("times",2));
-    painter.drawText(routePoints[0].x()+2, routePoints[0].y()+4, "START");
-    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()+6, "END");
+    painter.drawText(routePoints[0].x()+2, routePoints[0].y()+3, "START");
+    painter.drawText(routePoints[routePoints.size() - 1].x()+2, routePoints[routePoints.size() - 1].y()-3, "END");
 
     if (isPreview == false) { // draw route. used only for product map
         painter.setPen(QPen(Qt::blue, 1/(INKSCALE), Qt::SolidLine, Qt::RoundCap));
@@ -237,3 +215,58 @@ void secondProductWindow::paintEvent(QPaintEvent *event)
 }
 
 
+void secondProductWindow::createGrid(QPainter* painter)
+{
+    int xboundary = TILE_SIZE * 40; // max 40 length
+    int yboundary = TILE_SIZE * 22;
+
+    // create and label grid begin. scaling coordinates by 30. Max product coordinate is 37.98 (*30 to scale)
+    for (int i = 0; i < xboundary + 1; i += TILE_SIZE) {     // make a 40x22 map with 30 pixels per square
+        painter->drawLine(i, 0, i, yboundary);
+    }
+
+    for (int j = 0; j < yboundary + 1; j += TILE_SIZE) {
+        painter->drawLine(0, j, xboundary, j);
+    }
+
+    // label the 40x22 map
+    // labeling the x axis
+    for (int i = 0; i < xboundary - 1; i += TILE_SIZE * 5) {
+        painter->drawText(i, yboundary + 15, QString::number(i / TILE_SIZE));
+    }
+
+    painter->drawText(xboundary - 5, yboundary + 15, QString::number(xboundary / TILE_SIZE)); // x = 40
+
+    // labeling the y axis
+    painter->drawText(xboundary + 5, 10, QString::number(height));
+    for (int j = TILE_SIZE; j < yboundary + 1; j += TILE_SIZE) {
+        int diff = height - (j / TILE_SIZE);
+        if (diff % 5 == 0 && diff != 0) {
+            painter->drawText(xboundary + 5, j + 4, QString::number(diff));
+        }
+    }
+    // create and label grid end
+}
+
+void secondProductWindow::drawShelves(QPainter* painter)
+{
+    WarehouseMap* whm = whm->getInstance();
+    std::vector<std::tuple<int, int, int>> v = whm->getShelfSpecs(); // shelf num, begin, end
+    QColor orangeColor(255, 165, 0);
+
+    // draw shelves begin
+    painter->setPen(QPen(orangeColor, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    QPointF beginPt, endPt;
+    for (size_t i = 0; i < v.size(); i++) {
+        int shelfNum = std::get<0>(v[i]); // y level
+        int begin = std::get<1>(v[i]);
+        int end = std::get<2>(v[i]) + 1;
+
+        beginPt.setX(begin * TILE_SIZE / MAPSCALE);
+        beginPt.setY((height - shelfNum) * TILE_SIZE / MAPSCALE);
+        endPt.setX(end * TILE_SIZE / MAPSCALE);
+        endPt.setY((height - shelfNum) * TILE_SIZE / MAPSCALE);
+        painter->drawLine(beginPt.x(), beginPt.y(), endPt.x(), endPt.y());
+    }
+    // draw shelves end
+}
