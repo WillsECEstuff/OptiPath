@@ -31,8 +31,12 @@ mainwhmap::mainwhmap(QWidget *parent)
     p_button->setGeometry(200,700,135,50);
     connect(p_button, SIGNAL (clicked()), this, SLOT (handleButton()));
 
+    completeOrder_button = new QPushButton("Complete Order and Return", this);
+    completeOrder_button->setGeometry(400, 700, 160, 50);
+    connect(completeOrder_button, SIGNAL(clicked()), this, SLOT(handleCompleteOrderButton()));
+
     int instX = xboundary + 100; // x = 1300, location for instructions
-    int instY = 250; // underneath the legend
+    int instY = 280; // underneath the legend
 
     // create a scrollable instruction text area
     instrArea = new QScrollArea(parent=this);
@@ -112,9 +116,19 @@ void mainwhmap::loadInstructions(QVector<std::string> instrs) {
     instrArea->setWidgetResizable(true); */
 }
 
+void mainwhmap::loadOrderStatus(Order::Status stat)
+{
+    status = stat;
+}
+
 void mainwhmap::handleButton() {
     close();
     emit fromOtherMenu();
+}
+
+void mainwhmap::handleCompleteOrderButton() {
+    close();
+    emit COB();
 }
 
 void mainwhmap::paintEvent(QPaintEvent *event)
@@ -129,6 +143,7 @@ void mainwhmap::paintEvent(QPaintEvent *event)
 
     // draw the whole map
     createGrid(&painter);
+    drawOrderStatus(&painter);
     drawInstructions(&painter);
     drawLegend(&painter);
     drawShelves(&painter);
@@ -224,7 +239,7 @@ void mainwhmap::drawContents(QPainter* painter)
 void mainwhmap::drawInstructions(QPainter* painter)
 {
     int instX = xboundary + 100; // x = 1300, location for instructions
-    int instY = 250; // underneath the legend
+    int instY = 280; // underneath the legend
 
     // write instructions begin
     painter->drawText(instX + 40, instY, "Instructions");
@@ -253,6 +268,31 @@ void mainwhmap::drawInstructions(QPainter* painter)
 }
 
 /**
+ * @brief   Draw the order status on the window
+ * 
+ * @param   painter
+ */
+void mainwhmap::drawOrderStatus(QPainter* painter)
+{
+    int odX = xboundary + 100; // x = 1300, location for order status
+    int odY = 30; 
+
+    painter->drawText(odX + 40, odY, "Order Status");
+    painter->drawText(odX - 25, odY + 5, "-------------------------------------------");
+
+    if (status == Order::Status::ORDER_EXECUTED) {
+        painter->setPen(Qt::red);
+        painter->drawText(odX - 25, odY + 20, "Order has been executed");
+        painter->setPen(Qt::black);
+    }
+    else {
+        painter->setPen(Qt::black);
+        painter->drawText(odX - 25, odY + 20, "Order has NOT been executed");
+        
+    }
+}
+
+/**
  * @brief   Draws the legend for the map
  * 
  * @param   painter
@@ -260,33 +300,34 @@ void mainwhmap::drawInstructions(QPainter* painter)
 void mainwhmap::drawLegend(QPainter* painter)
 {
     int legendX = xboundary + 100; // x = 1300, location for legend
+    int legendY = 80;
     QColor orangeColor(255, 165, 0);
 
     // create legend begin
-    painter->drawText(legendX + 40, 30, "LEGEND");
-    painter->drawText(legendX - 25, 35, "-------------------------------------------");
-    painter->drawText(legendX + 25, 60, "Unselected Product");
-    painter->drawText(legendX + 25, 90, "Selected Product");
-    painter->drawText(legendX + 25, 120, "Route, numbered from");
-    painter->drawText(legendX + 25, 130, "start->1->...->end");
-    painter->drawText(legendX + 25, 150, "Start and End points");
-    painter->drawText(legendX + 25, 180, "Shelf");
+    painter->drawText(legendX + 40, legendY, "LEGEND");
+    painter->drawText(legendX - 25, legendY + 5, "-------------------------------------------");
+    painter->drawText(legendX + 25, legendY + 30, "Unselected Product");
+    painter->drawText(legendX + 25, legendY + 60, "Selected Product");
+    painter->drawText(legendX + 25, legendY + 90, "Route, numbered from");
+    painter->drawText(legendX + 25, legendY + 100, "start->1->...->end");
+    painter->drawText(legendX + 25, legendY + 130, "Start and End points");
+    painter->drawText(legendX + 25, legendY + 160, "Shelf");
 
     painter->setPen(QPen(Qt::red, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter->scale(MAPSCALE, MAPSCALE);
-    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, 60 / MAPSCALE));
+    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, (legendY + 25) / MAPSCALE));
 
     painter->setPen(QPen(Qt::green, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, 90 / MAPSCALE));
+    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, (legendY + 55) / MAPSCALE));
 
     painter->setPen(QPen(Qt::blue, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->drawLine((legendX + 5) / MAPSCALE, 120 / MAPSCALE, (legendX + 15) / MAPSCALE, 120 / MAPSCALE);
+    painter->drawLine((legendX + 5) / MAPSCALE, (legendY + 90) / MAPSCALE, (legendX + 15) / MAPSCALE, (legendY + 90) / MAPSCALE);
 
     painter->setPen(QPen(Qt::cyan, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, 150 / MAPSCALE));
+    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, (legendY + 125) / MAPSCALE));
 
     painter->setPen(QPen(orangeColor, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->drawLine((legendX + 5) / MAPSCALE, 180 / MAPSCALE, (legendX + 15) / MAPSCALE, 180 / MAPSCALE);
+    painter->drawLine((legendX + 5) / MAPSCALE, (legendY + 155) / MAPSCALE, (legendX + 15) / MAPSCALE, (legendY + 155) / MAPSCALE);
     // create legend end
 }
 

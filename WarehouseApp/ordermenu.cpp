@@ -128,19 +128,25 @@ void ordermenu::onOtherSignal() {
     show();
 }
 
+void ordermenu::onOrderCompleteSignal() {
+    orderList[currentOrderIDx - 1].orderCompleted();
+    show();
+}
+
 void ordermenu::handleRouteButton() {
     Database *d = d->getInstance();
     routePoints.clear();
     productPoints.clear();
     directions.clear();
 
-    int orderIdx = ordercbox->currentIndex();
-    std::cout << "Current COMBOBOX index: " << orderIdx << std::endl;
+    currentOrderIDx = ordercbox->currentIndex();
+    std::cout << "Current COMBOBOX index: " << currentOrderIDx << std::endl;
 
     routeMap = new mainwhmap();
     connect (routeMap, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
+    connect(routeMap, SIGNAL(COB()), this, SLOT(onOrderCompleteSignal()));
 
-    if (orderIdx < 1) {
+    if (currentOrderIDx < 1) {
         QMessageBox notifyUser;
         notifyUser.setText("Please select an order from the drop-down menu.");
         notifyUser.setWindowTitle("Error - Couldn't Read Order");
@@ -148,7 +154,8 @@ void ordermenu::handleRouteButton() {
     }
 
     else {
-        Order o = orderList[orderIdx-1];
+        Order o = orderList[currentOrderIDx -1];
+        Order::Status stat = o.getOrderStatus();
         //processOrder(&o, d, orderIdx);
 
         std::list<Product> l = o.getProductList();
@@ -203,6 +210,7 @@ void ordermenu::handleRouteButton() {
         //routeMap->loadRoutePrinter(routePoints);
         routeMap->loadUnconvertedRoutePrinter(routePoints);
         routeMap->loadInstructions(directions);
+        routeMap->loadOrderStatus(stat);
         routeMap->setFixedSize(1500, 800);
         routeMap->setWindowTitle("Warehouse Map with Route");
         this->hide();

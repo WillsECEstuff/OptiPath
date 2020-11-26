@@ -35,6 +35,7 @@ public:
 
 public slots:
     void onOtherSignal();
+    void onOrderCompleteSignal();
 
 private slots:
     void handleRouteButton();
@@ -80,5 +81,7 @@ private:
     mainwhmap *routeMap;
     secondProductWindow *secWindow;
     QVector <QPointF> singleRoute;
+
+    int currentOrderIDx;
 };
 #endif // ORDERMENU_H

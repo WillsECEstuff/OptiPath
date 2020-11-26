@@ -40,6 +40,8 @@ Order::Order(int oID, int p) {
 	}
 
 	productList.clear();
+
+	status = ORDER_PENDING;
 }
 
 /**
