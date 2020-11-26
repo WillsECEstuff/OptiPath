@@ -137,6 +137,11 @@ void mainwhmap::paintEvent(QPaintEvent *event)
 
 }
 
+/**
+ * @brief   A private function which draws the grid and labels
+ * 
+ * @param   painter
+ */
 void mainwhmap::createGrid(QPainter* painter) {
 
     // create and label grid begin. scaling coordinates by 30. Max product coordinate is 37.98 (*30 to scale)
@@ -167,6 +172,11 @@ void mainwhmap::createGrid(QPainter* painter) {
     // create and label grid end
 }
 
+/**
+ * @brief   draws the products and routes in the grid
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawContents(QPainter* painter)
 {
 
@@ -206,6 +216,11 @@ void mainwhmap::drawContents(QPainter* painter)
     // draw map contents end
 }
 
+/**
+ * @brief   Draws the instructions inside the scrollable area
+ * 
+ * @param painter
+ */
 void mainwhmap::drawInstructions(QPainter* painter)
 {
     int instX = xboundary + 100; // x = 1300, location for instructions
@@ -237,6 +252,11 @@ void mainwhmap::drawInstructions(QPainter* painter)
 
 }
 
+/**
+ * @brief   Draws the legend for the map
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawLegend(QPainter* painter)
 {
     int legendX = xboundary + 100; // x = 1300, location for legend
@@ -270,6 +290,11 @@ void mainwhmap::drawLegend(QPainter* painter)
     // create legend end
 }
 
+/**
+ * @brief   Draw the shelves in the map
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawShelves(QPainter* painter)
 {
     WarehouseMap* whm = whm->getInstance();
