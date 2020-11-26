@@ -61,7 +61,7 @@ private:
     QWidget *dockArea;
     int width;
     int height;
-    int bufferpx = 10;
+    bool flag;
 
     void createGrid(QPainter* painter);
     void drawContents(QPainter* painter);

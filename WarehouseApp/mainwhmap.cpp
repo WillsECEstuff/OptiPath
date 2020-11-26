@@ -30,8 +30,24 @@ mainwhmap::mainwhmap(QWidget *parent)
     p_button = new QPushButton("Return to Order Menu", this);
     p_button->setGeometry(200,700,135,50);
     connect(p_button, SIGNAL (clicked()), this, SLOT (handleButton()));
+
+    int instX = xboundary + 100; // x = 1300, location for instructions
+    int instY = 250; // underneath the legend
+
+    // create a scrollable instruction text area
+    instrArea = new QScrollArea(parent=this);
+    instrArea->setGeometry(instX - 25, instY + 15, 200, 300);
+    instrArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    instrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    instrArea->setWidgetResizable(true);
+    dockArea = new QWidget();
+    instrArea->setWidget(dockArea);
+    instrList = new QVBoxLayout();
+    dockArea->setLayout(instrList);
+
     height = 22;
     width = 40;
+    flag = false;
 }
 
 mainwhmap::~mainwhmap()
@@ -117,9 +133,15 @@ void mainwhmap::paintEvent(QPaintEvent *event)
     drawLegend(&painter);
     drawShelves(&painter);
     drawContents(&painter);
+    flag = true;
 
 }
 
+/**
+ * @brief   A private function which draws the grid and labels
+ * 
+ * @param   painter
+ */
 void mainwhmap::createGrid(QPainter* painter) {
 
     // create and label grid begin. scaling coordinates by 30. Max product coordinate is 37.98 (*30 to scale)
@@ -150,6 +172,11 @@ void mainwhmap::createGrid(QPainter* painter) {
     // create and label grid end
 }
 
+/**
+ * @brief   draws the products and routes in the grid
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawContents(QPainter* painter)
 {
 
@@ -189,19 +216,47 @@ void mainwhmap::drawContents(QPainter* painter)
     // draw map contents end
 }
 
+/**
+ * @brief   Draws the instructions inside the scrollable area
+ * 
+ * @param painter
+ */
 void mainwhmap::drawInstructions(QPainter* painter)
 {
+    int instX = xboundary + 100; // x = 1300, location for instructions
+    int instY = 250; // underneath the legend
+
     // write instructions begin
-    painter->drawText(xboundary / 2 + 40, yboundary + 40, "Instructions");
-    painter->drawText(xboundary / 2 - 25, yboundary + 45, "--------------------------------------------------");
-    for (int i = 0; i < directions.size(); i++) {
-        std::string toBeNumbered = std::to_string(i + 1) + ". " + directions[i];
-        QString temp = QString::fromStdString(toBeNumbered);
-        painter->drawText(xboundary / 2 - 25, yboundary + 60 + i * 20, temp);
-    }
+    painter->drawText(instX + 40, instY, "Instructions");
+    painter->drawText(instX - 25, instY + 5, "--------------------------------------------------");
+    //for (int i = 0; i < directions.size(); i++) {
+    //    std::string toBeNumbered = std::to_string(i + 1) + ". " + directions[i];
+    //    QString temp = QString::fromStdString(toBeNumbered);
+    //    painter->drawText(instX - 25, instY + 15 + i * 20, temp);
+    //}
     // write instructions end
+
+    if (!flag) {
+        QLabel* orderLabel = new QLabel();
+        std::string orderStr = "Instructions for Order";
+        orderLabel->setText(QString::fromStdString(orderStr));
+        instrList->addWidget(orderLabel);
+        for (int i = 0; i < directions.size(); i++) {
+            QLabel* txtLblOrder = new QLabel();
+            std::string toBeNumbered = std::to_string(i + 1) + ". " + directions[i];
+            txtLblOrder->setText(QString::fromStdString(toBeNumbered));
+            instrList->addWidget(txtLblOrder);
+        }
+    }
+    
+
 }
 
+/**
+ * @brief   Draws the legend for the map
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawLegend(QPainter* painter)
 {
     int legendX = xboundary + 100; // x = 1300, location for legend
@@ -235,6 +290,11 @@ void mainwhmap::drawLegend(QPainter* painter)
     // create legend end
 }
 
+/**
+ * @brief   Draw the shelves in the map
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawShelves(QPainter* painter)
 {
     WarehouseMap* whm = whm->getInstance();
