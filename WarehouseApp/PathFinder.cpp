@@ -145,7 +145,8 @@ int PathFinder::findMinBegin(int shelfStart, int shelfEnd) {
 QVector<QPointF> PathFinder :: ReturnTraversal(
         std::deque<Product>& productList,
         Product& startLocation,
-        Product& endLocation
+        Product& endLocation,
+        float userTimer
         ) {
     QVector<QPointF> pointsToDisplay;
     std::unordered_map<int, std::vector<Product>> aisleProductMap;
@@ -202,6 +203,10 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     }
 
     for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
+
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        if(duration.count() >= userTimer*1000) break;
         int yCoord = *it;
 
         if(yCoord < 21) { //Make sure y coordinate does not exceed 19
@@ -237,8 +242,10 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
 
      //Go back to start location
      points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
-     points.push_back(std::make_tuple(0,startLocation.getYPosition(),"-1"));
-     points.push_back(std::make_tuple(startLocation.getXPosition(),startLocation.getYPosition(),"-1"));
+     points.push_back(std::make_tuple(0,endLocation.getYPosition(),"-1"));
+     if (endLocation.getXPosition() > 0) {
+         points.push_back(std::make_tuple(endLocation.getXPosition(),endLocation.getYPosition(),"-1"));
+     }
 
      //Add points to display
      for(auto it = points.begin();it!=points.end()-1;++it) {
@@ -311,6 +318,9 @@ QVector<QPointF> PathFinder::STraversal(
         //aislesToBeVisited is an ordered vector of aisles. (1,3,5,7,9.....)
         for(std::vector<int> :: iterator it = aislesToBeVisited.begin();it!=aislesToBeVisited.end()-1;++it) {
             int yCoord = *it;
+            auto end = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+            if(duration.count() >= userTimer*1000) break;
 
             if(yCoord < 21) { //Make sure y coordinate does not exceed 19
                 if(traversalOrder == 1) { // left to right
@@ -376,7 +386,7 @@ QVector<QPointF> PathFinder::STraversal(
 
         std::cout << "points size b4: " << points.size() << std::endl;
 
-        // Go back to start location. (was startLocation
+        // Go to end location. (was startLocation)
         points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
         points.push_back(std::make_tuple(0,endLocation.getYPosition(),"-1"));
 

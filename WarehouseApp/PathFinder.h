@@ -78,7 +78,8 @@ class PathFinder {
     QVector<QPointF> ReturnTraversal(
             std::deque<Product>& productList,
             Product& startLocation,
-            Product& endLocation
+            Product& endLocation,
+            float userInput
             );
 
     QVector<QPointF> HybridTraversal(
