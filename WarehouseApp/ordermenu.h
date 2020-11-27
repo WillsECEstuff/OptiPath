@@ -36,6 +36,7 @@ public:
 
 public slots:
     void onOtherSignal();
+    void onOrderCompleteSignal();
     void onSettingsSignal();
 
 private slots:
@@ -84,5 +85,7 @@ private:
     secondProductWindow *secWindow;
     settingsmenu *settingsWindow;
     QVector <QPointF> singleRoute;
+
+    int currentOrderIDx;
 };
 #endif // ORDERMENU_H

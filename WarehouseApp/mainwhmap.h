@@ -6,6 +6,7 @@
 #ifndef mainwhmap_H
 #define mainwhmap_H
 
+#include <deque>
 #include <QMainWindow>
 #include <QPainter>
 #include <QVector>
@@ -35,6 +36,7 @@ public:
     void loadUnconvertedRoutePrinter(QVector <QPointF> route);
     void loadInstructions(QVector <std::string> instrList);
     void loadOrderStatus(Order::Status stat);
+    void loadUnconvertedPointsPF(std::deque<std::tuple<float, float, std::string>> p);
 
     virtual void paintEvent(QPaintEvent *event);
 
@@ -68,6 +70,7 @@ private:
     int height;
     bool flag;
     Order::Status status;
+    std::deque<std::tuple<float, float, std::string>> pointsPF;
 
     void createGrid(QPainter* painter);
     void drawContents(QPainter* painter);
@@ -75,6 +78,11 @@ private:
     void drawOrderStatus(QPainter* painter);
     void drawLegend(QPainter* painter);
     void drawShelves(QPainter* painter);
+
+    void drawRedProducts(QPainter* painter);
+    void drawGreenProducts(QPainter* painter);
+    void drawPFRoute(QPainter* painter);
+
     
 };
 #endif // mainwhmap_H
