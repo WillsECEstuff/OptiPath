@@ -40,11 +40,11 @@ public slots:
 
 private slots:
     void handleRouteButton();
-    void handleSLocationButton();
-    void handleELocationButton();
+    //void handleSLocationButton();
+    //void handleELocationButton();
     void handleCreateOrderButton();
     void handleSingleButton();
-    void handleTimerButton();
+    //void handleTimerButton();
     void handleSettingsButton();
 
 private:
@@ -59,26 +59,26 @@ private:
     std::tuple<float, float> startLocation;
     std::tuple<float, float> endLocation;
 
-    QPushButton *startLocationButton;
-    QPushButton *endLocationButton;
+    //QPushButton *startLocationButton;
+    //QPushButton *endLocationButton;
     QPushButton *routeButton;
     QPushButton *enterSingleButton;
     QPushButton *addOrderButton;
     QPushButton *settingsButton;
-    QPushButton *timerButton;
+    //QPushButton *timerButton;
     QLabel *txtOrder;
     QFont *font;
     QComboBox *ordercbox;
     QLineEdit *txtwantsingle;
     QLabel *txtLblSingle;
-    QLineEdit *txtSLoc;
+    /*QLineEdit *txtSLoc;
     QLabel *txtLblSLoc;
     QLineEdit *txtELoc;
-    QLabel *txtLblELoc;
+    QLabel *txtLblELoc; */
     QLineEdit *txtAddOrder;
     QLabel *txtLblOrder;
-    QLineEdit *txtTimer;
-    QLabel *txtLblTimer;
+    //QLineEdit *txtTimer;
+    //QLabel *txtLblTimer;
 
     mainwhmap *routeMap;
     secondProductWindow *secWindow;
