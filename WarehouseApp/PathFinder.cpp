@@ -221,9 +221,9 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
 
             //Add the product locations in the traversal - modified. Now does not travel through shelves
             for(auto& product : aisleProductMap[yCoord-1]) {
-                points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
+                points.push_back(std::make_tuple(product.getXPosition(),yCoord,"-1"));
                 points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
-                points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
+                points.push_back(std::make_tuple(product.getXPosition(),yCoord, "-1"));
             }
 
             //Push the leftmost coordinate in the aisle
@@ -236,13 +236,13 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     }
 
     for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
-        points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
+        points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(), "-1"));
         points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
-        points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
+        points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(), "-1"));
     }
 
      //Go back to start location
-     points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
+     points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"1-"));
      points.push_back(std::make_tuple(0,endLocation.getYPosition(),"-1"));
      if (endLocation.getXPosition() > 0) {
          points.push_back(std::make_tuple(endLocation.getXPosition(),endLocation.getYPosition(),"-1"));
@@ -341,9 +341,9 @@ QVector<QPointF> PathFinder::STraversal(
 
                     //Add the product locations in the traversal - modified. Now does not travel through shelves
                     for(auto& product : aisleProductMap[yCoord-1]) {
-                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord, "-1"));
                         points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
-                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord, "-1"));
                     }
 
 
@@ -371,9 +371,9 @@ QVector<QPointF> PathFinder::STraversal(
 
                     //Add the product locations in the traversal - modified. Now does not travel through shelves
                     for(auto& product : aisleProductMap[yCoord-1]) {
-                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,"-1"));
                         points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
-                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,product.getProductID()));
+                        points.push_back(std::make_tuple(product.getXPosition(),yCoord,"-1"));
                     }
 
                     //Push the leftmost coordinate in the aisle
@@ -389,9 +389,9 @@ QVector<QPointF> PathFinder::STraversal(
 
         // Visit the last aisle of products
         for(auto& product : aisleProductMap[aislesToBeVisited.back()-1]) {
-            points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
+            points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(), "-1"));
             points.push_back(std::make_tuple(product.getXPosition(),product.getYPosition(),product.getProductID()));
-            points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(),product.getProductID()));
+            points.push_back(std::make_tuple(product.getXPosition(),aislesToBeVisited.back(), "-1"));
         }
 
         std::cout << "points size b4: " << points.size() << std::endl;
@@ -580,14 +580,13 @@ QVector <std::string> PathFinder::pathAnnotation() {
             distanceBetweenPointsEuclidean(points[i - 1], points[i]);
 
         if(std::get<2>(points[i]) != "-1") {
-            if (c == Compass::Stay) {
-                instruction = "Stay at product (" + xStream.str() + "," + yStream.str() + ")";
+            if (c != Compass::Stay) {
+                instruction = "Pick product #" + std::get<2>(points[i]) + " from the " + dir[c] + " at (" + xStream.str() + "," + yStream.str() + ")";
             }
             else {
-                instruction = "Go " + distanceStream.str() + " units " + dir[c] + " to product " +
-                    std::get<2>(points[i]) + " at (" + xStream.str() + "," + yStream.str() + ")";
+                instruction = "Stay at product (" + xStream.str() + "," + yStream.str() + ")";
             }
-            
+            i++;
         }
 
         else {
@@ -661,6 +660,11 @@ QVector <std::string> PathFinder::oldAnnotation(std::deque<Product>& path) {
     return instructions;
 }
 
+std::deque<std::tuple<float, float, std::string>> PathFinder::getPoints()
+{
+    return points;
+}
+
 /**
  * @brief	Return current position of the user. (Unused currently)
  *
@@ -697,30 +701,30 @@ Compass PathFinder::getHeading(std::tuple<float, float, std::string> p1,
     
     float x = std::get<0>(p2) - std::get<0>(p1);
     float y = std::get<1>(p2) - std::get<1>(p1);
-    // North is when x = 0, and y is negative
+    // South is when x = 0, and y is negative
     if (x == 0.0 && y < 0.0) {
-        return Compass::North;
-    }// NorthEast is when x is positive and y is negative
+        return Compass::South;
+    }// SouthEast is when x is positive and y is negative
     else if (x > 0.0 && y < 0.0) {
-        return Compass::NorthEast;
+        return Compass::SouthEast;
     }// East is when x is positive and y = 0
     else if (x > 0.0 && y == 0.0) {
         return Compass::East;
-    }// SouthEast is when x is positive and y is positive 
+    }// NorthEast is when x is positive and y is positive 
     else if (x > 0.0 && y > 0.0) {
-        return Compass::SouthEast;
-    }// South is when x is 0 and y is positive
+        return Compass::NorthEast;
+    }// North is when x is 0 and y is positive
     else if (x == 0.0 && y > 0.0) {
-        return Compass::South;
-    }// SouthWest is when x is negative and y is positive
+        return Compass::North;
+    }// NorthWest is when x is negative and y is positive
     else if (x < 0.0 && y > 0.0) {
-        return Compass::SouthWest;
+        return Compass::NorthWest;
     }// West is when x is negative and y is 0
     else if (x < 0.0 && y == 0.0) {
         return Compass::West;
-    }// NorthWest is when x is negative and y is positive
+    }// SouthWest is when x is negative and y is positive
     else if (x < 0.0 && y < 0.0) {
-        return Compass::NorthWest;
+        return Compass::SouthWest;
     }// else dont move
     else {
         return Compass::Stay;

@@ -127,6 +127,11 @@ void ordermenu::onOtherSignal() {
     show();
 }
 
+void ordermenu::onOrderCompleteSignal() {
+    orderList[currentOrderIDx - 1].orderCompleted();
+    show();
+}
+
 void ordermenu::onSettingsSignal() {
     myTimer = settingsWindow->getTimer();
     startLocation = settingsWindow->getSLocation();
@@ -159,13 +164,14 @@ void ordermenu::handleRouteButton() {
     productPoints.clear();
     directions.clear();
 
-    int orderIdx = ordercbox->currentIndex();
-    std::cout << "Current COMBOBOX index: " << orderIdx << std::endl;
+    currentOrderIDx = ordercbox->currentIndex();
+    std::cout << "Current COMBOBOX index: " << currentOrderIDx << std::endl;
 
     routeMap = new mainwhmap();
     connect (routeMap, SIGNAL(fromOtherMenu()), this, SLOT(onOtherSignal()));
+    connect(routeMap, SIGNAL(COB()), this, SLOT(onOrderCompleteSignal()));
 
-    if (orderIdx < 1) {
+    if (currentOrderIDx < 1) {
         QMessageBox notifyUser;
         notifyUser.setText("Please select an order from the drop-down menu.");
         notifyUser.setWindowTitle("Error - Couldn't Read Order");
@@ -173,7 +179,8 @@ void ordermenu::handleRouteButton() {
     }
 
     else {
-        Order o = orderList[orderIdx-1];
+        Order o = orderList[currentOrderIDx -1];
+        Order::Status stat = o.getOrderStatus();
         //processOrder(&o, d, orderIdx);
 
         std::list<Product> l = o.getProductList();
@@ -200,8 +207,8 @@ void ordermenu::handleRouteButton() {
 
         PathFinder pathFinder;
         NN NNFinder;
-        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
-        routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
+        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
+        //routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
         //routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd,myTimer);
 
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
@@ -225,8 +232,10 @@ void ordermenu::handleRouteButton() {
         //routeMap->loadProductPoints(productPoints);
         routeMap->loadUnconvertedProductPoints(productPoints);
         //routeMap->loadRoutePrinter(routePoints);
-        routeMap->loadUnconvertedRoutePrinter(routePoints);
+        //routeMap->loadUnconvertedRoutePrinter(routePoints);
+        routeMap->loadUnconvertedPointsPF(pathFinder.getPoints());
         routeMap->loadInstructions(directions);
+        routeMap->loadOrderStatus(stat);
         routeMap->setFixedSize(1500, 800);
         routeMap->setWindowTitle("Warehouse Map with Route");
         this->hide();

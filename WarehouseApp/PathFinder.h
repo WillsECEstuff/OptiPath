@@ -103,4 +103,5 @@ class PathFinder {
     QVector <std::string> pathAnnotation();
     QVector <std::string> oldAnnotation(std::deque<Product>& path);
 
+    std::deque<std::tuple<float, float, std::string>> getPoints();
 };
