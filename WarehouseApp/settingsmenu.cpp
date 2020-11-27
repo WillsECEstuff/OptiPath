@@ -51,7 +51,7 @@ settingsmenu::settingsmenu(QWidget *parent)
     txtELoc->setGeometry(390,325,50,25);
 
     txtLblTimer = new QLabel(this);
-    txtLblTimer->setText("Change the timer below,\nin seconds. Warning: timer\n should be longer than 5 seconds.");
+    txtLblTimer->setText("Change the timer below,\nin seconds. Warning: timer\nshould be longer than 5 seconds.");
     txtLblTimer->setGeometry(235,420,300,40);
     txtTimer = new QLineEdit(this);
     txtTimer->setPlaceholderText("60.0");

@@ -41,24 +41,25 @@ ordermenu::ordermenu(QWidget *parent)
     settingsButton->setGeometry(100,200,135,50);
     routeButton = new QPushButton("Show Route", this);
     routeButton->setGeometry(345,200,135,50);
-    startLocationButton = new QPushButton("Change Starting Location", this);
-    startLocationButton->setGeometry(100,300,135,50);
+    //startLocationButton = new QPushButton("Change Starting Location", this);
+    //startLocationButton->setGeometry(100,300,135,50);
+    addOrderButton = new QPushButton("Create Order", this);
+    addOrderButton->setGeometry(100,300,135,50);
     enterSingleButton = new QPushButton("Search for Single Product/\nMap Preview", this);
     enterSingleButton->setGeometry(345,300,135,50);
-    endLocationButton = new QPushButton("Change Ending Location", this);
-    endLocationButton->setGeometry(100,480,135,50);
+    //endLocationButton = new QPushButton("Change Ending Location", this);
+    //endLocationButton->setGeometry(100,480,135,50);
 
-    addOrderButton = new QPushButton("Create Order", this);
-    addOrderButton->setGeometry(345,480,135,50);
-    timerButton = new QPushButton("Change timer", this);
-    timerButton->setGeometry(235,660,110,50);
 
-    txtLblTimer = new QLabel(this);
+    //timerButton = new QPushButton("Change timer", this);
+    //timerButton->setGeometry(235,660,110,50);
+
+    /*txtLblTimer = new QLabel(this);
     txtLblTimer->setText("Change the timer below,\nin seconds.");
     txtLblTimer->setGeometry(235,720,300,40);
     txtTimer = new QLineEdit(this);
     txtTimer->setPlaceholderText("60.0");
-    txtTimer->setGeometry(265,765,50,25);
+    txtTimer->setGeometry(265,765,50,25); */
 
     txtOrder = new QLabel(this);
     QFont font = txtOrder->font();
@@ -72,12 +73,19 @@ ordermenu::ordermenu(QWidget *parent)
 
     txtLblOrder = new QLabel(this);
     txtLblOrder->setText("Add product ID(s) below\nfollowing the example below,\nthen click on 'Create Order.'");
-    txtLblOrder->setGeometry(345,540,300,60);
+    txtLblOrder->setGeometry(100,360,300,60);
     txtAddOrder = new QLineEdit(this);
     txtAddOrder->setPlaceholderText("123, 456, 789");
-    txtAddOrder->setGeometry(345,605,135,25);
+    txtAddOrder->setGeometry(100,425,135,25);
 
-    txtLblSLoc = new QLabel(this);
+    txtLblSingle = new QLabel(this);
+    txtLblSingle->setText("Just want a single product?\nEnter a single product ID below,\nthen click on 'Search for Single Product.'\nLeave empty for map preview.");
+    txtLblSingle->setGeometry(345,360,300,60);
+    txtwantsingle = new QLineEdit(this);
+    txtwantsingle->setPlaceholderText("123");
+    txtwantsingle->setGeometry(390,425,50,25);
+
+    /*txtLblSLoc = new QLabel(this);
     txtLblSLoc->setText("Enter a location below\nas (x,y) without parentheses,\nthen click on\n'Change Starting Location.'");
     txtLblSLoc->setGeometry(100,360,300,60);
     txtSLoc = new QLineEdit(this);
@@ -89,20 +97,13 @@ ordermenu::ordermenu(QWidget *parent)
     txtLblELoc->setGeometry(100,540,300,60);
     txtELoc = new QLineEdit(this);
     txtELoc->setPlaceholderText("0,0");
-    txtELoc->setGeometry(145,605,50,25);
-
-    txtLblSingle = new QLabel(this);
-    txtLblSingle->setText("Just want a single product?\nEnter a single product ID below,\nthen click on 'Search for Single Product.'\nLeave empty for map preview.");
-    txtLblSingle->setGeometry(345,360,300,60);
-    txtwantsingle = new QLineEdit(this);
-    txtwantsingle->setPlaceholderText("123");
-    txtwantsingle->setGeometry(390,425,50,25);
+    txtELoc->setGeometry(145,605,50,25); */
 
     connect(routeButton, SIGNAL (clicked()), this, SLOT (handleRouteButton()));
-    connect(startLocationButton, SIGNAL (clicked()), this, SLOT (handleSLocationButton()));
-    connect(endLocationButton, SIGNAL (clicked()), this, SLOT (handleELocationButton()));
+    //connect(startLocationButton, SIGNAL (clicked()), this, SLOT (handleSLocationButton()));
+    //connect(endLocationButton, SIGNAL (clicked()), this, SLOT (handleELocationButton()));
     connect(enterSingleButton, SIGNAL(clicked()), this, SLOT(handleSingleButton()));
-    connect(timerButton, SIGNAL(clicked()), this, SLOT(handleTimerButton()));
+    //connect(timerButton, SIGNAL(clicked()), this, SLOT(handleTimerButton()));
     connect(addOrderButton, SIGNAL(clicked()), this, SLOT(handleCreateOrderButton()));
     connect(settingsButton, SIGNAL(clicked()), this, SLOT(handleSettingsButton()));
 
@@ -260,7 +261,7 @@ void ordermenu::handleRouteButton() {
     }
 } */
 
-void ordermenu::handleSLocationButton() {
+/*void ordermenu::handleSLocationButton() {
     std::string sLoc = txtSLoc->text().toStdString();
     int idx = (int)sLoc.find(",");
     std::string xLoc = sLoc.substr(0, idx);
@@ -302,9 +303,9 @@ void ordermenu::handleSLocationButton() {
             notifyUser.exec();
         }
     }
-}
+} */
 
-void ordermenu::handleELocationButton() {
+/*void ordermenu::handleELocationButton() {
     std::string eLoc = txtELoc->text().toStdString();
     int idx = (int)eLoc.find(",");
     std::string xLoc = eLoc.substr(0, idx);
@@ -346,7 +347,7 @@ void ordermenu::handleELocationButton() {
             notifyUser.exec();
         }
     }
-}
+} */
 
 void ordermenu::handleCreateOrderButton() {
     std::string order = txtAddOrder->text().toStdString();
@@ -443,7 +444,7 @@ void ordermenu::handleCreateOrderButton() {
     }
 } */
 
-void ordermenu::handleTimerButton() {
+/*void ordermenu::handleTimerButton() {
     std::string num = txtTimer->text().toStdString();
 
     if (num.find_first_not_of("1234567890.") != std::string::npos) { // If any other characters are detected, generate an error
@@ -461,7 +462,7 @@ void ordermenu::handleTimerButton() {
         notifyUser.setWindowTitle("Success - Timer Set");
         notifyUser.exec();
     }
-}
+} */
 
 void ordermenu::handleSingleButton() {
     Database *d = d->getInstance();

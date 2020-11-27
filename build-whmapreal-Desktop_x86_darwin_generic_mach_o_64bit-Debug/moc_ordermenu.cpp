@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ordermenu_t {
-    QByteArrayData data[9];
-    char stringdata0[148];
+    QByteArrayData data[11];
+    char stringdata0[186];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,18 +35,21 @@ static const qt_meta_stringdata_ordermenu_t qt_meta_stringdata_ordermenu = {
 QT_MOC_LITERAL(0, 0, 9), // "ordermenu"
 QT_MOC_LITERAL(1, 10, 13), // "onOtherSignal"
 QT_MOC_LITERAL(2, 24, 0), // ""
-QT_MOC_LITERAL(3, 25, 17), // "handleRouteButton"
-QT_MOC_LITERAL(4, 43, 21), // "handleSLocationButton"
-QT_MOC_LITERAL(5, 65, 21), // "handleELocationButton"
-QT_MOC_LITERAL(6, 87, 23), // "handleCreateOrderButton"
-QT_MOC_LITERAL(7, 111, 18), // "handleSingleButton"
-QT_MOC_LITERAL(8, 130, 17) // "handleTimerButton"
+QT_MOC_LITERAL(3, 25, 16), // "onSettingsSignal"
+QT_MOC_LITERAL(4, 42, 17), // "handleRouteButton"
+QT_MOC_LITERAL(5, 60, 21), // "handleSLocationButton"
+QT_MOC_LITERAL(6, 82, 21), // "handleELocationButton"
+QT_MOC_LITERAL(7, 104, 23), // "handleCreateOrderButton"
+QT_MOC_LITERAL(8, 128, 18), // "handleSingleButton"
+QT_MOC_LITERAL(9, 147, 17), // "handleTimerButton"
+QT_MOC_LITERAL(10, 165, 20) // "handleSettingsButton"
 
     },
-    "ordermenu\0onOtherSignal\0\0handleRouteButton\0"
-    "handleSLocationButton\0handleELocationButton\0"
-    "handleCreateOrderButton\0handleSingleButton\0"
-    "handleTimerButton"
+    "ordermenu\0onOtherSignal\0\0onSettingsSignal\0"
+    "handleRouteButton\0handleSLocationButton\0"
+    "handleELocationButton\0handleCreateOrderButton\0"
+    "handleSingleButton\0handleTimerButton\0"
+    "handleSettingsButton"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +59,7 @@ static const uint qt_meta_data_ordermenu[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,15 +67,19 @@ static const uint qt_meta_data_ordermenu[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x0a /* Public */,
-       3,    0,   50,    2, 0x08 /* Private */,
-       4,    0,   51,    2, 0x08 /* Private */,
-       5,    0,   52,    2, 0x08 /* Private */,
-       6,    0,   53,    2, 0x08 /* Private */,
-       7,    0,   54,    2, 0x08 /* Private */,
-       8,    0,   55,    2, 0x08 /* Private */,
+       1,    0,   59,    2, 0x0a /* Public */,
+       3,    0,   60,    2, 0x0a /* Public */,
+       4,    0,   61,    2, 0x08 /* Private */,
+       5,    0,   62,    2, 0x08 /* Private */,
+       6,    0,   63,    2, 0x08 /* Private */,
+       7,    0,   64,    2, 0x08 /* Private */,
+       8,    0,   65,    2, 0x08 /* Private */,
+       9,    0,   66,    2, 0x08 /* Private */,
+      10,    0,   67,    2, 0x08 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -91,12 +98,14 @@ void ordermenu::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->onOtherSignal(); break;
-        case 1: _t->handleRouteButton(); break;
-        case 2: _t->handleSLocationButton(); break;
-        case 3: _t->handleELocationButton(); break;
-        case 4: _t->handleCreateOrderButton(); break;
-        case 5: _t->handleSingleButton(); break;
-        case 6: _t->handleTimerButton(); break;
+        case 1: _t->onSettingsSignal(); break;
+        case 2: _t->handleRouteButton(); break;
+        case 3: _t->handleSLocationButton(); break;
+        case 4: _t->handleELocationButton(); break;
+        case 5: _t->handleCreateOrderButton(); break;
+        case 6: _t->handleSingleButton(); break;
+        case 7: _t->handleTimerButton(); break;
+        case 8: _t->handleSettingsButton(); break;
         default: ;
         }
     }
@@ -132,13 +141,13 @@ int ordermenu::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
 }
