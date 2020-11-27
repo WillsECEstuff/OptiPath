@@ -365,6 +365,11 @@ void mainwhmap::drawShelves(QPainter* painter)
     // draw shelves end
 }
 
+/**
+ * @brief   Draws unpicked products of an order
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawRedProducts(QPainter* painter)
 {
     // draw product points
@@ -376,6 +381,11 @@ void mainwhmap::drawRedProducts(QPainter* painter)
 
 }
 
+/**
+ * @brief   Draws products to be picked in an order
+ * 
+ * @param painter
+ */
 void mainwhmap::drawGreenProducts(QPainter* painter)
 {
     // draw products to be picked points
@@ -386,6 +396,11 @@ void mainwhmap::drawGreenProducts(QPainter* painter)
     }
 }
 
+/**
+ * @brief   Draws a specialized route
+ * 
+ * @param   painter
+ */
 void mainwhmap::drawPFRoute(QPainter* painter)
 {
 

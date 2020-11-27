@@ -124,10 +124,18 @@ ordermenu::~ordermenu()
     delete ui;
 }
 
+/**
+ * @brief   button handler when pressed "Return to order menu"
+ * 
+ */
 void ordermenu::onOtherSignal() {
     show();
 }
 
+/**
+ * @brief   button handler when pressed complete order
+ * 
+ */
 void ordermenu::onOrderCompleteSignal() {
     orderList[currentOrderIDx - 1].orderCompleted();
     show();
