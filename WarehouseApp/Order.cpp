@@ -129,8 +129,18 @@ int Order::getPriority(void) {
  *
  * @return	returns an integer indicating the object's size.
  */
-int Order::getSize(void) {
+size_t Order::getSize(void) {
     return productList.size();
+}
+
+/**
+ * @brief	Get the Order size.
+ *
+ * @return	returns an integer indicating the object's size.
+ */
+
+int Order::getOrderID(void) {
+    return orderID;
 }
 
 /**

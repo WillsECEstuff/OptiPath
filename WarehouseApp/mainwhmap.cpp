@@ -36,7 +36,7 @@ mainwhmap::mainwhmap(QWidget *parent)
     connect(completeOrder_button, SIGNAL(clicked()), this, SLOT(handleCompleteOrderButton()));
 
     int instX = xboundary + 100; // x = 1300, location for instructions
-    int instY = 290; // underneath the legend
+    int instY = 280; // underneath the legend
 
     // create a scrollable instruction text area
     instrArea = new QScrollArea(parent=this);
@@ -104,33 +104,21 @@ void mainwhmap::loadUnconvertedRoutePrinter(QVector<QPointF> route)
 
 void mainwhmap::loadInstructions(QVector<std::string> instrs) {
     directions = instrs;
-    directions.remove(1); // remove "stay at start"
     std::cout << "loaded instructions" << std::endl;
-
-    QLabel* orderLabel = new QLabel();
-    std::string orderStr = "Instructions for Order";
-    orderLabel->setText(QString::fromStdString(orderStr));
-    instrList->addWidget(orderLabel);
-    for (int i = 0; i < directions.size(); i++) {
-        QLabel* txtLblOrder = new QLabel();
-        std::string toBeNumbered = std::to_string(i) + ". " + directions[i];
-        txtLblOrder->setText(QString::fromStdString(toBeNumbered));
+    /*
+    for (int i = 0; i < instrs.size(); i++) {
+        QLabel *txtLblOrder = new QLabel(this);
+        txtLblOrder->setText(QString::fromStdString(instrs[i]));
         instrList->addWidget(txtLblOrder);
+        instrList->addSpacing(10);
     }
+    instrArea->setLayout(instrList);
+    instrArea->setWidgetResizable(true); */
 }
 
 void mainwhmap::loadOrderStatus(Order::Status stat)
 {
     status = stat;
-}
-
-void mainwhmap::loadUnconvertedPointsPF(std::deque<std::tuple<float, float, std::string>> p)
-{
-    for (auto& it : p) {
-        std::tuple<float, float, std::string> f(std::get<0>(it) * TILE_SIZE / MAPSCALE,
-            ((float)height - std::get<1>(it)) * TILE_SIZE / MAPSCALE, std::get<2>(it));
-        pointsPF.push_back(f);
-    }
 }
 
 void mainwhmap::handleButton() {
@@ -149,7 +137,6 @@ void mainwhmap::paintEvent(QPaintEvent *event)
     painter.setBrush(Qt::DiagCrossPattern);
     QPen pen;
     
-
     //pen.setColor(Qt::green);
     pen.setWidth(5);
 
@@ -159,10 +146,7 @@ void mainwhmap::paintEvent(QPaintEvent *event)
     drawInstructions(&painter);
     drawLegend(&painter);
     drawShelves(&painter);
-    //drawContents(&painter);
-    drawRedProducts(&painter);
-    drawGreenProducts(&painter);
-    drawPFRoute(&painter);
+    drawContents(&painter);
     flag = true;
 
 }
@@ -237,7 +221,7 @@ void mainwhmap::drawContents(QPainter* painter)
     painter->drawText(routePoints[0].x() + 2, routePoints[0].y() + 3, "START");
     painter->drawText(routePoints[routePoints.size() - 1].x() + 2, routePoints[routePoints.size() - 1].y() - 3, "END");
 
-    painter->setPen(QPen(Qt::blue, (float) 2 / (float) (INKSCALE), Qt::SolidLine, Qt::RoundCap));
+    painter->setPen(QPen(Qt::blue, 1 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
     for (int i = 1; i < routePoints.size() - 1; i++) {
         painter->drawLine(routePoints[i - 1].x(), routePoints[i - 1].y(), routePoints[i].x(), routePoints[i].y());
         painter->drawText(routePoints[i].x() + 2, routePoints[i].y() - 1, QString::number(i));
@@ -254,7 +238,7 @@ void mainwhmap::drawContents(QPainter* painter)
 void mainwhmap::drawInstructions(QPainter* painter)
 {
     int instX = xboundary + 100; // x = 1300, location for instructions
-    int instY = 290; // underneath the legend
+    int instY = 280; // underneath the legend
 
     // write instructions begin
     painter->drawText(instX + 40, instY, "Instructions");
@@ -265,6 +249,19 @@ void mainwhmap::drawInstructions(QPainter* painter)
     //    painter->drawText(instX - 25, instY + 15 + i * 20, temp);
     //}
     // write instructions end
+
+    if (!flag) {
+        QLabel* orderLabel = new QLabel();
+        std::string orderStr = "Instructions for Order";
+        orderLabel->setText(QString::fromStdString(orderStr));
+        instrList->addWidget(orderLabel);
+        for (int i = 0; i < directions.size(); i++) {
+            QLabel* txtLblOrder = new QLabel();
+            std::string toBeNumbered = std::to_string(i + 1) + ". " + directions[i];
+            txtLblOrder->setText(QString::fromStdString(toBeNumbered));
+            instrList->addWidget(txtLblOrder);
+        }
+    }
     
 
 }
@@ -312,9 +309,8 @@ void mainwhmap::drawLegend(QPainter* painter)
     painter->drawText(legendX + 25, legendY + 60, "Selected Product");
     painter->drawText(legendX + 25, legendY + 90, "Route, numbered from");
     painter->drawText(legendX + 25, legendY + 100, "start->1->...->end");
-    painter->drawText(legendX + 25, legendY + 130, "Pick up product");
-    painter->drawText(legendX + 25, legendY + 160, "Start and End points");
-    painter->drawText(legendX + 25, legendY + 190, "Shelf");
+    painter->drawText(legendX + 25, legendY + 130, "Start and End points");
+    painter->drawText(legendX + 25, legendY + 160, "Shelf");
 
     painter->setPen(QPen(Qt::red, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter->scale(MAPSCALE, MAPSCALE);
@@ -326,14 +322,11 @@ void mainwhmap::drawLegend(QPainter* painter)
     painter->setPen(QPen(Qt::blue, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
     painter->drawLine((legendX + 5) / MAPSCALE, (legendY + 90) / MAPSCALE, (legendX + 15) / MAPSCALE, (legendY + 90) / MAPSCALE);
 
-    painter->setPen(QPen(Qt::blue, 5 / (INKSCALE), Qt::DotLine, Qt::RoundCap));
-    painter->drawLine((legendX ) / MAPSCALE, (legendY + 125) / MAPSCALE, (legendX + 20) / MAPSCALE, (legendY + 125) / MAPSCALE);
-
     painter->setPen(QPen(Qt::cyan, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, (legendY + 155) / MAPSCALE));
+    painter->drawPoint(QPointF((legendX + 15) / MAPSCALE, (legendY + 125) / MAPSCALE));
 
     painter->setPen(QPen(orangeColor, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->drawLine((legendX + 5) / MAPSCALE, (legendY + 185) / MAPSCALE, (legendX + 15) / MAPSCALE, (legendY + 185) / MAPSCALE);
+    painter->drawLine((legendX + 5) / MAPSCALE, (legendY + 155) / MAPSCALE, (legendX + 15) / MAPSCALE, (legendY + 155) / MAPSCALE);
     // create legend end
 }
 
@@ -363,84 +356,4 @@ void mainwhmap::drawShelves(QPainter* painter)
         painter->drawLine(beginPt.x(), beginPt.y(), endPt.x(), endPt.y());
     }
     // draw shelves end
-}
-
-/**
- * @brief   Draws unpicked products of an order
- * 
- * @param   painter
- */
-void mainwhmap::drawRedProducts(QPainter* painter)
-{
-    // draw product points
-    painter->setPen(QPen(Qt::red, 5 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-
-    for (auto& it : allPoints) { // draw all points
-        painter->drawPoint(it);
-    }
-
-}
-
-/**
- * @brief   Draws products to be picked in an order
- * 
- * @param painter
- */
-void mainwhmap::drawGreenProducts(QPainter* painter)
-{
-    // draw products to be picked points
-    painter->setPen(QPen(Qt::green, 10 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-
-    for (auto& it : productPoints) { // draw product location
-        painter->drawPoint(it);
-    }
-}
-
-/**
- * @brief   Draws a specialized route
- * 
- * @param   painter
- */
-void mainwhmap::drawPFRoute(QPainter* painter)
-{
-
-    // draw routes
-    painter->setPen(QPen(Qt::cyan, 10 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->drawPoint(std::get<0>(pointsPF[0]), std::get<1>(pointsPF[0]));
-    painter->drawPoint(std::get<0>(pointsPF[pointsPF.size()-1]), std::get<1>(pointsPF[pointsPF.size() - 1]));
-
-    painter->setPen(QPen(Qt::cyan, 1 / (INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    painter->setFont(QFont("times", 2));
-    painter->drawText(std::get<0>(pointsPF[0]) + 2, std::get<1>(pointsPF[0]) + 3, "START");
-    painter->drawText(std::get<0>(pointsPF[pointsPF.size() - 1]) + 2, std::get<1>(pointsPF[pointsPF.size() - 1]) - 3, "END");
-
-    painter->setPen(QPen(Qt::blue, (float)2 / (float)(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-    for (int i = 1, j = 1; i < pointsPF.size() - 1; i++) {
-        if (std::get<2>(pointsPF[i]) != "-1") {
-            painter->setPen(QPen(Qt::blue, (float)2 / (float)(INKSCALE), Qt::DotLine, Qt::RoundCap));
-            painter->drawLine(std::get<0>(pointsPF[i - 1]), std::get<1>(pointsPF[i - 1]), std::get<0>(pointsPF[i]), std::get<1>(pointsPF[i]));
-            painter->setPen(QPen(Qt::blue, (float)2 / (float)(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-            i++;
-        }
-        else {
-            painter->drawLine(std::get<0>(pointsPF[i - 1]), std::get<1>(pointsPF[i - 1]), std::get<0>(pointsPF[i]), std::get<1>(pointsPF[i]));
-            painter->setPen(QPen(Qt::darkBlue, (float)6 / (float)(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-            painter->drawPoint(std::get<0>(pointsPF[i]), std::get<1>(pointsPF[i]));
-            painter->setPen(QPen(Qt::darkBlue, (float)2 / (float)(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-            if (j % 2 == 1) {
-                painter->drawText(std::get<0>(pointsPF[i]) + 2, std::get<1>(pointsPF[i]) + 3, QString::number(j));
-            }
-            else {
-                painter->drawText(std::get<0>(pointsPF[i]) + 2, std::get<1>(pointsPF[i]) - 1, QString::number(j));
-            }
-            
-
-            painter->setPen(QPen(Qt::blue, (float)2 / (float)(INKSCALE), Qt::SolidLine, Qt::RoundCap));
-            j++;
-        }
-        
-    }
-    painter->drawLine(std::get<0>(pointsPF[pointsPF.size() - 2]), std::get<1>(pointsPF[pointsPF.size() - 2]), 
-        std::get<0>(pointsPF[pointsPF.size() - 1]), std::get<1>(pointsPF[pointsPF.size() - 1]));
-    // draw map contents end
 }

@@ -35,13 +35,13 @@ public:
     void orderPending();
     Status getOrderStatus();
 	void changePriority(int p);
-    int getSize(void);
+    size_t getSize(void);
 	int getPriority(void);
+    int getOrderID(void);
 
 private:
     int priority;
     int orderID;
-
 
     Order::Status status;
     std::list<Product> productList;
