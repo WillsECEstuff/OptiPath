@@ -49,6 +49,13 @@ class PathFinder {
 
     std::vector<int> nextOpenAisle(Product& product1, Product& product2);
 
+    QVector<QPointF> NNAlgorithm(
+            std::deque<Product>& productList,
+            Product& startLocation,
+            Product& endLocation,
+            float userTimer
+            );
+
     QVector<QPointF> calculatePath(
         std::deque<Product>& productList,
         Product& startLocation,

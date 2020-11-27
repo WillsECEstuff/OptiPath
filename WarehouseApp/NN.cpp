@@ -1,11 +1,4 @@
-#include "NN.h"
-
-double NN::distanceBetweenProductsEuclidean(Product& product1, Product& product2) {
-    double distance = sqrt(pow(product1.getXPosition() - product2.getXPosition(),2) +
-                        pow(product1.getYPosition() - product2.getYPosition(),2));
-    //std::cout<<"Distance between "<<product1.getProductID()<<" and "<<product2.getProductID()<<" = "<<distance<<std::endl;
-    return distance;
-}
+#include "PathFinder.h"
 
 /**
  * @brief	Branch and Bound Algorithm
@@ -17,17 +10,21 @@ double NN::distanceBetweenProductsEuclidean(Product& product1, Product& product2
  * @return  Ordered set of points to be visited
  */
 
-QVector<QPointF> NN :: NNAlgorithm(
+QVector<QPointF> PathFinder :: NNAlgorithm(
         std::deque<Product>& productList,
         Product& startLocation,
-        Product& endLocation
+        Product& endLocation,
+        float userTimer
         ) {
 
-        QVector<QPointF> points;
-
+        //QVector<QPointF> points;
+        QVector<QPointF> pointsFinished;
+        std::unordered_map<int,Product*> indexToProduct;
         productList.push_front(startLocation);
+
         std::vector<std::vector<int> > matrix(productList.size(),std::vector<int>(productList.size()));
         std::vector<int> visited(productList.size(),0);
+
         int currVert = 0;
 
         for(int i = 0;i<(int)productList.size();++i) {
@@ -48,7 +45,8 @@ QVector<QPointF> NN :: NNAlgorithm(
             int minVert = currVert;
             int visitedCount = 0;
             visited[currVert] = 1;
-            points.push_back(QPointF(productList[currVert].getXPosition() * TILE_SIZE/SCALE,productList[currVert].getYPosition() * TILE_SIZE/SCALE));
+            //points.push_back(QPointF(productList[currVert].getXPosition() * TILE_SIZE/SCALE,productList[currVert].getYPosition() * TILE_SIZE/SCALE));
+            points.push_back(std::make_tuple(productList[currVert].getXPosition(),productList[currVert].getYPosition(),"-1"));
             for(int j = 0;j<(int)matrix[currVert].size();++j) {
                 std::cout<<"Vertex :"<<j<<std::endl;
                 if(visited[j] != 1 && distanceBetweenProductsEuclidean(*indexToProduct[currVert],*indexToProduct[j]) < minDist) {
@@ -71,8 +69,14 @@ QVector<QPointF> NN :: NNAlgorithm(
             }
         }
 
-        points.push_back(QPointF(endLocation.getXPosition() * TILE_SIZE/SCALE,endLocation.getYPosition() * TILE_SIZE/SCALE));
-        return points;
+        for(auto it = points.begin();it!=points.end();++it) {
+            //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+            pointsFinished.push_back(QPointF(std::get<0>(*it), std::get<1>(*it)));
+            pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
+        }
+
+        points.push_back(std::make_tuple(endLocation.getXPosition(),endLocation.getYPosition(),"-1"));
+        return pointsFinished;
 }
 
 
