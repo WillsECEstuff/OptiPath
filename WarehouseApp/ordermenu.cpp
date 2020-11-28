@@ -68,7 +68,7 @@ ordermenu::ordermenu(QWidget *parent)
     txtLblSingle->setGeometry(345,360,300,75);
     txtwantsingle = new QLineEdit(this);
     txtwantsingle->setPlaceholderText("123");
-    txtwantsingle->setGeometry(390,425,50,25);
+    txtwantsingle->setGeometry(390,435,50,25);
 
     connect(routeButton, SIGNAL (clicked()), this, SLOT (handleRouteButton()));
     connect(enterSingleButton, SIGNAL(clicked()), this, SLOT(handleSingleButton()));
@@ -250,11 +250,19 @@ void ordermenu::handleCreateOrderButton() {
                 ordercbox->addItem(QString::fromStdString(pinnedOrder));
             }
 
-            std::string notify = std::to_string(tempOrderList.size()) + " orders added from file.";
-            notifyUser.setText(QString::fromStdString(notify));
-            notifyUser.setWindowTitle("Orders Successfully Created");
-            notifyUser.exec();
+            if (tempOrderList.size() == 0) {
+                std::string notify = std::to_string(tempOrderList.size()) + " orders added from file. File may be incorrectly formatted.";
+                notifyUser.setWindowTitle("No Orders Created");
+                notifyUser.setText(QString::fromStdString(notify));
+            }
 
+            else {
+                std::string notify = std::to_string(tempOrderList.size()) + " orders added from file.";
+                notifyUser.setWindowTitle("Orders Successfully Created");
+                notifyUser.setText(QString::fromStdString(notify));
+            }
+
+            notifyUser.exec();
         }
 
         else {
@@ -307,7 +315,6 @@ void ordermenu::handleCreateOrderButton() {
         std::string notify = pinnedOrder + " products\nContents: " + chain;
         notifyUser.setText(QString::fromStdString(notify));
         notifyUser.setWindowTitle("Order Created");
-        //prodIDs.clear();
         notifyUser.exec();
 
         std::cout << "big order size: " << orderList.size() << std::endl;
