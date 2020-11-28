@@ -171,6 +171,11 @@ std::vector<Order> createOrdersfromFile(std::string filePath, int orderID, int p
 
 	// goes through all the lines in the file
 	while (std::getline(infile, line)) {
+        /*if (line.find_first_not_of("1234567890, ")) {
+            std::cout << "An order wasn't formatted properly, so it was dropped!" << std::endl;
+            continue;
+        } */
+
 		o.push_back(createOrderfromString(line, oID++, priority));
 	}
 	
