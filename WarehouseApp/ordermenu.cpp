@@ -44,7 +44,7 @@ ordermenu::ordermenu(QWidget *parent)
     txtOrder->setFont(font);
     txtOrder->setGeometry(235,80,110,50);
     ordercbox = new QComboBox(this);
-    ordercbox->setGeometry(210,150,160,25);
+    ordercbox->setGeometry(200,150,180,25);
     ordercbox->addItem("Select an order...");
 
     settingsButton = new QPushButton("Settings", this);
@@ -246,7 +246,7 @@ void ordermenu::handleCreateOrderButton() {
             for (it = tempOrderList.begin(); it != tempOrderList.end(); it++) {
                 orderList.push_back(*it);
                 size_t orderSize = it->getSize();
-                std::string pinnedOrder = "Order " + std::to_string(orderList.size()) + ", containing " + std::to_string(orderSize) + " items";
+                std::string pinnedOrder = "Order #" + std::to_string(orderList.size()) + ", containing " + std::to_string(orderSize) + " items";
                 ordercbox->addItem(QString::fromStdString(pinnedOrder));
             }
 
@@ -309,7 +309,7 @@ void ordermenu::handleCreateOrderButton() {
         }
 
         QMessageBox notifyUser;
-        std::string pinnedOrder = "Order " + std::to_string(orderNum) + ", containing " + std::to_string(orderSize) + " items";
+        std::string pinnedOrder = "Order #" + std::to_string(orderNum) + ", containing " + std::to_string(orderSize) + " items";
         ordercbox->addItem(QString::fromStdString(pinnedOrder));
 
         std::string notify = pinnedOrder + " products\nContents: " + chain;
