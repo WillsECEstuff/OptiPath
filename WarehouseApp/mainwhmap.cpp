@@ -338,7 +338,7 @@ void mainwhmap::drawLegend(QPainter* painter)
 }
 
 /**
- * @brief   Draw the shelves in the map
+ * @brief   Draw the shelves on the map
  * 
  * @param   painter
  */
@@ -366,7 +366,7 @@ void mainwhmap::drawShelves(QPainter* painter)
 }
 
 /**
- * @brief   Draws unpicked products of an order
+ * @brief   Draws all products (unpicked) from the database.
  * 
  * @param   painter
  */
