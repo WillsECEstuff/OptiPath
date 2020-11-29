@@ -208,7 +208,7 @@ void settingsmenu::handleTimerButton() {
 
         if (temp <= 5.0) {
             QMessageBox::StandardButton reply;
-            std::string timerWarn = "Are you sure you want a " + num + " timer?";
+            std::string timerWarn = "Are you sure you want a " + num + "-second timer?";
             reply = QMessageBox::question(this, "Warning - Short Timer", QString::fromStdString(timerWarn), QMessageBox::Yes|QMessageBox::No);
 
             if (reply == QMessageBox::Yes) {

@@ -171,6 +171,16 @@ std::vector<Order> createOrdersfromFile(std::string filePath, int orderID, int p
 
 	// goes through all the lines in the file
 	while (std::getline(infile, line)) {
+        if (line.find_first_not_of("1234567890, ") != std::string::npos) {
+            std::cout << "An order wasn't formatted properly, so it was dropped!" << std::endl;
+            continue;
+        }
+
+        else if (line == "") { // empty
+            continue;
+        }
+
+        std::cout << "\nOrder added." << std::endl;
 		o.push_back(createOrderfromString(line, oID++, priority));
 	}
 	
