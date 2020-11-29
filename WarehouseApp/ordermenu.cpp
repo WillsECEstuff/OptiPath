@@ -312,7 +312,7 @@ void ordermenu::handleCreateOrderButton() {
         std::string pinnedOrder = "Order #" + std::to_string(orderNum) + ", containing " + std::to_string(orderSize) + " items";
         ordercbox->addItem(QString::fromStdString(pinnedOrder));
 
-        std::string notify = pinnedOrder + " products\nContents: " + chain;
+        std::string notify = pinnedOrder + "\nContents: " + chain;
         notifyUser.setText(QString::fromStdString(notify));
         notifyUser.setWindowTitle("Order Created");
         notifyUser.exec();
