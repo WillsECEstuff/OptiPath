@@ -660,6 +660,11 @@ QVector <std::string> PathFinder::oldAnnotation(std::deque<Product>& path) {
     return instructions;
 }
 
+/**
+ * @brief   Returns the contents from the points member.
+ * 
+ * @return  deque of tuple<float, float, string>
+ */
 std::deque<std::tuple<float, float, std::string>> PathFinder::getPoints()
 {
     return points;
@@ -686,7 +691,7 @@ void PathFinder::setCurrentPosition(std::tuple<float,float>& pos) {
 }
 
 /**
- * @brief   returns the general direction of 2 points.
+ * @brief   Returns the general direction of 2 points.
  * 
  * @param   p1     tuple of coordinates
  * @param   p2     tuple of coordinates
