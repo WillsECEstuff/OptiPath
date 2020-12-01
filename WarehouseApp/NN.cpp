@@ -1,5 +1,6 @@
 #include "PathFinder.h"
 #include <unordered_set>
+#include <algorithm>
 
 void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& pointsFinished) {
     std::unordered_set<int> blocked;
@@ -43,48 +44,58 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
     float minDistance = distanceBetweenPointsEuclidean(start,tempPoints[1]);
     auto nextPoint = start;
     auto temp = start;
-    //for(int i = 1;i<(int)points.size();++i) {
-    while(std::get<1>(nextPoint) != std::get<1>(tempPoints[1]) - 1) {
+    for(int i = 1;i<3;++i) {
+        while(std::get<1>(nextPoint) != std::get<1>(tempPoints[i]) - 1) {
 
-        //Right
-        std::get<0>(nextPoint)++;
-        if(blocked.find(startIndex + 1) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
-            std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
-            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
-            temp = nextPoint;
-        }
+            //Right
+            std::get<0>(nextPoint)++;
+            if(blocked.find(startIndex + 1) == blocked.end() &&
+                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] == 0) {
+                std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
+                minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[i]);
+                temp = nextPoint;
+            }
+            visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
-        //Left
-        std::get<0>(nextPoint)--;
-        std::get<0>(nextPoint)--;
-        if(blocked.find(startIndex - 1) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
-            //std::cout<<"startIndex - 1"<<std::endl;
-            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
-            temp = nextPoint;
-        }
+            //Left
+            std::get<0>(nextPoint)--;
+            std::get<0>(nextPoint)--;
+            if(blocked.find(startIndex - 1) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[i]) < minDistance &&
+                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] == 0) {
+                //std::cout<<"startIndex - 1"<<std::endl;
+                minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[i]);
+                temp = nextPoint;
+            }
+            visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
-        //Top
-        std::get<0>(nextPoint)++;
-        std::get<1>(nextPoint)++;
-        if(blocked.find(startIndex + 40) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
-            //std::cout<<"startIndex + 40"<<std::endl;
-            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
-            temp = nextPoint;
-        }
+            //Top
+            std::get<0>(nextPoint)++;
+            std::get<1>(nextPoint)++;
+            if(blocked.find(startIndex + 40) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[i]) < minDistance &&
+                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] == 0) {
+                //std::cout<<"startIndex + 40"<<std::endl;
+                minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[i]);
+                temp = nextPoint;
+            }
+            visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
-        //Bottom
-        std::get<1>(nextPoint)--;
-        std::get<1>(nextPoint)--;
-        if(blocked.find(startIndex - 40) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
-            //std::cout<<"startIndex - 40"<<std::endl;
-            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
-            temp = nextPoint;
+            //Bottom
+            std::get<1>(nextPoint)--;
+            std::get<1>(nextPoint)--;
+            if(blocked.find(startIndex - 40) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[i]) < minDistance &&
+                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] == 0) {
+                //std::cout<<"startIndex - 40"<<std::endl;
+                minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[i]);
+                temp = nextPoint;
+            }
+            visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
+
+            nextPoint = temp;
+            points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint),"-1"));
+            pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)));
+            startIndex = std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint);
+            std::cout<<"Next point to be visited : "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
         }
-        nextPoint = temp;
-        points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint),"-1"));
-        pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)));
-        startIndex = std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint);
-        std::cout<<"Next point to be visited : "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
     }
 
 }
