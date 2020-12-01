@@ -1,7 +1,95 @@
 #include "PathFinder.h"
+#include <unordered_set>
 
+void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& pointsFinished) {
+    std::unordered_set<int> blocked;
+    std::unordered_map<int,bool> visited;
+    WarehouseMap* wMap = wMap->getInstance();
+    json shelves = wMap->getShelves();
+
+    auto tempPoints = points;
+    points.clear();
+    pointsFinished.clear();
+
+    //Get aisles to be visited
+    for(auto& shelf : shelves.items()) {
+        for(auto& product : productList) {
+            if(product.getYPosition() == std::stoi(shelf.key())) {
+                aislesToBeVisited.push_back(std::stoi(shelf.key()) + 1); //aisle "1" can access shelf "0"
+            }
+        }
+    }
+    // coordinates data strucure
+    coordinates.resize(880,0);
+
+    //Setup the initial vectors and check if they can be visited
+    //If not add to blocked set
+    for(int i = 0;i<40;++i) {
+        for(int j = 0;j<22;++j) {
+            int coord = j* 40 + i;
+            visited[coord] = 0;
+            if(j%2 == 1) coordinates[coord] = 1;
+            else {
+                if(std::find(shelves[std::to_string(j)]["occupied"].begin(),shelves[std::to_string(j)]["occupied"].end(),i)
+                        != shelves[std::to_string(j)]["occupied"].end()) {
+                    std::cout<<"Blocked: "<<i<<" "<<j<<std::endl;
+                    blocked.insert(coord);
+                }
+            }
+        }
+    }
+    int startIndex = std::get<1>(tempPoints[0]) * 40 + std::get<0>(tempPoints[0]);
+    auto start = tempPoints[0];
+    float minDistance = distanceBetweenPointsEuclidean(start,tempPoints[1]);
+    auto nextPoint = start;
+    auto temp = start;
+    //for(int i = 1;i<(int)points.size();++i) {
+    while(std::get<1>(nextPoint) != std::get<1>(tempPoints[1]) - 1) {
+
+        //Right
+        std::get<0>(nextPoint)++;
+        if(blocked.find(startIndex + 1) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
+            std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
+            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
+            temp = nextPoint;
+        }
+
+        //Left
+        std::get<0>(nextPoint)--;
+        std::get<0>(nextPoint)--;
+        if(blocked.find(startIndex - 1) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
+            //std::cout<<"startIndex - 1"<<std::endl;
+            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
+            temp = nextPoint;
+        }
+
+        //Top
+        std::get<0>(nextPoint)++;
+        std::get<1>(nextPoint)++;
+        if(blocked.find(startIndex + 40) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
+            //std::cout<<"startIndex + 40"<<std::endl;
+            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
+            temp = nextPoint;
+        }
+
+        //Bottom
+        std::get<1>(nextPoint)--;
+        std::get<1>(nextPoint)--;
+        if(blocked.find(startIndex - 40) == blocked.end() && distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]) < minDistance) {
+            //std::cout<<"startIndex - 40"<<std::endl;
+            minDistance = distanceBetweenPointsEuclidean(nextPoint,tempPoints[1]);
+            temp = nextPoint;
+        }
+        nextPoint = temp;
+        points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint),"-1"));
+        pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)));
+        startIndex = std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint);
+        std::cout<<"Next point to be visited : "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
+    }
+
+}
 /**
- * @brief	Branch and Bound Algorithm
+ * @brief	NN Algorithm
  *
  * @param	productList		List of products to be picked up
  * @param	startLocation   Start location deaulted to (0,1)
@@ -76,6 +164,7 @@ QVector<QPointF> PathFinder :: NNAlgorithm(
         }
 
         points.push_back(std::make_tuple(endLocation.getXPosition(),endLocation.getYPosition(),"-1"));
+        router(productList,pointsFinished);
         return pointsFinished;
 }
 

@@ -35,6 +35,7 @@ class PathFinder {
     std::vector<int> aislesToBeVisited;
     std::deque<std::tuple<float,float,std::string>> points;
     std::deque<Product> path;
+    std::vector<int> coordinates;
     const std::string NOT_PRODUCT = "-1";
     const float TILE_SIZE = 30;
     const float SCALE = 5;
@@ -43,7 +44,6 @@ class PathFinder {
         std::tuple<float, float, std::string> p2);
 
     public:
-
     int findMaxEnd(int, int);
     int findMinBegin(int, int);
 
@@ -95,6 +95,9 @@ class PathFinder {
             Product& endLocation
             );
     //Branch and bound stuff
+
+    void router(std::deque<Product>& productList,QVector<QPointF>&);
+
 
 
     std::tuple<float,float> getCurrentPosition(void);
