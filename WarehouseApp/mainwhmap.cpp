@@ -345,7 +345,7 @@ void mainwhmap::drawLegend(QPainter* painter)
 void mainwhmap::drawShelves(QPainter* painter)
 {
     WarehouseMap* whm = whm->getInstance();
-    std::vector<std::tuple<int, int, int>> v = whm->getShelfSpecs(); // shelf num, begin, end
+    std::vector<std::tuple<int, std::set<int>, int, int>> v = whm->getShelfSpecs(); // shelf num, begin, end
     QColor orangeColor(255, 165, 0);
 
     // draw shelves begin
@@ -353,14 +353,18 @@ void mainwhmap::drawShelves(QPainter* painter)
     QPointF beginPt, endPt;
     for (size_t i = 0; i < v.size(); i++) {
         int shelfNum = std::get<0>(v[i]); // y level
-        int begin = std::get<1>(v[i]);
-        int end = std::get<2>(v[i]) + 1;
-
-        beginPt.setX(begin * TILE_SIZE / MAPSCALE);
+        std::set<int> occupied = std::get<1>(v[i]);
+        int begin = std::get<2>(v[i]);
+        int end = std::get<3>(v[i]) + 1;
         beginPt.setY((height - shelfNum) * TILE_SIZE / MAPSCALE);
-        endPt.setX(end * TILE_SIZE / MAPSCALE);
         endPt.setY((height - shelfNum) * TILE_SIZE / MAPSCALE);
-        painter->drawLine(beginPt.x(), beginPt.y(), endPt.x(), endPt.y());
+
+        for (auto shelf : occupied) {
+            beginPt.setX(shelf * TILE_SIZE / MAPSCALE);
+            endPt.setX((shelf+1) * TILE_SIZE / MAPSCALE);
+            painter->drawLine(beginPt.x(), beginPt.y(), endPt.x(), endPt.y());
+        }
+
     }
     // draw shelves end
 }

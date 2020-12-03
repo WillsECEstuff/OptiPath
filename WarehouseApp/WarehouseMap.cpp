@@ -165,18 +165,18 @@ void WarehouseMap::findShelveEnds(void) {
  * 
  * @return	vector of tuples<int, int int>
  */
-std::vector<std::tuple<int, int, int>> WarehouseMap::getShelfSpecs(void) {
-	std::vector<std::tuple<int, int, int>> v;
+std::vector<std::tuple<int, std::set<int>, int, int>> WarehouseMap::getShelfSpecs(void) {
+	std::vector<std::tuple<int, std::set<int>, int, int>> v;
 	
 	for (auto it : shelves.items()) {
 		// get the key and value
 		int shelf_num = std::stoi(it.key());
 		json j = it.value();
-
+		std::set<int> occupied = it.value()["occupied"];
 		int begin = it.value()["begin"];
 		int end = it.value()["end"];
 		
-		v.push_back(std::make_tuple(shelf_num, begin, end));
+		v.push_back(std::make_tuple(shelf_num, occupied, begin, end));
 	}
 
 	return v;
