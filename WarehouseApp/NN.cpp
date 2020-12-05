@@ -47,12 +47,12 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
     for(int i = 1;i<(int)productPoints.size();++i) {
         //std::cout<<"Product :"<<productList[i].getXPosition()<<" "<<productList[i].getYPosition()<<std::endl;
         //std::cout<<"Product :"<<std::get<0>(productPoints[i])<<" "<<std::get<1>(productPoints[i])<<std::endl;
-        int coord = (int)(std::get<1>(productPoints[i])*40 + std::get<0>(productPoints[i]));
+        int coord = ((int)std::get<1>(productPoints[i])*40 + (int)std::get<0>(productPoints[i]));
 
-        if(blocked.find(coord+40) == blocked.end() && productList[i].getYPosition() +1 < 22)
-            pickUpPoints[i].insert(std::make_tuple((int)productList[i].getXPosition(),(int)productList[i].getYPosition()+1,"-1"));
-        if(blocked.find(coord-40) == blocked.end() && productList[i].getYPosition() -1 >= 0)
-            pickUpPoints[i].insert(std::make_tuple((int)productList[i].getXPosition(),(int)productList[i].getYPosition()-1,"-1"));
+        if(blocked.find(coord+40) == blocked.end() && std::get<1>(productPoints[i]) +1 < 22)
+            pickUpPoints[i].insert(std::make_tuple((int)std::get<0>(productPoints[i]),(int)std::get<1>(productPoints[i])+1,"-1"));
+        if(blocked.find(coord-40) == blocked.end() && std::get<1>(productPoints[i]) -1 >= 0)
+            pickUpPoints[i].insert(std::make_tuple((int)std::get<0>(productPoints[i]),(int)std::get<1>(productPoints[i])-1,"-1"));
 
     }
 
@@ -67,7 +67,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
     pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)));
 
 
-    for(int i = 1;i<2;++i) {
+    for(int i = 1;i<4;++i) {
         std::cout<<"Product point to be visited "<<std::get<0>(productPoints[i])<<"  "<<std::get<1>(productPoints[i])<<std::endl;
         std::set<std::tuple<float,float,std::string>> visitedThisCycle;
         //while(std::get<1>(nextPoint) != std::get<1>(productPoints[i]) - 1) {
