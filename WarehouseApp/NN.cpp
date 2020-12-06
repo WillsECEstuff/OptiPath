@@ -79,6 +79,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
 
         //Use this if diagonal traversal is required
         bool diagonalTraversal = false;
+        int diagonal = 0;
 
         //while(std::get<1>(nextPoint) != std::get<1>(productPoints[i]) - 1) {
         while(pickUpPoints[i].find(nextPoint) == pickUpPoints[i].end()) {
@@ -145,7 +146,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
             }
             //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
-            if(diagonalTraversal) {
+            //if(diagonalTraversal) {
             //Left-Down
             std::get<1>(nextPoint)++;
             std::get<1>(nextPoint)--;
@@ -158,6 +159,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
+                    diagonal = 1;
                 }
             }
 
@@ -172,6 +174,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
+                    diagonal = 2;
                 }
             }
 
@@ -186,6 +189,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
+                    diagonal = 3;
                 }
             }
 
@@ -200,11 +204,65 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
+                    diagonal = 4;
                 }
             }
             diagonalTraversal = false;
-            }
+            //}
             nextPoint = temp;
+            switch(diagonal) {
+                case 1 : //Left-Down
+                    //2 options to reach diagonal point
+                    if(blocked.find(startIndex - 40) == blocked.end()) {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint),"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint)+1,std::get<1>(nextPoint)));
+                    }
+                    else {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)+1,"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)+1));
+                    }
+                    break;
+
+                case 2 : //Right-Down
+                //2 options to reach diagonal point
+                    if(blocked.find(startIndex - 40) == blocked.end()) {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint),"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint)-1,std::get<1>(nextPoint)));
+                    }
+                    else {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)+1,"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)+1));
+                    }
+                    break;
+
+                case 3 : //Right-Top
+                //2 options to reach diagonal point
+                    if(blocked.find(startIndex + 40) == blocked.end()) {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint),"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint)-1,std::get<1>(nextPoint)));
+                    }
+                    else {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)-1,"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)-1));
+                    }
+                    break;
+
+                case 4 : //Left-Top
+                //2 options to reach diagonal point
+                    if(blocked.find(startIndex + 40) == blocked.end()) {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint),"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint)+1,std::get<1>(nextPoint)));
+                    }
+                    else {
+                        points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)-1,"-1"));
+                        pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)-1));
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            diagonal = 0;
             points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint),"-1"));
             pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)));
 
