@@ -73,9 +73,13 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
     pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)));
 
 
-    for(int i = 1;i<(int)productPoints.size()-1;++i) {
+    for(int i = 1;i<(int)productPoints.size();++i) {
         std::cout<<"Product point to be visited "<<std::get<0>(productPoints[i])<<"  "<<std::get<1>(productPoints[i])<<std::endl;
         std::set<std::tuple<float,float,std::string>> visitedThisCycle;
+
+        //Use this if diagonal traversal is required
+        bool diagonalTraversal = false;
+
         //while(std::get<1>(nextPoint) != std::get<1>(productPoints[i]) - 1) {
         while(pickUpPoints[i].find(nextPoint) == pickUpPoints[i].end()) {
             auto tempPoint = nextPoint;
@@ -141,6 +145,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
             }
             //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
+            if(diagonalTraversal) {
             //Left-Down
             std::get<1>(nextPoint)++;
             std::get<1>(nextPoint)--;
@@ -197,6 +202,8 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
                 }
             }
+            diagonalTraversal = false;
+            }
             nextPoint = temp;
             points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint),"-1"));
             pointsFinished.push_back(QPointF(std::get<0>(nextPoint),std::get<1>(nextPoint)));
@@ -244,6 +251,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     std::get<1>(nextPoint) += 1;
                     std::get<0>(nextPoint) += 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
+                    diagonalTraversal = true;
                 }
 
                 //X-- Y--
@@ -252,6 +260,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     std::get<1>(nextPoint) -= 1;
                     std::get<0>(nextPoint) -= 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
+                    diagonalTraversal = true;
                 }
 
                 //X-- Y++
@@ -260,6 +269,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     std::get<1>(nextPoint) += 1;
                     std::get<0>(nextPoint) -= 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
+                    diagonalTraversal = true;
                 }
 
                 //X++ Y--
@@ -268,6 +278,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                     std::get<1>(nextPoint) -= 1;
                     std::get<0>(nextPoint) += 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
+                    diagonalTraversal = true;
                 }
                 //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
             }
@@ -282,6 +293,10 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
         visitedThisCycle.clear();
         for(auto entry : visited) entry.second = 0;
     }
+
+    //Add end point to the traversal
+    pointsFinished.push_back(QPointF(std::get<0>(productPoints.back()),std::get<1>(productPoints.back())));
+    points.push_back(std::make_tuple(std::get<0>(productPoints.back()),std::get<1>(productPoints.back()),"-1"));
 }
 /**
  * @brief	NN Algorithm
@@ -360,9 +375,7 @@ QVector<QPointF> PathFinder :: NNAlgorithm(
             pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
         }
         router(productList,pointsFinished);
-//        for(auto p : pointsFinished) {
-//            std::cout<<p.rx()<<"       "<<p.ry()<<std::endl;
-//        }
+
         return pointsFinished;
 }
 
