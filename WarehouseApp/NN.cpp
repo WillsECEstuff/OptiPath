@@ -91,11 +91,10 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     std::cout<<minDistance<<std::endl;
                     temp = nextPoint;
-                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
                 }
             }
             //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
@@ -107,14 +106,12 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     std::cout<<minDistance<<std::endl;
                     temp = nextPoint;
-                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
                 }
             }
-            //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
             //Top
             std::get<0>(nextPoint)++;
@@ -123,13 +120,11 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
-                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
                 }
             }
-            //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
             //Down
             std::get<1>(nextPoint)--;
@@ -138,7 +133,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
@@ -146,7 +141,6 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
             }
             //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
 
-            //if(diagonalTraversal) {
             //Left-Down
             std::get<1>(nextPoint)++;
             std::get<1>(nextPoint)--;
@@ -155,7 +149,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
@@ -170,7 +164,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
                     visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
@@ -185,10 +179,9 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
-                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
                     diagonal = 3;
                 }
             }
@@ -200,10 +193,9 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 std::cout<<"Index "<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<std::endl;
                 if(distanceBetweenPointsEuclidean(nextPoint,productPoints[i]) < minDistance &&
                         visitedThisCycle.find(nextPoint) == visitedThisCycle.end()) {
-                    visitedThisCycle.insert(nextPoint);
+                    //visitedThisCycle.insert(nextPoint);
                     minDistance = distanceBetweenPointsEuclidean(nextPoint,productPoints[i]);
                     temp = nextPoint;
-                    visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
                     diagonal = 4;
                 }
             }
@@ -272,11 +264,12 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
 
             //To avoid repetition in case no good option is available
             //Try to increment/decrement X and Y coordinates
-            if(nextPoint == tempPoint) {
-
+            if(std::get<0>(nextPoint) == std::get<0>(tempPoint) && std::get<1>(nextPoint) == std::get<1>(tempPoint)) {
+                std::cout<<"Next point and current point are same"<<std::endl;
                 //X++
                 if(blocked.find(startIndex+1) == blocked.end()) {
                         //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint),"-1")) == visitedThisCycle.end()) {
+
                     std::get<0>(nextPoint) += 1;
                     std::cout<<"Same point so incrementing X ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
                 }
@@ -304,8 +297,8 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
 
                 //Newly added
                 //X++ Y++
-                else if(blocked.find(startIndex+41) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint)+1,"-1")) == visitedThisCycle.end()) {
+                else if(blocked.find(startIndex+41) == blocked.end()) {
+                        //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint)+1,"-1")) == visitedThisCycle.end()) {
                     std::get<1>(nextPoint) += 1;
                     std::get<0>(nextPoint) += 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
@@ -313,8 +306,8 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 }
 
                 //X-- Y--
-                else if(blocked.find(startIndex-41) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint)-1,"-1")) == visitedThisCycle.end()) {
+                else if(blocked.find(startIndex-41) == blocked.end()) {
+                        //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint)-1,"-1")) == visitedThisCycle.end()) {
                     std::get<1>(nextPoint) -= 1;
                     std::get<0>(nextPoint) -= 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
@@ -322,8 +315,8 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 }
 
                 //X-- Y++
-                else if(blocked.find(startIndex+39) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint)+1,"-1")) == visitedThisCycle.end()) {
+                else if(blocked.find(startIndex+39) == blocked.end()) {
+                        //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint)+1,"-1")) == visitedThisCycle.end()) {
                     std::get<1>(nextPoint) += 1;
                     std::get<0>(nextPoint) -= 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
@@ -331,14 +324,13 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
                 }
 
                 //X++ Y--
-                else if(blocked.find(startIndex-39) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint)-1,"-1")) == visitedThisCycle.end()) {
+                else if(blocked.find(startIndex-39) == blocked.end()) {
+                        //&&visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint)-1,"-1")) == visitedThisCycle.end()) {
                     std::get<1>(nextPoint) -= 1;
                     std::get<0>(nextPoint) += 1;
                     std::cout<<"Same point so changing X and Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
                     diagonalTraversal = true;
                 }
-                //visited[std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint)] = 1;
             }
             else {
                 std::cout<<"Not the same point "<<"("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<"("<<std::get<0>(tempPoint)<<"  "<<std::get<1>(tempPoint)<<")"<<std::endl;
