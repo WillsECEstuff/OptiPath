@@ -275,29 +275,29 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
             if(nextPoint == tempPoint) {
 
                 //X++
-                if(blocked.find(startIndex+1) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint),"-1")) == visitedThisCycle.end()) {
+                if(blocked.find(startIndex+1) == blocked.end()) {
+                        //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)+1,std::get<1>(nextPoint),"-1")) == visitedThisCycle.end()) {
                     std::get<0>(nextPoint) += 1;
                     std::cout<<"Same point so incrementing X ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
                 }
 
                 //X--
-                else if(blocked.find(startIndex-1) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint),"-1")) == visitedThisCycle.end()) {
+                else if(blocked.find(startIndex-1) == blocked.end()) {
+                        //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint)-1,std::get<1>(nextPoint),"-1")) == visitedThisCycle.end()) {
                     std::get<0>(nextPoint) -= 1;
                     std::cout<<"Same point so decrementing X ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
                 }
 
                 //Y--
-                else if(blocked.find(startIndex-40) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)-1,"-1")) == visitedThisCycle.end()) {
+                else if(blocked.find(startIndex-40) == blocked.end()) {
+                        //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)-1,"-1")) == visitedThisCycle.end()) {
                     std::get<1>(nextPoint) -= 1;
                     std::cout<<"Same point so decrementing Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
                 }
 
                 //Y++
-                else if(blocked.find(startIndex+40) == blocked.end() &&
-                        visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)+1,"-1")) == visitedThisCycle.end()) {
+                else if(blocked.find(startIndex+40) == blocked.end()) {
+                        //&& visitedThisCycle.find(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint)+1,"-1")) == visitedThisCycle.end()) {
                     std::get<1>(nextPoint) += 1;
                     std::cout<<"Same point so incrementing Y ("<<std::get<0>(nextPoint)<<"  "<<std::get<1>(nextPoint)<<")"<<std::endl;
                 }
@@ -433,7 +433,6 @@ QVector<QPointF> PathFinder :: NNAlgorithm(
             pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
         }
         router(productList,pointsFinished);
-
         return pointsFinished;
 }
 
