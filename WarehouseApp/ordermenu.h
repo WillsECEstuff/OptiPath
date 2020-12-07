@@ -74,5 +74,7 @@ private:
     QVector <QPointF> singleRoute;
 
     int currentOrderIDx;
+    int myAlgoMode = 0; // default: 0 (s-traversal)
+    bool isDev = false; // default: user mode
 };
 #endif // ORDERMENU_H
