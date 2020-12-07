@@ -1,4 +1,4 @@
-// WarehouseDriver.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// WarehouseApp.cpp : This file contains the 'main' function. Program execution begins and ends there.
 // This file is a small driver to get this classes and objects to run together
 //
 
@@ -57,7 +57,14 @@ int main(int argc, char** argv)
                 QObject::tr("Open Database File"), a.applicationDirPath(), 
                 QObject::tr("Text File (*.txt)"));
             path = qs.toStdString();
-            
+            if (path == "") { // if the user pressed cancel, exit the program.
+                QString msg("No database submitted. Exiting program.");
+                QMessageBox msgBox;
+                msgBox.setText(msg);
+                msgBox.exec();
+                QApplication::quit();
+                return 0;
+            }
         }
     }
     
