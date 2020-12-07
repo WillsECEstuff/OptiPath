@@ -2,6 +2,12 @@
 #include <unordered_set>
 #include <algorithm>
 
+
+/**
+ * @brief	Routing Algorithm to route along gaps and aisles
+ * @param	productList		List of products to be picked up
+ * @param	pointsFinished  List of products visited by parent algorithm - NN/MST
+ */
 void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& pointsFinished) {
     std::unordered_set<int> blocked;
     std::unordered_map<int,bool> visited;
@@ -339,7 +345,10 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
             //Change start index for next iteration
             startIndex = std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint);
         }
-        std::cout<<"Product "<<std::get<0>(productPoints[i])<<" "<<std::get<1>(productPoints[i])<<" visited!!"<<std::endl;
+        std::cout<<"Product "<<std::get<0>(productPoints[i])<<" "<<std::get<1>(productPoints[i])<<" "<<std::get<2>(productPoints[i])<<" visited!!"<<std::endl;
+        points.push_back(std::make_tuple(std::get<0>(productPoints[i]),std::get<1>(productPoints[i]),std::get<2>(productPoints[i])));
+        points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint),"-1"));
+
         visitedThisCycle.clear();
         for(auto entry : visited) entry.second = 0;
     }
@@ -394,7 +403,11 @@ QVector<QPointF> PathFinder :: NNAlgorithm(
             int visitedCount = 0;
             visited[currVert] = 1;
             //points.push_back(QPointF(productList[currVert].getXPosition() * TILE_SIZE/SCALE,productList[currVert].getYPosition() * TILE_SIZE/SCALE));
-            points.push_back(std::make_tuple(productList[currVert].getXPosition(),productList[currVert].getYPosition(),"-1"));
+            if(productList[currVert].getXPosition() == startLocation.getXPosition() && productList[currVert].getYPosition() == startLocation.getYPosition())
+                points.push_back(std::make_tuple(productList[currVert].getXPosition(),productList[currVert].getYPosition(),"-1"));
+            else
+                points.push_back(std::make_tuple(productList[currVert].getXPosition(),productList[currVert].getYPosition(),productList[currVert].getProductID()));
+
             for(int j = 0;j<(int)matrix[currVert].size();++j) {
                 //std::cout<<"Vertex :"<<j<<std::endl;
                 if(visited[j] != 1 && distanceBetweenProductsEuclidean(*indexToProduct[currVert],*indexToProduct[j]) < minDist) {
@@ -419,7 +432,7 @@ QVector<QPointF> PathFinder :: NNAlgorithm(
 
         points.push_back(std::make_tuple(endLocation.getXPosition(),endLocation.getYPosition(),"-1"));
 
-        for(auto it = points.begin();it!=points.end();++it) {
+        for(auto it = points.begin();it!=points.end()-1;++it) {
             //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
             pointsFinished.push_back(QPointF(std::get<0>(*it), std::get<1>(*it)));
             pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
