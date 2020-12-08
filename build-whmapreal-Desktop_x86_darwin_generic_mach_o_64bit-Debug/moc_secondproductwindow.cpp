@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../WarehouseApp/secondproductwindow.h"
+#include "../../../../Downloads/OptiPath-abinavKrishna/WarehouseApp/secondproductwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)

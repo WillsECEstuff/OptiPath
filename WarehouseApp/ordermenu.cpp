@@ -182,10 +182,9 @@ void ordermenu::handleRouteButton() {
 #endif // 
 
         PathFinder pathFinder;
-        NN NNFinder;
         routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
         //routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
-        //routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd,myTimer);
+        //routePoints = pathFinder.NNAlgorithm(deq,dummyStart,dummyEnd,myTimer);
 
         //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
         std::cout << "routePoints size: " << routePoints.size() << std::endl;

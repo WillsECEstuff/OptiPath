@@ -30,7 +30,6 @@ SOURCES += \
 HEADERS += \
     Inventory.h \
     MST.h \
-    NN.h \
     OrderHelper.h \
     WarehouseMap.h \
     AdjacencyMatrix.h \
