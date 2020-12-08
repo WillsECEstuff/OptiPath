@@ -577,6 +577,7 @@ std::deque<Product> PathFinder::getPath(void) {
 
 QVector <std::string> PathFinder::pathAnnotation() {
     QVector <std::string> instructions;
+    std::vector<std::string> pickUpOrder;
     std::stringstream xStream, yStream, distanceStream;
 
     xStream << std::fixed << std::setprecision(2) << std::get<0>(points[0]);
@@ -597,6 +598,7 @@ QVector <std::string> PathFinder::pathAnnotation() {
 
         if(std::get<2>(points[i]) != "-1") {
             if (c != Compass::Stay) {
+                pickUpOrder.push_back(std::get<2>(points[i]));
                 instruction = "Pick product #" + std::get<2>(points[i]) + " from the " + dir[c] + " at (" + xStream.str() + "," + yStream.str() + ")";
             }
             else {
@@ -628,6 +630,10 @@ QVector <std::string> PathFinder::pathAnnotation() {
 
     xStream.str(""); yStream.str("");
     instructions.append(instruction);
+    std::cout<<"Pick up order:"<<std::endl;
+    for(auto& entry : pickUpOrder) {
+        std::cout<<entry<<std::endl;
+    }
     return instructions;
 }
 
