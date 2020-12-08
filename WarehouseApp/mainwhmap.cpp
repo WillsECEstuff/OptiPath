@@ -71,7 +71,7 @@ void mainwhmap::loadUnconvertedPoints(QVector<QPointF> ptsList)
         QPointF f(it.x() * TILE_SIZE / MAPSCALE, ((float)height - it.y()) * TILE_SIZE / MAPSCALE);
         allPoints.append(f);
     }
-    std::cout << "coverted all points" << std::endl;
+    std::cout << "converted all points" << std::endl;
 }
 
 void mainwhmap::loadProductPoints(QVector <QPointF> ptsList) {

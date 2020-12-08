@@ -188,7 +188,6 @@ void ordermenu::handleRouteButton() {
 #endif // 
 
         PathFinder pathFinder;
-        NN NNFinder;
 
         if (myAlgoMode == 0) { // default: s-traversal
             routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
@@ -199,7 +198,7 @@ void ordermenu::handleRouteButton() {
         }
 
         else if (myAlgoMode == 2) { // Nearest Neighbor
-            routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd);
+            routePoints = pathFinder.NNAlgorithm(deq,dummyStart,dummyEnd, myTimer);
         }
 
         std::cout << "routePoints size: " << routePoints.size() << std::endl;
@@ -209,19 +208,14 @@ void ordermenu::handleRouteButton() {
             std::cout<<"("<<point.rx()/6<<","<<point.ry()/6<<")"<<std::endl;
         }
 
-        if (myAlgoMode == 0 || myAlgoMode == 1) {
-            directions = pathFinder.pathAnnotation();
-
-            for (auto& instruction: directions) {
-                std::cout << instruction << std::endl;
-            }
-
-            routeMap->loadInstructions(directions);
-            routeMap->loadUnconvertedPointsPF(pathFinder.getPoints());
+        directions = pathFinder.pathAnnotation();
+        for (auto& instruction: directions) {
+            std::cout << instruction << std::endl;
         }
 
+        routeMap->loadInstructions(directions);
+        routeMap->loadUnconvertedPointsPF(pathFinder.getPoints());
 
-        //std::cout << "test" << std::endl;
         //routeMap->loadAllPoints(allPoints);
         routeMap->loadUnconvertedPoints(allPoints);
         //routeMap->loadProductPoints(productPoints);
