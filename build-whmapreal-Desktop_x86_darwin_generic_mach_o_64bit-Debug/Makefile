@@ -306,7 +306,6 @@ DIST          = ../WarehouseApp/ClassDiagram.cd \
 		../../../../Qt/5.15.1/clang_64/mkspecs/features/lex.prf \
 		../WarehouseApp/whmapreal.pro ../WarehouseApp/Inventory.h \
 		../WarehouseApp/MST.h \
-		../WarehouseApp/NN.h \
 		../WarehouseApp/OrderHelper.h \
 		../WarehouseApp/WarehouseMap.h \
 		../WarehouseApp/AdjacencyMatrix.h \
@@ -818,7 +817,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.15.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../WarehouseApp/Inventory.h ../WarehouseApp/MST.h ../WarehouseApp/NN.h ../WarehouseApp/OrderHelper.h ../WarehouseApp/WarehouseMap.h ../WarehouseApp/AdjacencyMatrix.h ../WarehouseApp/Database.h ../WarehouseApp/Order.h ../WarehouseApp/ordermenu.h ../WarehouseApp/PathFinder.h ../WarehouseApp/PriorityQueue.h ../WarehouseApp/Product.h ../WarehouseApp/mainwhmap.h ../WarehouseApp/secondproductwindow.h ../WarehouseApp/settingsmenu.h ../WarehouseApp/Ticket.h ../WarehouseApp/ui_mainwhmap.h ../WarehouseApp/ui_settingsmenu.h ../WarehouseApp/ui_singleProductWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../WarehouseApp/Inventory.h ../WarehouseApp/MST.h ../WarehouseApp/OrderHelper.h ../WarehouseApp/WarehouseMap.h ../WarehouseApp/AdjacencyMatrix.h ../WarehouseApp/Database.h ../WarehouseApp/Order.h ../WarehouseApp/ordermenu.h ../WarehouseApp/PathFinder.h ../WarehouseApp/PriorityQueue.h ../WarehouseApp/Product.h ../WarehouseApp/mainwhmap.h ../WarehouseApp/secondproductwindow.h ../WarehouseApp/settingsmenu.h ../WarehouseApp/Ticket.h ../WarehouseApp/ui_mainwhmap.h ../WarehouseApp/ui_settingsmenu.h ../WarehouseApp/ui_singleProductWindow.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../WarehouseApp/Inventory.cpp ../WarehouseApp/MST.cpp ../WarehouseApp/NN.cpp ../WarehouseApp/OrderHelper.cpp ../WarehouseApp/WarehouseApp.cpp ../WarehouseApp/WarehouseMap.cpp ../WarehouseApp/AdjacencyMatrix.cpp ../WarehouseApp/Database.cpp ../WarehouseApp/Order.cpp ../WarehouseApp/ordermenu.cpp ../WarehouseApp/PathFinder.cpp ../WarehouseApp/PriorityQueue.cpp ../WarehouseApp/Product.cpp ../WarehouseApp/mainwhmap.cpp ../WarehouseApp/secondproductwindow.cpp ../WarehouseApp/settingsmenu.cpp ../WarehouseApp/Ticket.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../WarehouseApp/mainwhmap.ui ../WarehouseApp/ordermenu.ui ../WarehouseApp/secondproductwindow.ui ../WarehouseApp/settingsmenu.ui $(DISTDIR)/
 
@@ -1487,8 +1486,7 @@ MST.o: ../WarehouseApp/MST.cpp ../WarehouseApp/MST.h \
 		../WarehouseApp/third_party/nlohmann/single_include/nlohmann/json.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MST.o ../WarehouseApp/MST.cpp
 
-NN.o: ../WarehouseApp/NN.cpp ../WarehouseApp/NN.h \
-		../WarehouseApp/PathFinder.h \
+NN.o: ../WarehouseApp/NN.cpp ../WarehouseApp/PathFinder.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QVector \
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/qvector.h \
 		../../../../Qt/5.15.1/clang_64/lib/QtCore.framework/Headers/QPointF \

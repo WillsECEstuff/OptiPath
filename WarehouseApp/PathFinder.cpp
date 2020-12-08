@@ -178,7 +178,7 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
 
     //aisle "3" can access shelf "2" and shelf "4"
-    /*
+
     for(int i = 0;i<(int)aislesToBeVisited.size()-1;++i) {
         if(aislesToBeVisited[i+1] == aislesToBeVisited[i]+2) {
             aislesToBeVisited[i+1] = aislesToBeVisited[i];
@@ -188,7 +188,7 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
         }
     }
     aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
-    */
+
 
     for(auto& element : aislesToBeVisited) {
         std::cout<<element<<std::endl;
@@ -312,6 +312,18 @@ QVector<QPointF> PathFinder::STraversal(
         std::cout<<"Aisles to be visited:"<<std::endl;
         std::sort(aislesToBeVisited.begin(),aislesToBeVisited.end());
 
+        aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
+
+        //aisle "3" can access shelf "2" and shelf "4" - changed in S traversal as well
+
+        for(int i = 0;i<(int)aislesToBeVisited.size()-1;++i) {
+            if(aislesToBeVisited[i+1] == aislesToBeVisited[i]+2) {
+                aislesToBeVisited[i+1] = aislesToBeVisited[i];
+                aisleProductMap[aislesToBeVisited[i]-1].insert(aisleProductMap[aislesToBeVisited[i]-1].end(),aisleProductMap[aislesToBeVisited[i]+1].begin(),aisleProductMap[aislesToBeVisited[i]+1].end());
+                aisleProductMap[aislesToBeVisited[i]+1].erase(aisleProductMap[aislesToBeVisited[i]+1].begin(),aisleProductMap[aislesToBeVisited[i]+1].end());
+                i++;
+            }
+        }
         aislesToBeVisited.erase(std::unique(aislesToBeVisited.begin(), aislesToBeVisited.end()), aislesToBeVisited.end());
         for(auto& element : aislesToBeVisited) {
             std::cout<<element<<std::endl;
