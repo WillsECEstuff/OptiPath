@@ -248,19 +248,23 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
          points.push_back(std::make_tuple(endLocation.getXPosition(),endLocation.getYPosition(),"-1"));
      }
 
-     //Add points to display
+     // Add points to display
      for(auto it = points.begin();it!=points.end();++it) {
-         //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
+         //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it) * TILE_SIZE/SCALE));
          pointsFinished.push_back(QPointF(std::get<0>(*it), std::get<1>(*it)));
-         pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
+
+         if (it == points.begin()) {
+             continue;
+         }
+
+         pathLength += distanceBetweenPointsEuclidean(*(it-1),*it);
      }
 
      auto end = std::chrono::high_resolution_clock::now();
      auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
      std::cout<<"Total time taken for execution of baseline algorithm = "<<duration.count()<<" milliseconds"<<std::endl;
      std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
-
-    return pointsFinished;
+     return pointsFinished;
 }
 
 

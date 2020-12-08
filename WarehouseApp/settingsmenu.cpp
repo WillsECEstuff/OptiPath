@@ -57,11 +57,22 @@ settingsmenu::settingsmenu(QWidget *parent)
     txtTimer->setPlaceholderText("60.0");
     txtTimer->setGeometry(265,475,50,25);
 
+    devcbox = new QComboBox(this);
+    devcbox->setGeometry(200,150,180,25);
+    devcbox->addItem("Default: S-Traversal");
+    devcbox->addItem("Return Traversal");
+    devcbox->addItem("Nearest Neighbor (NN)");
+    devcbox->setVisible(false);
+
+    devcheck = new QCheckBox("Enable Developer Mode", this);
+    devcheck->setGeometry(235,500,150,25);
+
     connect(startLocationButton, SIGNAL (clicked()), this, SLOT (handleSLocationButton()));
     connect(endLocationButton, SIGNAL (clicked()), this, SLOT (handleELocationButton()));
     connect(timerButton, SIGNAL(clicked()), this, SLOT(handleTimerButton()));
     connect(returnButton, SIGNAL (clicked()), this, SLOT (handleReturnButton()));
     connect(applyButton, SIGNAL (clicked()), this, SLOT (handleApplyButton()));
+    connect(devcheck, SIGNAL (stateChanged(int)), this, SLOT (handleDevMode()));
 }
 
 settingsmenu::~settingsmenu()
@@ -69,7 +80,7 @@ settingsmenu::~settingsmenu()
     delete ui;
 }
 
-void settingsmenu::setTextFields() {
+void settingsmenu::setOptions() {
     std::string txtS, txtE, txtT = "";
     std::stringstream sxS, syS, sxE, syE, sT;
     float xS = std::get<0>(mySLocation);
@@ -93,6 +104,16 @@ void settingsmenu::setTextFields() {
     txtSLoc->setText(QString::fromStdString(txtS));
     txtELoc->setText(QString::fromStdString(txtE));
     txtTimer->setText(QString::fromStdString(txtT));
+    devcbox->setCurrentIndex(myAlgoMode);
+
+    if (isDev) {
+        devcheck->setCheckState(Qt::Checked);
+    }
+
+    else {
+        devcheck->setCheckState(Qt::Unchecked);
+    }
+
 }
 
 void settingsmenu::handleReturnButton() {
@@ -101,6 +122,8 @@ void settingsmenu::handleReturnButton() {
 }
 
 void settingsmenu::handleApplyButton() {
+    int devIdx = devcbox->currentIndex();
+    setAlgoMode(devIdx);
     emit fromSettingsMenu();
 }
 
@@ -236,6 +259,18 @@ void settingsmenu::handleTimerButton() {
     }
 }
 
+void settingsmenu::handleDevMode() {
+    isDev = devcheck->isChecked();
+
+    if (isDev) {
+        devcbox->setVisible(true);
+    }
+
+    else {
+        devcbox->setVisible(false);
+    }
+}
+
 // getters, called whenever "apply settings" is clicked
 std::tuple<float, float> settingsmenu::getSLocation() {
     return mySLocation;
@@ -247,6 +282,14 @@ std::tuple<float, float> settingsmenu::getELocation() {
 
 float settingsmenu::getTimer() {
     return myTimer;
+}
+
+int settingsmenu::getAlgoMode() {
+    return myAlgoMode;
+}
+
+bool settingsmenu::getDevMode() {
+    return isDev;
 }
 
 // setters, called only to load previous settings
@@ -262,3 +305,13 @@ void settingsmenu::setTimer(float timer) {
     myTimer = timer;
     std::cout << "timer set: " << myTimer << std::endl;
 }
+
+void settingsmenu::setAlgoMode(int algomode) {
+    myAlgoMode = algomode;
+}
+
+void settingsmenu::setDevMode(bool dev) {
+    isDev = dev;
+}
+
+

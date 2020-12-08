@@ -26,7 +26,14 @@ public:
 
     float getTimer();
     void setTimer(float timer);
-    void setTextFields();
+
+    int getAlgoMode();
+    void setAlgoMode(int algomode);
+
+    bool getDevMode();
+    void setDevMode(bool dev);
+
+    void setOptions();
 
 
 private slots:
@@ -35,6 +42,7 @@ private slots:
     void handleTimerButton();
     void handleReturnButton();
     void handleApplyButton();
+    void handleDevMode();
 
 signals:
     void fromOtherMenu();
@@ -45,6 +53,7 @@ private:
     float myTimer = 60.0;
     std::tuple<float, float> mySLocation;
     std::tuple<float, float> myELocation;
+
     QPushButton *startLocationButton;
     QPushButton *endLocationButton;
     QPushButton *timerButton;
@@ -59,5 +68,11 @@ private:
     QLabel *txtLblELoc;
     QLineEdit *txtTimer;
     QLabel *txtLblTimer;
+
+    QComboBox *devcbox;
+    QCheckBox *devcheck;
+    int myAlgoMode = 0; // default: s-traversal
+    bool isDev = false; // default: user mode
+
 };
 #endif // SETTINGSMENU_H

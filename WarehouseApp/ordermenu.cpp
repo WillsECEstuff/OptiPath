@@ -113,9 +113,13 @@ void ordermenu::onSettingsSignal() {
     myTimer = settingsWindow->getTimer();
     startLocation = settingsWindow->getSLocation();
     endLocation = settingsWindow->getELocation();
+    myAlgoMode = settingsWindow->getAlgoMode();
+    isDev = settingsWindow->getDevMode();
     std::cout << "startLocation: " << std::get<0>(startLocation) << "," << std::get<1>(startLocation) << std::endl;
     std::cout << "endLocation: " << std::get<0>(endLocation) << "," << std::get<1>(endLocation) << std::endl;
     std::cout << "timer: " << myTimer << std::endl;
+    std::cout << "algo mode: " << myAlgoMode << std::endl;
+    std::cout << "dev mode: " << isDev << std::endl;
     settingsWindow->close();
     show();
 }
@@ -127,7 +131,9 @@ void ordermenu::handleSettingsButton() {
     settingsWindow->setTimer(myTimer);
     settingsWindow->setSLocation(startLocation);
     settingsWindow->setELocation(endLocation);
-    settingsWindow->setTextFields();
+    settingsWindow->setAlgoMode(myAlgoMode);
+    settingsWindow->setDevMode(isDev);
+    settingsWindow->setOptions();
 
     settingsWindow->setFixedSize(575, 700);
     settingsWindow->setWindowTitle("Settings");
@@ -182,11 +188,20 @@ void ordermenu::handleRouteButton() {
 #endif // 
 
         PathFinder pathFinder;
-        routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
-        //routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
-        //routePoints = pathFinder.NNAlgorithm(deq,dummyStart,dummyEnd,myTimer);
+        NN NNFinder;
 
-        //routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
+        if (myAlgoMode == 0) { // default: s-traversal
+            routePoints = pathFinder.STraversal(deq,dummyStart,dummyEnd,myTimer);
+        }
+
+        else if (myAlgoMode == 1) { // return traversal
+            routePoints = pathFinder.ReturnTraversal(deq,dummyStart,dummyEnd, myTimer);
+        }
+
+        else if (myAlgoMode == 2) { // Nearest Neighbor
+            routePoints = NNFinder.NNAlgorithm(deq,dummyStart,dummyEnd);
+        }
+
         std::cout << "routePoints size: " << routePoints.size() << std::endl;
 
         std::cout<<"Points to be reached are:"<<std::endl;
@@ -194,10 +209,15 @@ void ordermenu::handleRouteButton() {
             std::cout<<"("<<point.rx()/6<<","<<point.ry()/6<<")"<<std::endl;
         }
 
+        if (myAlgoMode == 0 || myAlgoMode == 1) {
+            directions = pathFinder.pathAnnotation();
 
-        directions = pathFinder.pathAnnotation();
-        for (auto& instruction: directions) {
-            std::cout << instruction << std::endl;
+            for (auto& instruction: directions) {
+                std::cout << instruction << std::endl;
+            }
+
+            routeMap->loadInstructions(directions);
+            routeMap->loadUnconvertedPointsPF(pathFinder.getPoints());
         }
 
 
@@ -208,8 +228,7 @@ void ordermenu::handleRouteButton() {
         routeMap->loadUnconvertedProductPoints(productPoints);
         //routeMap->loadRoutePrinter(routePoints);
         //routeMap->loadUnconvertedRoutePrinter(routePoints);
-        routeMap->loadUnconvertedPointsPF(pathFinder.getPoints());
-        routeMap->loadInstructions(directions);
+        std::cout << "test" << std::endl;
         routeMap->loadOrderStatus(stat);
         routeMap->setFixedSize(1500, 800);
         routeMap->setWindowTitle("Warehouse Map with Route");
