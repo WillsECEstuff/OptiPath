@@ -242,7 +242,7 @@ QVector<QPointF> PathFinder :: ReturnTraversal(
     }
 
      //Go back to start location
-     points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"1-"));
+     points.push_back(std::make_tuple(0,*(aislesToBeVisited.end()-1),"-1"));
      points.push_back(std::make_tuple(0,endLocation.getYPosition(),"-1"));
      if (endLocation.getXPosition() > 0) {
          points.push_back(std::make_tuple(endLocation.getXPosition(),endLocation.getYPosition(),"-1"));
