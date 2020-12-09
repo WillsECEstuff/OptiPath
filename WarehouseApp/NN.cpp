@@ -435,9 +435,12 @@ QVector<QPointF> PathFinder :: NNAlgorithm(
         for(auto it = points.begin();it!=points.end()-1;++it) {
             //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
             pointsFinished.push_back(QPointF(std::get<0>(*it), std::get<1>(*it)));
-            pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
         }
         router(productList,pointsFinished);
+        for(auto it = points.begin();it!=points.end()-1;++it) {
+            pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
+        }
+        std::cout<<"Total path length (approx) = "<<pathLength<<std::endl;
         return pointsFinished;
 }
 
