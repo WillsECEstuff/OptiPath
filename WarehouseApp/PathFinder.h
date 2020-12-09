@@ -96,7 +96,7 @@ class PathFinder {
             );
     //Branch and bound stuff
 
-    void router(std::deque<Product>& productList,QVector<QPointF>&);
+    void router(std::deque<Product>& productList,QVector<QPointF>&,float userTimer);
 
 
 

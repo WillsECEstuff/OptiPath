@@ -8,14 +8,15 @@
  * @param	productList		List of products to be picked up
  * @param	pointsFinished  List of products visited by parent algorithm - NN/MST
  */
-void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& pointsFinished) {
+void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& pointsFinished, float userTimer) {
     std::unordered_set<int> blocked;
     std::unordered_map<int,bool> visited;
     std::unordered_map<int,std::set<std::tuple<float,float,std::string>>> pickUpPoints;
 
-
+    auto startTime = std::chrono::high_resolution_clock::now();
     WarehouseMap* wMap = wMap->getInstance();
     json shelves = wMap->getShelves();
+    bool timeLimitExceeded = false;
 
     auto productPoints = points;
     points.clear();
@@ -89,6 +90,12 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
 
         //while(std::get<1>(nextPoint) != std::get<1>(productPoints[i]) - 1) {
         while(pickUpPoints[i].find(nextPoint) == pickUpPoints[i].end()) {
+            auto endTime = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+            if(duration.count() >= userTimer*1000) {
+                timeLimitExceeded = true;
+                break;
+            }
             auto tempPoint = nextPoint;
             visitedThisCycle.insert(nextPoint);
             //Right
@@ -345,6 +352,7 @@ void PathFinder::router(std::deque<Product>& productList,QVector<QPointF>& point
             //Change start index for next iteration
             startIndex = std::get<1>(nextPoint) * 40 + std::get<0>(nextPoint);
         }
+        if(timeLimitExceeded) return;
         std::cout<<"Product "<<std::get<0>(productPoints[i])<<" "<<std::get<1>(productPoints[i])<<" "<<std::get<2>(productPoints[i])<<" visited!!"<<std::endl;
         points.push_back(std::make_tuple(std::get<0>(productPoints[i]),std::get<1>(productPoints[i]),std::get<2>(productPoints[i])));
         points.push_back(std::make_tuple(std::get<0>(nextPoint),std::get<1>(nextPoint),"-1"));
@@ -436,7 +444,7 @@ QVector<QPointF> PathFinder :: NNAlgorithm(
             //pointsToDisplay.push_back(QPointF(std::get<0>(*it) * TILE_SIZE/SCALE,std::get<1>(*it)  * TILE_SIZE/SCALE));
             pointsFinished.push_back(QPointF(std::get<0>(*it), std::get<1>(*it)));
         }
-        router(productList,pointsFinished);
+        router(productList,pointsFinished,userTimer);
         for(auto it = points.begin();it!=points.end()-1;++it) {
             pathLength += distanceBetweenPointsEuclidean(*(it+1),*it);
         }
